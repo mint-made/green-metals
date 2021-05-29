@@ -9,7 +9,7 @@ const companies = [
     assets: [
       {
         name: 'Namib land package',
-        commodity: 'uranium',
+        commodity: ['uranium'],
         location: 'Namibia',
         stage: 'exploration',
         resource: '0',
@@ -35,7 +35,7 @@ const companies = [
     assets: [
       {
         name: 'Arrow',
-        commodity: 'uranium',
+        commodity: ['uranium'],
         location: 'Athabasca Basin, Canada',
         stage: 'Developer',
         resource: '239.6',
@@ -68,7 +68,7 @@ const companies = [
     assets: [
       {
         name: 'Honeymoon',
-        commodity: 'uranium',
+        commodity: ['uranium'],
         location: 'Australia',
         stage: 'Developer',
         resource: '36',
@@ -85,6 +85,32 @@ const companies = [
     ],
   },
   {
+    _id: '4',
+    name: 'Impala Platinum',
+    issuedShares: 0,
+    primaryCommodity: 'platinum',
+    website: 'https://www.implats.co.za/',
+    logo: 'frontend/public/images/Impala.png',
+    assets: [
+      {
+        name: 'Impala Rustenburg',
+        commodity: ['platinum', 'palladium', 'rhodium', 'nickel', 'copper'],
+        location: '',
+        stage: '',
+        resource: '',
+      },
+    ],
+    tickers: [
+      {
+        exchange: 'OTC',
+        ticker: 'IMPUY',
+        date: '2021-05-29',
+        currency: '$',
+        price: '17.33',
+      },
+    ],
+  },
+  {
     _id: 'template',
     name: '',
     issuedShares: 0,
@@ -94,7 +120,7 @@ const companies = [
     assets: [
       {
         name: '',
-        commodity: '',
+        commodity: [],
         location: '',
         stage: '',
         resource: '',
