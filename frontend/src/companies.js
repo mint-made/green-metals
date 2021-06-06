@@ -5,7 +5,7 @@ const companies = [
     issuedShares: 779740000,
     primaryCommodity: 'platinum',
     website: 'https://www.implats.co.za/',
-    logo: 'frontend/public/images/Impala.png',
+    logo: '/images/Impala.png',
     assets: [
       {
         name: 'Impala Rustenburg',
@@ -21,7 +21,7 @@ const companies = [
         ticker: 'IMPUY',
         date: '2021-05-29',
         currency: '$',
-        price: '17.33',
+        price: 17.33,
       },
     ],
   },
@@ -31,7 +31,7 @@ const companies = [
     issuedShares: 985860000,
     primaryCommodity: 'Copper',
     website: 'https://www.antofagasta.co.uk/',
-    logo: 'frontend/public/images/antofagasta.png',
+    logo: '/images/antofagasta.png',
     assets: [
       {
         name: 'Los Pelambres',
@@ -61,7 +61,7 @@ const companies = [
         ticker: 'ANTO',
         date: '2021-06-6',
         currency: '£',
-        price: '1565.50',
+        price: 1565.5,
       },
     ],
   },
@@ -71,21 +71,21 @@ const companies = [
     issuedShares: 207871461,
     primaryCommodity: 'uranium',
     website: 'http://marenicaenergy.com.au/',
-    logo: '/home/tom/Desktop/resources-investing/frontend/public/images/MEY.jpeg',
+    logo: '/images/MEY.jpeg',
     assets: [
       {
         name: 'Namib land package',
         commodity: ['uranium'],
         location: 'Namibia',
         stage: 'exploration',
-        resource: '0',
+        resource: 0,
       },
     ],
     tickers: [
       {
         exchange: 'ASX',
         ticker: 'MEY',
-        price: '0.3',
+        price: 0.3,
         date: '2021-05-25',
         currency: 'A$',
       },
@@ -97,14 +97,14 @@ const companies = [
     issuedShareCount: 470683919,
     primaryCommodity: 'uranium',
     website: 'https://www.nexgenenergy.ca/',
-    logo: '/home/tom/Desktop/resources-investing/frontend/public/images/NXE.jpeg',
+    logo: '/images/NXE.jpeg',
     assets: [
       {
         name: 'Arrow',
         commodity: ['uranium'],
         location: 'Athabasca Basin, Canada',
         stage: 'Developer',
-        resource: '239.6',
+        resource: 239.6,
       },
     ],
     tickers: [
@@ -113,14 +113,14 @@ const companies = [
         ticker: 'NXE',
         date: '2021-05-25',
         currency: '$',
-        price: '4.34',
+        price: 4.34,
       },
       {
         exchange: 'TSX',
         ticker: 'NXE',
         date: '2021-05-25',
         currency: 'C$',
-        price: '5.23',
+        price: 5.23,
       },
     ],
   },
@@ -130,14 +130,14 @@ const companies = [
     issuedShares: 2278276306,
     primaryCommodity: 'uranium',
     website: 'https://www.bossenergy.com/',
-    logo: '/home/tom/Desktop/resources-investing/frontend/public/images/BOE.webp',
+    logo: '/images/BOE.webp',
     assets: [
       {
         name: 'Honeymoon',
         commodity: ['uranium'],
         location: 'Australia',
         stage: 'Developer',
-        resource: '36',
+        resource: 36,
       },
     ],
     tickers: [
@@ -146,7 +146,7 @@ const companies = [
         ticker: 'BOE',
         date: '2021-05-25',
         currency: 'A$',
-        price: '0.165',
+        price: 0.165,
       },
     ],
   },
@@ -198,5 +198,13 @@ const companies = [
     ],
   },
 ];
+
+companies.forEach((company) => {
+  const mcapValue = company.issuedShares * company.tickers[0].price;
+  company.mcap = {
+    currency: company.tickers[0].currency,
+    value: mcapValue,
+  };
+});
 
 export default companies;
