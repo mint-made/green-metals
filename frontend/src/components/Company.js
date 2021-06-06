@@ -1,31 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
+import MCap from '../components/MCap';
 
 const Company = ({ company }) => {
   return (
-    <Card className='my-3 -3 rounded'>
-      <Link to={`/company/${company._id}`}>
-        <Card.Img src={company.logo} variant='top' />
-      </Link>
-      <Card.Body>
-        <Link to={`/company/${company._id}`}>
-          <Card.Title as='div'>
-            <strong>
-              {company.name} specializing in {company.primaryCommodity}
-            </strong>
-          </Card.Title>
+    <tr key={company._id}>
+      <td>{company.name}</td>
+      <td>
+        {company.tickers[0].exchange}:{company.tickers[0].ticker}
+      </td>
+      <td>
+        <MCap mcap={company.mcap} />
+      </td>
+      <td>{company.primaryCommodity}</td>
+      <td>
+        <Link className='btn btn-dark p-1' to={`/company/${company._id}`}>
+          More Info
         </Link>
-        <Card.Text as='div'>
-          <div className='my-3'></div>
-        </Card.Text>
-        <Card.Text as='h3'>
-          {company.tickers[0].exchange}:{company.tickers[0].ticker} -{' '}
-          {company.tickers[0].currency}
-          {company.tickers[0].price}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+      </td>
+    </tr>
   );
 };
 
