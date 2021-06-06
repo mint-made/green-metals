@@ -1,6 +1,6 @@
 const companies = [
   {
-    _id: '4',
+    _id: '1',
     name: 'Impala Platinum',
     issuedShares: 779740000,
     primaryCommodity: 'platinum',
@@ -26,7 +26,7 @@ const companies = [
     ],
   },
   {
-    _id: '5',
+    _id: '2',
     name: 'Antofagasta PLC',
     issuedShares: 985860000,
     primaryCommodity: 'Copper',
@@ -66,7 +66,7 @@ const companies = [
     ],
   },
   {
-    _id: '1',
+    _id: '3',
     name: 'Marenica Energy',
     issuedShares: 207871461,
     primaryCommodity: 'uranium',
@@ -92,7 +92,7 @@ const companies = [
     ],
   },
   {
-    _id: '2',
+    _id: '4',
     name: 'Nexgen Energy Ltd.',
     issuedShareCount: 470683919,
     primaryCommodity: 'uranium',
@@ -125,7 +125,7 @@ const companies = [
     ],
   },
   {
-    _id: '3',
+    _id: '5',
     name: 'Boss Energy',
     issuedShares: 2278276306,
     primaryCommodity: 'uranium',

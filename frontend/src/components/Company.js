@@ -1,20 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 
 const Company = ({ company }) => {
   return (
     <Card className='my-3 -3 rounded'>
-      <a href={`/company/${company._id}`}>
+      <Link to={`/company/${company._id}`}>
         <Card.Img src={company.logo} variant='top' />
-      </a>
+      </Link>
       <Card.Body>
-        <a href={`/company/${company._id}`}>
+        <Link to={`/company/${company._id}`}>
           <Card.Title as='div'>
             <strong>
               {company.name} specializing in {company.primaryCommodity}
             </strong>
           </Card.Title>
-        </a>
+        </Link>
         <Card.Text as='div'>
           <div className='my-3'></div>
         </Card.Text>
