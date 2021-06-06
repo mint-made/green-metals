@@ -1,5 +1,71 @@
 const companies = [
   {
+    _id: '4',
+    name: 'Impala Platinum',
+    issuedShares: 779740000,
+    primaryCommodity: 'platinum',
+    website: 'https://www.implats.co.za/',
+    logo: 'frontend/public/images/Impala.png',
+    assets: [
+      {
+        name: 'Impala Rustenburg',
+        commodity: ['platinum', 'palladium', 'rhodium', 'nickel', 'copper'],
+        location: '',
+        stage: '',
+        resource: '',
+      },
+    ],
+    tickers: [
+      {
+        exchange: 'OTC',
+        ticker: 'IMPUY',
+        date: '2021-05-29',
+        currency: '$',
+        price: '17.33',
+      },
+    ],
+  },
+  {
+    _id: '5',
+    name: 'Antofagasta PLC',
+    issuedShares: 985860000,
+    primaryCommodity: 'Copper',
+    website: 'https://www.antofagasta.co.uk/',
+    logo: 'frontend/public/images/antofagasta.png',
+    assets: [
+      {
+        name: 'Los Pelambres',
+        commodity: ['copper', 'gold', 'silver'],
+        location: 'Chile',
+        stage: 'production',
+        resource: '',
+      },
+      {
+        name: 'Centinela',
+        commodity: ['copper', 'gold', 'silver'],
+        location: 'Chile',
+        stage: 'production',
+        resource: '',
+      },
+      {
+        name: 'Zaldívar',
+        commodity: ['copper'],
+        location: 'Chile',
+        stage: 'production',
+        resource: '',
+      },
+    ],
+    tickers: [
+      {
+        exchange: 'LSE',
+        ticker: 'ANTO',
+        date: '2021-06-6',
+        currency: '£',
+        price: '1565.50',
+      },
+    ],
+  },
+  {
     _id: '1',
     name: 'Marenica Energy',
     issuedShares: 207871461,
@@ -81,32 +147,6 @@ const companies = [
         date: '2021-05-25',
         currency: 'A$',
         price: '0.165',
-      },
-    ],
-  },
-  {
-    _id: '4',
-    name: 'Impala Platinum',
-    issuedShares: 0,
-    primaryCommodity: 'platinum',
-    website: 'https://www.implats.co.za/',
-    logo: 'frontend/public/images/Impala.png',
-    assets: [
-      {
-        name: 'Impala Rustenburg',
-        commodity: ['platinum', 'palladium', 'rhodium', 'nickel', 'copper'],
-        location: '',
-        stage: '',
-        resource: '',
-      },
-    ],
-    tickers: [
-      {
-        exchange: 'OTC',
-        ticker: 'IMPUY',
-        date: '2021-05-29',
-        currency: '$',
-        price: '17.33',
       },
     ],
   },
