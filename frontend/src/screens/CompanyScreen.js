@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-import companies from '../companies';
 import MCap from '../components/MCap';
 
 const CompanyScreen = ({ match }) => {
-  const company = companies.find((company) => company._id === match.params.id);
+  const [company, setCompany] = useState({});
 
+  useEffect(() => {
+    console.log('start');
+    const fetchCompany = async () => {
+      const res = await axios.get(`/api/company/${match.params.id}`);
+
+      setCompany(res.data);
+    };
+    fetchCompany();
+  }, []);
+
+  if (!company.name) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Link className='btn btn-light my-3' to='/'>

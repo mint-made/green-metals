@@ -61,7 +61,7 @@ const companies = [
         ticker: 'ANTO',
         date: '2021-06-6',
         currency: '£',
-        price: 1565.5,
+        price: 15.655,
       },
     ],
   },
@@ -94,7 +94,7 @@ const companies = [
   {
     _id: '4',
     name: 'Nexgen Energy Ltd.',
-    issuedShareCount: 470683919,
+    issuedShares: 470683919,
     primaryCommodity: 'uranium',
     website: 'https://www.nexgenenergy.ca/',
     logo: '/images/NXE.jpeg',

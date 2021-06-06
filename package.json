@@ -1,0 +1,23 @@
+{
+  "name": "resources-investing",
+  "version": "1.0.0",
+  "description": "A website to analyse natural resource companies",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mint-made/resourcesinvesting.git"
+  },
+  "author": "mint-made",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mint-made/resourcesinvesting/issues"
+  },
+  "homepage": "https://github.com/mint-made/resourcesinvesting#readme"
+}
