@@ -1,6 +1,5 @@
 const companies = [
   {
-    _id: '1',
     name: 'Impala Platinum',
     issuedShares: 779740000,
     primaryCommodity: 'platinum',
@@ -9,10 +8,15 @@ const companies = [
     assets: [
       {
         name: 'Impala Rustenburg',
-        commodity: ['platinum', 'palladium', 'rhodium', 'nickel', 'copper'],
-        location: '',
-        stage: '',
-        resource: '',
+        location: 'South Africa',
+        stage: 'mine',
+        resource: [
+          { commodity: 'platinum' },
+          { commodity: 'palladium' },
+          { commodity: 'rhodium' },
+          { commodity: 'nickel' },
+          { commodity: 'copper' },
+        ],
       },
     ],
     tickers: [
@@ -26,7 +30,6 @@ const companies = [
     ],
   },
   {
-    _id: '2',
     name: 'Antofagasta',
     issuedShares: 985860000,
     primaryCommodity: 'copper',
@@ -35,24 +38,29 @@ const companies = [
     assets: [
       {
         name: 'Los Pelambres',
-        commodity: ['copper', 'gold', 'silver'],
         location: 'Chile',
         stage: 'production',
-        resource: '',
+        resource: [
+          { commodity: 'copper' },
+          { commodity: 'gold' },
+          { commodity: 'silver' },
+        ],
       },
       {
         name: 'Centinela',
-        commodity: ['copper', 'gold', 'silver'],
         location: 'Chile',
         stage: 'production',
-        resource: '',
+        resource: [
+          { commodity: 'copper' },
+          { commodity: 'gold' },
+          { commodity: 'silver' },
+        ],
       },
       {
         name: 'Zaldívar',
-        commodity: ['copper'],
         location: 'Chile',
         stage: 'production',
-        resource: '',
+        resource: [{ commodity: 'copper' }],
       },
     ],
     tickers: [
@@ -66,7 +74,6 @@ const companies = [
     ],
   },
   {
-    _id: '3',
     name: 'Marenica Energy',
     issuedShares: 207871461,
     primaryCommodity: 'uranium',
@@ -75,10 +82,9 @@ const companies = [
     assets: [
       {
         name: 'Namib land package',
-        commodity: ['uranium'],
         location: 'Namibia',
         stage: 'exploration',
-        resource: 0,
+        resource: [{ size: 0, units: 'Mlb', commodity: 'uranium' }],
       },
     ],
     tickers: [
@@ -92,7 +98,6 @@ const companies = [
     ],
   },
   {
-    _id: '4',
     name: 'Nexgen Energy',
     issuedShares: 470683919,
     primaryCommodity: 'uranium',
@@ -101,10 +106,9 @@ const companies = [
     assets: [
       {
         name: 'Arrow',
-        commodity: ['uranium'],
         location: 'Athabasca Basin, Canada',
         stage: 'Developer',
-        resource: 239.6,
+        resource: [{ size: 239.6, units: 'Mlb', commodity: 'uranium' }],
       },
     ],
     tickers: [
@@ -125,7 +129,6 @@ const companies = [
     ],
   },
   {
-    _id: '5',
     name: 'Boss Energy',
     issuedShares: 2278276306,
     primaryCommodity: 'uranium',
@@ -134,10 +137,9 @@ const companies = [
     assets: [
       {
         name: 'Honeymoon',
-        commodity: ['uranium'],
         location: 'Australia',
         stage: 'Developer',
-        resource: 36,
+        resource: [{ size: 36, units: 'Mlb', commodity: 'uranium' }],
       },
     ],
     tickers: [
@@ -147,53 +149,6 @@ const companies = [
         date: '2021-05-25',
         currency: 'A$',
         price: 0.165,
-      },
-    ],
-  },
-  {
-    _id: 'template',
-    name: '',
-    issuedShares: 0,
-    primaryCommodity: '',
-    website: '',
-    logo: '',
-    assets: [
-      {
-        name: '',
-        commodity: [],
-        location: '',
-        stage: '',
-        resource: '',
-      },
-    ],
-    tickers: [
-      {
-        exchange: 'ASX',
-        ticker: '',
-        date: '2021-05-25',
-        currency: 'A$',
-        price: '',
-      },
-      {
-        exchange: 'OTC',
-        ticker: '',
-        date: '2021-05-25',
-        currency: '$',
-        price: '',
-      },
-      {
-        exchange: 'NYSE',
-        ticker: '',
-        date: '2021-05-25',
-        currency: '$',
-        price: '',
-      },
-      {
-        exchange: 'TSX',
-        ticker: '',
-        date: '2021-05-25',
-        currency: '$C',
-        price: '',
       },
     ],
   },
@@ -208,3 +163,50 @@ companies.forEach((company) => {
 });
 
 export default companies;
+
+// {
+//   name: '',
+//   issuedShares: 0,
+//   primaryCommodity: '',
+//   website: '',
+//   logo: '',
+//   assets: [
+//     {
+//       name: '',
+//       commodity: [],
+//       location: '',
+//       stage: '',
+//       resource: '',
+//     },
+//   ],
+//   tickers: [
+//     {
+//       exchange: 'ASX',
+//       ticker: '',
+//       date: '2021-05-25',
+//       currency: 'A$',
+//       price: '',
+//     },
+//     {
+//       exchange: 'OTC',
+//       ticker: '',
+//       date: '2021-05-25',
+//       currency: '$',
+//       price: '',
+//     },
+//     {
+//       exchange: 'NYSE',
+//       ticker: '',
+//       date: '2021-05-25',
+//       currency: '$',
+//       price: '',
+//     },
+//     {
+//       exchange: 'TSX',
+//       ticker: '',
+//       date: '2021-05-25',
+//       currency: '$C',
+//       price: '',
+//     },
+//   ],
+// },

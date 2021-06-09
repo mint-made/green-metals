@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 
 import connectDB from './config/db.js';
-import companies from './data/companies.js';
+import companyRoutes from './routes/companyRoutes.js';
 
 dotenv.config();
 
@@ -15,14 +15,16 @@ app.get('/', (req, res) => {
   res.send('API is running');
 });
 
-app.get('/api/companies', (req, res) => {
-  res.json(companies);
-});
+app.use('/api/companies', companyRoutes);
 
-app.get('/api/company/:id', (req, res) => {
-  const company = companies.find((company) => company._id === req.params.id);
-  res.json(company);
-});
+// app.get('/api/companies', (req, res) => {
+//   res.json(companies);
+// });
+
+// app.get('/api/company/:id', (req, res) => {
+//   const company = companies.find((company) => company._id === req.params.id);
+//   res.json(company);
+// });
 
 const PORT = process.env.PORT || 5001;
 
