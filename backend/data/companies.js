@@ -207,4 +207,4 @@ companies.forEach((company) => {
   };
 });
 
-module.exports = companies;
+export default companies;
