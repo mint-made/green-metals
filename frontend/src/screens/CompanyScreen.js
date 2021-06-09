@@ -16,7 +16,7 @@ const CompanyScreen = ({ match }) => {
       setCompany(res.data);
     };
     fetchCompany();
-  }, []);
+  }, [match]);
 
   if (!company.name) {
     return <div>Loading...</div>;

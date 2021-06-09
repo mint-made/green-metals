@@ -27,9 +27,9 @@ const companies = [
   },
   {
     _id: '2',
-    name: 'Antofagasta PLC',
+    name: 'Antofagasta',
     issuedShares: 985860000,
-    primaryCommodity: 'Copper',
+    primaryCommodity: 'copper',
     website: 'https://www.antofagasta.co.uk/',
     logo: '/images/antofagasta.png',
     assets: [
@@ -93,7 +93,7 @@ const companies = [
   },
   {
     _id: '4',
-    name: 'Nexgen Energy Ltd.',
+    name: 'Nexgen Energy',
     issuedShares: 470683919,
     primaryCommodity: 'uranium',
     website: 'https://www.nexgenenergy.ca/',
