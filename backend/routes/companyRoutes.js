@@ -25,7 +25,12 @@ router.get(
   asyncHandler(async (req, res) => {
     const company = await Company.findById(req.params.id);
 
-    res.json(company);
+    if (company) {
+      res.json(company);
+    } else {
+      res.status(404);
+      throw new Error('Company not found');
+    }
   })
 );
 

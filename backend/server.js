@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 
 import connectDB from './config/db.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import companyRoutes from './routes/companyRoutes.js';
 
 dotenv.config();
@@ -17,14 +18,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/companies', companyRoutes);
 
-// app.get('/api/companies', (req, res) => {
-//   res.json(companies);
-// });
-
-// app.get('/api/company/:id', (req, res) => {
-//   const company = companies.find((company) => company._id === req.params.id);
-//   res.json(company);
-// });
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5001;
 
