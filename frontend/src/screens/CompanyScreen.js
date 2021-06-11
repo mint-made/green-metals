@@ -9,7 +9,6 @@ const CompanyScreen = ({ match }) => {
   const [company, setCompany] = useState({});
 
   useEffect(() => {
-    console.log('start', match.params.id);
     const fetchCompany = async () => {
       const res = await axios.get(`/api/companies/${match.params.id}`);
 
