@@ -19,15 +19,13 @@ const companies = [
         ],
       },
     ],
-    tickers: [
-      {
-        exchange: 'OTC',
-        ticker: 'IMPUY',
-        date: '2021-05-29',
-        currency: '$',
-        price: 17.33,
-      },
-    ],
+    trading: {
+      exchange: 'OTC',
+      ticker: 'IMPUY',
+      date: '2021-05-29',
+      currency: '$',
+      price: 17.33,
+    },
   },
   {
     name: 'Antofagasta',
@@ -63,22 +61,20 @@ const companies = [
         resource: [{ commodity: 'copper' }],
       },
     ],
-    tickers: [
-      {
-        exchange: 'LSE',
-        ticker: 'ANTO',
-        date: '2021-06-6',
-        currency: '£',
-        price: 15.655,
-      },
-    ],
+    trading: {
+      exchange: 'LSE',
+      ticker: 'ANTO',
+      date: '2021-06-6',
+      currency: '£',
+      price: 15.655,
+    },
   },
   {
-    name: 'Marenica Energy',
+    name: 'Elevate Uranium',
     issuedShares: 207871461,
     primaryCommodity: 'uranium',
-    website: 'http://marenicaenergy.com.au/',
-    logo: '/images/MEY.jpeg',
+    website: 'http://elevateuranium.com.au/',
+    logo: '/images/EL8.png',
     assets: [
       {
         name: 'Namib land package',
@@ -87,15 +83,13 @@ const companies = [
         resource: [{ size: 0, units: 'Mlb', commodity: 'uranium' }],
       },
     ],
-    tickers: [
-      {
-        exchange: 'ASX',
-        ticker: 'MEY',
-        price: 0.3,
-        date: '2021-05-25',
-        currency: 'A$',
-      },
-    ],
+    trading: {
+      exchange: 'ASX',
+      ticker: 'EL8',
+      price: 0.435,
+      date: '2021-12-25',
+      currency: 'A$',
+    },
   },
   {
     name: 'Nexgen Energy',
@@ -111,22 +105,13 @@ const companies = [
         resource: [{ size: 239.6, units: 'Mlb', commodity: 'uranium' }],
       },
     ],
-    tickers: [
-      {
-        exchange: 'NYSE',
-        ticker: 'NXE',
-        date: '2021-05-25',
-        currency: '$',
-        price: 4.34,
-      },
-      {
-        exchange: 'TSX',
-        ticker: 'NXE',
-        date: '2021-05-25',
-        currency: 'C$',
-        price: 5.23,
-      },
-    ],
+    trading: {
+      exchange: 'NYSE',
+      ticker: 'NXE',
+      date: '2021-05-25',
+      currency: '$',
+      price: 4.34,
+    },
   },
   {
     name: 'Boss Energy',
@@ -142,71 +127,19 @@ const companies = [
         resource: [{ size: 36, units: 'Mlb', commodity: 'uranium' }],
       },
     ],
-    tickers: [
-      {
-        exchange: 'ASX',
-        ticker: 'BOE',
-        date: '2021-05-25',
-        currency: 'A$',
-        price: 0.165,
-      },
-    ],
+    trading: {
+      exchange: 'ASX',
+      ticker: 'BOE',
+      date: '2021-05-25',
+      currency: 'A$',
+      price: 0.165,
+    },
   },
 ];
 
 companies.forEach((company) => {
-  const mcapValue = company.issuedShares * company.tickers[0].price;
-  company.mcap = {
-    currency: company.tickers[0].currency,
-    value: mcapValue,
-  };
+  const mcapValuation = company.issuedShares * company.trading.price;
+  company.trading.mcap = mcapValuation;
 });
 
 export default companies;
-
-// {
-//   name: '',
-//   issuedShares: 0,
-//   primaryCommodity: '',
-//   website: '',
-//   logo: '',
-//   assets: [
-//     {
-//       name: '',
-//       commodity: [],
-//       location: '',
-//       stage: '',
-//       resource: '',
-//     },
-//   ],
-//   tickers: [
-//     {
-//       exchange: 'ASX',
-//       ticker: '',
-//       date: '2021-05-25',
-//       currency: 'A$',
-//       price: '',
-//     },
-//     {
-//       exchange: 'OTC',
-//       ticker: '',
-//       date: '2021-05-25',
-//       currency: '$',
-//       price: '',
-//     },
-//     {
-//       exchange: 'NYSE',
-//       ticker: '',
-//       date: '2021-05-25',
-//       currency: '$',
-//       price: '',
-//     },
-//     {
-//       exchange: 'TSX',
-//       ticker: '',
-//       date: '2021-05-25',
-//       currency: '$C',
-//       price: '',
-//     },
-//   ],
-// },

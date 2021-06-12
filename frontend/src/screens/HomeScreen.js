@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { listCompanies } from '../actions/companyActions';
 import Company from '../components/Company';
+import Loader from '../components/Loader';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -15,11 +16,13 @@ const HomeScreen = () => {
     dispatch(listCompanies());
   }, [dispatch]);
 
+  console.log(`loading: ${loading} & error: ${error}`, companies);
+
   return (
     <>
       <h1>Natural Resource Companies</h1>
       {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : error ? (
         <h3>{error}</h3>
       ) : (

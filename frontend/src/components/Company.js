@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import MCap from '../components/MCap';
+import NumFormat from '../components/NumFormat';
 
 const Company = ({ company }) => {
   return (
     <tr key={company._id}>
       <td>{company.name}</td>
       <td>
-        {company.tickers[0].exchange}:{company.tickers[0].ticker}
+        {company.trading.exchange}:{company.trading.ticker}
       </td>
       <td>
-        <MCap mcap={company.mcap} />
+        <NumFormat number={company.trading.mcap} dp='2' />
       </td>
       <td>{company.primaryCommodity}</td>
       <td>

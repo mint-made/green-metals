@@ -13,14 +13,6 @@ const assetSchema = new mongoose.Schema({
   ],
 });
 
-const tickerSchema = new mongoose.Schema({
-  exchange: { type: String, required: true },
-  ticker: { type: String, required: true },
-  date: { type: String, required: true },
-  currency: { type: String, required: true },
-  price: { type: Number, required: true },
-});
-
 const companySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,16 +27,6 @@ const companySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  mcap: {
-    value: {
-      type: Number,
-      required: true,
-    },
-    currency: {
-      type: String,
-      required: true,
-    },
-  },
   primaryCommodity: {
     type: String,
     required: true,
@@ -57,8 +39,15 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  trading: {
+    exchange: { type: String, required: true },
+    ticker: { type: String, required: true },
+    date: { type: String, required: true },
+    currency: { type: String, required: true },
+    price: { type: Number, required: true },
+    mcap: { type: Number, required: true },
+  },
   assets: [assetSchema],
-  tickers: [tickerSchema],
 });
 
 const Company = mongoose.model('Company', companySchema);
