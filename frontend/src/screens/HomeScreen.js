@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listCompanies } from '../actions/companyActions';
-import Company from '../components/Company';
+import CompanyTableRow from '../components/CompanyTableRow';
 import Loader from '../components/Loader';
 
 const HomeScreen = () => {
@@ -38,7 +38,7 @@ const HomeScreen = () => {
           </thead>
           <tbody>
             {companies.map((company) => (
-              <Company key={company._id} company={company} />
+              <CompanyTableRow key={company._id} company={company} />
             ))}
           </tbody>
         </Table>

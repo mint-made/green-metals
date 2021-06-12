@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import NumFormat from '../components/NumFormat';
+import NumFormat from './NumFormat';
 
-const Company = ({ company }) => {
+const CompanyTableRow = ({ company }) => {
   return (
     <tr key={company._id}>
       <td>{company.name}</td>
@@ -23,4 +23,4 @@ const Company = ({ company }) => {
   );
 };
 
-export default Company;
+export default CompanyTableRow;
