@@ -33,7 +33,6 @@ export const listCompanyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: COMPANY_DETAILS_REQUEST });
 
-    console.log(id);
     const { data } = await axios.get(`/api/companies/${id}`);
 
     dispatch({

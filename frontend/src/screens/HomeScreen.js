@@ -16,8 +16,6 @@ const HomeScreen = () => {
     dispatch(listCompanies());
   }, [dispatch]);
 
-  console.log(`loading: ${loading} & error: ${error}`, companies);
-
   return (
     <>
       <h1>Natural Resource Companies</h1>
@@ -29,11 +27,24 @@ const HomeScreen = () => {
         <Table size='sm' striped bordered hover responsive>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Ticker</th>
-              <th>Mcap</th>
-              <th>Primary Commodity</th>
-              <th>More Info</th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Name</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Ticker</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>MCap</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Commodity</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Info</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Compare</h5>
+              </th>
             </tr>
           </thead>
           <tbody>

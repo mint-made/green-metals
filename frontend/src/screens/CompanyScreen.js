@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Image, ListGroup, Button } from 'react-bootstrap';
 
@@ -53,7 +52,7 @@ const CompanyScreen = ({ match }) => {
           <Row>
             <h2 className='text-center'>Assets</h2>
             {company.assets.map((asset) => (
-              <Col md={4}>
+              <Col key={asset._id} md={4}>
                 <AssetSummary asset={asset} />
               </Col>
             ))}

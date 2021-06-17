@@ -6,13 +6,23 @@ import {
   companyListReducer,
   companyDetailsReducer,
 } from './reducers/companyReducer';
+import { compareReducer } from './reducers/compareReducer';
 
 const reducer = combineReducers({
   companyList: companyListReducer,
   companyDetails: companyDetailsReducer,
+  compare: compareReducer,
 });
 
-const initialState = {};
+const compareListFromStorage = localStorage.getItem('compareList')
+  ? JSON.parse(localStorage.getItem('compareList'))
+  : [];
+
+const initialState = {
+  compare: {
+    compareList: compareListFromStorage,
+  },
+};
 
 const middleware = [thunk];
 

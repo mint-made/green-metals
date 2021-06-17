@@ -14,9 +14,9 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
-              <LinkContainer to='/subscribe'>
+              <LinkContainer to='/compare'>
                 <Nav.Link>
-                  <i className='fas fa-star'></i> Subscribe
+                  <i className='fas fa-star'></i> Compare
                 </Nav.Link>
               </LinkContainer>
 
