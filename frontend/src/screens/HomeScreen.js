@@ -18,7 +18,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <h1>Natural Resource Companies</h1>
+      <h1 className='text-center'>Natural Resource Companies</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -43,7 +43,9 @@ const HomeScreen = () => {
                 <h5 className='m-0 text-center'>Info</h5>
               </th>
               <th className='p-1'>
-                <h5 className='m-0 text-center'>Compare</h5>
+                <h5 className='m-0 text-center'>
+                  <i className='fas fa-chart-pie'></i> Compare
+                </h5>
               </th>
             </tr>
           </thead>

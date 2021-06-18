@@ -1,19 +1,15 @@
 import { Table } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { listCompanies } from '../actions/companyActions';
 import CompanyTableRow from '../components/CompanyTableRow';
-import Loader from '../components/Loader';
 
 const CompareScreen = () => {
-  const dispatch = useDispatch();
-
   const compare = useSelector((state) => state.compare);
   const { compareList } = compare;
 
   return (
     <>
-      <h1>Compare List</h1>
+      <h1 className="text-center">Compare List</h1>
 
       <Table size='sm' striped bordered hover responsive>
         <thead>

@@ -16,7 +16,7 @@ const Header = () => {
             <Nav className='ms-auto'>
               <LinkContainer to='/compare'>
                 <Nav.Link>
-                  <i className='fas fa-star'></i> Compare
+                  <i className='fas fa-chart-pie'></i> Compare
                 </Nav.Link>
               </LinkContainer>
 
