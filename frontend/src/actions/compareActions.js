@@ -33,4 +33,9 @@ export const removeFromCompareList = (id) => async (dispatch, getState) => {
     type: COMPARE_REMOVE_COMPANY,
     payload: id,
   });
+
+  localStorage.setItem(
+    'compareList',
+    JSON.stringify(getState().compare.compareList)
+  );
 };
