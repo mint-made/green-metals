@@ -7,7 +7,12 @@ import {
   companyDetailsReducer,
 } from './reducers/companyReducer';
 import { compareReducer } from './reducers/compareReducer';
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  userUpdateProfileReducer,
+} from './reducers/userReducers';
 
 const reducer = combineReducers({
   companyList: companyListReducer,
@@ -15,6 +20,8 @@ const reducer = combineReducers({
   compare: compareReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 });
 
 const compareListFromStorage = localStorage.getItem('compareList')
