@@ -10,6 +10,7 @@ import CompareScreen from './screens/CompareScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import UserListScreen from './screens/UserListScreen';
 
 const App = () => {
   return (
@@ -20,9 +21,10 @@ const App = () => {
           <Route path='/register' component={RegisterScreen} />
           <Route path='/login' component={LoginScreen} />
           <Route path='/profile' component={ProfileScreen} />
-          <Route path='/' component={HomeScreen} exact />
           <Route path='/company/:id' component={CompanyScreen} />
           <Route path='/compare' component={CompareScreen} />
+          <Route path='/admin/userlist' component={UserListScreen} />
+          <Route path='/' component={HomeScreen} exact />
         </Container>
       </main>
 
