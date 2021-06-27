@@ -19,9 +19,12 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_RESET,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_FAIL,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
 
 export const login = (email, password) => async (dispatch) => {
@@ -116,6 +119,10 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
+// Can be used by non-admin by passing in "profile" as the ID making the request
+// to /api/users/profile which is a non-admin route that gets the logged in user's
+// id from the token. Wheras passing in an id uses the endpoint: /api/users/:id
+// which is an admin only endpoint
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -241,6 +248,44 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+      payload: data,
+    });
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
