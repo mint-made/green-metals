@@ -14,7 +14,7 @@ const getCompanies = asyncHandler(async (req, res) => {
 // @description Fetch a single company
 // @route GET /api/companies/:id
 // @access Public
-const getCompany = asyncHandler(async (req, res) => {
+const getCompanyById = asyncHandler(async (req, res) => {
   const company = await Company.findById(req.params.id);
 
   if (company) {
@@ -25,4 +25,19 @@ const getCompany = asyncHandler(async (req, res) => {
   }
 });
 
-export { getCompanies, getCompany };
+// @description Delete a company
+// @route DELETE /api/companies/:id
+// @access Private/Admin
+const deleteCompany = asyncHandler(async (req, res) => {
+  const company = await Company.findById(req.params.id);
+
+  if (company) {
+    await company.remove();
+    res.json({ message: 'Company removed' });
+  } else {
+    res.status(404);
+    throw new Error('Company not found');
+  }
+});
+
+export { getCompanies, getCompanyById, deleteCompany };
