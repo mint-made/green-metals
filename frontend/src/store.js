@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   companyListReducer,
   companyDetailsReducer,
+  companyDeleteReducer,
 } from './reducers/companyReducer';
 import { compareReducer } from './reducers/compareReducer';
 import {
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  companyDelete: companyDeleteReducer,
 });
 
 const compareListFromStorage = localStorage.getItem('compareList')

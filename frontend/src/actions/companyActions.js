@@ -6,6 +6,9 @@ import {
   COMPANY_DETAILS_REQUEST,
   COMPANY_DETAILS_SUCCESS,
   COMPANY_DETAILS_FAIL,
+  COMPANY_DELETE_SUCCESS,
+  COMPANY_DELETE_FAIL,
+  COMPANY_DELETE_REQUEST,
 } from '../constants/companyConstants';
 
 export const listCompanies = () => async (dispatch) => {
@@ -42,6 +45,38 @@ export const listCompanyDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: COMPANY_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteCompany = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: COMPANY_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/companies/${id}`, config);
+
+    dispatch({
+      type: COMPANY_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: COMPANY_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
