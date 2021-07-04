@@ -9,6 +9,9 @@ import {
   COMPANY_DELETE_SUCCESS,
   COMPANY_DELETE_FAIL,
   COMPANY_DELETE_REQUEST,
+  COMPANY_CREATE_REQUEST,
+  COMPANY_CREATE_FAIL,
+  COMPANY_CREATE_SUCCESS,
 } from '../constants/companyConstants';
 
 export const listCompanies = () => async (dispatch) => {
@@ -77,6 +80,39 @@ export const deleteCompany = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: COMPANY_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createCompany = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: COMPANY_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post('/api/companies', {}, config);
+
+    dispatch({
+      type: COMPANY_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: COMPANY_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

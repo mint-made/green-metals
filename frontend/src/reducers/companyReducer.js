@@ -8,6 +8,10 @@ import {
   COMPANY_DELETE_REQUEST,
   COMPANY_DELETE_SUCCESS,
   COMPANY_DELETE_FAIL,
+  COMPANY_CREATE_REQUEST,
+  COMPANY_CREATE_SUCCESS,
+  COMPANY_CREATE_FAIL,
+  COMPANY_CREATE_RESET,
 } from '../constants/companyConstants';
 
 export const companyListReducer = (state = { companies: [] }, action) => {
@@ -47,6 +51,21 @@ export const companyDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case COMPANY_DELETE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const companyCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COMPANY_CREATE_REQUEST:
+      return { loading: true };
+    case COMPANY_CREATE_SUCCESS:
+      return { loading: false, success: true, company: action.payload };
+    case COMPANY_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case COMPANY_CREATE_RESET:
+      return {};
     default:
       return state;
   }
