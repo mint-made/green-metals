@@ -40,4 +40,78 @@ const deleteCompany = asyncHandler(async (req, res) => {
   }
 });
 
-export { getCompanies, getCompanyById, deleteCompany };
+// @description Create a company
+// @route POST /api/companies/:id
+// @access Private/Admin
+const createCompany = asyncHandler(async (req, res) => {
+  const company = new Company({
+    user: req.user._id,
+    name: 'example corp',
+    issuedShares: 1000000,
+    primaryCommodity: 'copper',
+    website: 'example.com',
+    logo: '/images/sample.jpeg',
+    trading: {
+      exchange: 'LSE',
+      ticker: 'EG',
+      date: '2021-05-29',
+      currency: '£',
+      price: '10',
+      mcap: 0,
+    },
+    assets: [],
+  });
+
+  company.trading.mcap = company.trading.price * company.issuedShares;
+
+  const createdCompany = await company.save();
+  res.json(createdCompany);
+});
+
+// @description Update a companies information
+// @route PUT /api/companies/:id
+// @access Private/Admin
+const updateCompany = asyncHandler(async (req, res) => {
+  const {
+    name,
+    issuedShares,
+    primaryCommodity,
+    website,
+    logo,
+    assets,
+    trading: { exchange, ticker, date, currency, price } = {},
+  } = req.body;
+
+  const company = await Company.findById(req.params.id);
+
+  if (company) {
+    company.name = name || company.name;
+    company.issuedShares = issuedShares || company.issuedShares;
+    company.primaryCommodity = primaryCommodity || company.primaryCommodity;
+    company.website = website || company.website;
+    company.logo = logo || company.logo;
+    company.assets = assets || company.assets;
+    company.trading = {
+      exchange: exchange ? exchange : company.trading.exchange,
+      ticker: ticker ? ticker : company.trading.ticker,
+      date: date ? date : company.trading.date,
+      currency: currency ? currency : company.trading.currency,
+      price: price ? price : company.trading.price,
+    };
+    company.trading.mcap = company.trading.price * company.issuedShares;
+
+    const updatedCompany = await company.save();
+    res.json(updatedCompany);
+  } else {
+    res.status(404);
+    throw new Error('Company not found');
+  }
+});
+
+export {
+  getCompanies,
+  getCompanyById,
+  deleteCompany,
+  createCompany,
+  updateCompany,
+};
