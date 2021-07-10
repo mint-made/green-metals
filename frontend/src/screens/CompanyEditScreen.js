@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +13,7 @@ const ProductEditScreen = ({ match, history }) => {
   const companyId = match.params.id;
 
   const [name, setName] = useState('');
+  const [logo, setLogo] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
   const [primaryCommodity, setPrimaryCommodity] = useState('');
   const [website, setWebsite] = useState('');
@@ -20,6 +22,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [ticker, setTicker] = useState('');
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -50,8 +53,31 @@ const ProductEditScreen = ({ match, history }) => {
       setTicker(company.trading.ticker);
       setCurrency(company.trading.currency);
       setPrice(company.trading.price);
+      setLogo(company.logo);
     }
   }, [dispatch, history, companyId, company, successUpdate]);
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      setLogo(data);
+      setUploading(false);
+    } catch (e) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -62,6 +88,7 @@ const ProductEditScreen = ({ match, history }) => {
         issuedShares,
         primaryCommodity,
         website,
+        logo,
         trading: {
           exchange,
           ticker,
@@ -95,6 +122,23 @@ const ProductEditScreen = ({ match, history }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId='logo'>
+              <Form.Label>Logo</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter logo URL'
+                value={logo}
+                onChange={(e) => setLogo(e.target.value)}
+              ></Form.Control>
+              <Form.File
+                id='image-file'
+                label='Choose File'
+                custom
+                onChange={uploadFileHandler}
+              ></Form.File>
+              {uploading && <Loader />}
             </Form.Group>
 
             <Form.Group controlId='issuedShares'>
