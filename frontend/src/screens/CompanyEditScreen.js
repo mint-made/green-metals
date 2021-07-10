@@ -6,8 +6,9 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { listCompanyDetails, updateCompany } from '../actions/companyActions';
+import { COMPANY_UPDATE_RESET } from '../constants/companyConstants';
 
-const ProductEditScreen = ({ match }) => {
+const ProductEditScreen = ({ match, history }) => {
   const companyId = match.params.id;
 
   const [name, setName] = useState('');
@@ -25,7 +26,19 @@ const ProductEditScreen = ({ match }) => {
   const companyDetails = useSelector((state) => state.companyDetails);
   const { loading, error, company } = companyDetails;
 
+  const companyUpdate = useSelector((state) => state.companyUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = companyUpdate;
+
   useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: COMPANY_UPDATE_RESET });
+      history.push('/admin/companylist');
+    }
+
     if (!company.name || company._id !== companyId) {
       dispatch(listCompanyDetails(companyId));
     } else {
@@ -38,7 +51,7 @@ const ProductEditScreen = ({ match }) => {
       setCurrency(company.trading.currency);
       setPrice(company.trading.price);
     }
-  }, [dispatch, companyId, company]);
+  }, [dispatch, history, companyId, company, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -66,6 +79,8 @@ const ProductEditScreen = ({ match }) => {
       </Link>
       <FormContainer>
         <h1>Update Company Info</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {loading ? (
           <Loader />
         ) : error ? (
