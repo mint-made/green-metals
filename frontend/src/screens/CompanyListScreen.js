@@ -44,7 +44,7 @@ const ProductListScreen = ({ history, match }) => {
     }
 
     if (successCreate) {
-      history.push(`/admin/company/${createdCompany._id}`);
+      history.push(`/admin/company/${createdCompany._id}/edit`);
     } else {
       dispatch(listCompanies());
     }
