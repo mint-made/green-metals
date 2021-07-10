@@ -12,6 +12,9 @@ import {
   COMPANY_CREATE_REQUEST,
   COMPANY_CREATE_FAIL,
   COMPANY_CREATE_SUCCESS,
+  COMPANY_UPDATE_REQUEST,
+  COMPANY_UPDATE_SUCCESS,
+  COMPANY_UPDATE_FAIL,
 } from '../constants/companyConstants';
 
 export const listCompanies = () => async (dispatch) => {
@@ -113,6 +116,43 @@ export const createCompany = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: COMPANY_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateCompany = (company) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: COMPANY_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/companies/${company._id}`,
+      company,
+      config
+    );
+
+    dispatch({
+      type: COMPANY_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: COMPANY_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

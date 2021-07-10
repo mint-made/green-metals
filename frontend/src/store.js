@@ -7,6 +7,7 @@ import {
   companyDetailsReducer,
   companyDeleteReducer,
   companyCreateReducer,
+  companyUpdateReducer,
 } from './reducers/companyReducer';
 import { compareReducer } from './reducers/compareReducer';
 import {
@@ -24,6 +25,7 @@ const reducer = combineReducers({
   companyDetails: companyDetailsReducer,
   companyDelete: companyDeleteReducer,
   companyCreate: companyCreateReducer,
+  companyUpdate: companyUpdateReducer,
   compare: compareReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

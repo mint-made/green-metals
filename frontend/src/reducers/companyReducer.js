@@ -12,6 +12,10 @@ import {
   COMPANY_CREATE_SUCCESS,
   COMPANY_CREATE_FAIL,
   COMPANY_CREATE_RESET,
+  COMPANY_UPDATE_REQUEST,
+  COMPANY_UPDATE_SUCCESS,
+  COMPANY_UPDATE_FAIL,
+  COMPANY_UPDATE_RESET,
 } from '../constants/companyConstants';
 
 export const companyListReducer = (state = { companies: [] }, action) => {
@@ -66,6 +70,21 @@ export const companyCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case COMPANY_CREATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const companyUpdateReducer = (state = { company: {} }, action) => {
+  switch (action.type) {
+    case COMPANY_UPDATE_REQUEST:
+      return { loading: true };
+    case COMPANY_UPDATE_SUCCESS:
+      return { loading: false, success: true, company: action.payload };
+    case COMPANY_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case COMPANY_UPDATE_RESET:
+      return { company: {} };
     default:
       return state;
   }
