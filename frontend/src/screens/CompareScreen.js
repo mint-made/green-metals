@@ -2,6 +2,7 @@ import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import CompanyTableRow from '../components/CompanyTableRow';
+import Meta from '../components/Meta';
 
 const CompareScreen = () => {
   const compare = useSelector((state) => state.compare);
@@ -9,7 +10,8 @@ const CompareScreen = () => {
 
   return (
     <>
-      <h1 className="text-center">Compare List</h1>
+      <Meta title='Compare Companies' />
+      <h1 className='text-center'>Compare List</h1>
 
       <Table size='sm' striped bordered hover responsive>
         <thead>

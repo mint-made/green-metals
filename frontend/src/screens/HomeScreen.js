@@ -6,6 +6,7 @@ import { listCompanies } from '../actions/companyActions';
 import CompanyTableRow from '../components/CompanyTableRow';
 import Loader from '../components/Loader';
 import Paginate from '../components/Paginate';
+import Meta from '../components/Meta';
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
@@ -21,6 +22,7 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
+      <Meta />
       <h1 className='text-center'>Natural Resource Companies</h1>
       {loading ? (
         <Loader />

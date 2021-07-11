@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import AssetSummary from '../components/AssetSummary';
 import ValutationSummary from '../components/ValutationSummary';
+import Meta from '../components/Meta';
 
 const CompanyScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const CompanyScreen = ({ match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={company.name} />
           <h2 className='text-center'>{company.name}</h2>
           <Row className='mb-3'>
             <Col md={6}>
