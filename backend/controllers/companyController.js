@@ -6,7 +6,16 @@ import Company from '../models/companyModel.js';
 // @route GET /api/companies
 // @access Public
 const getCompanies = asyncHandler(async (req, res) => {
-  const companies = await Company.find({});
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const companies = await Company.find({ ...keyword });
 
   res.json(companies);
 });

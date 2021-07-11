@@ -6,15 +6,16 @@ import { listCompanies } from '../actions/companyActions';
 import CompanyTableRow from '../components/CompanyTableRow';
 import Loader from '../components/Loader';
 
-const HomeScreen = () => {
+const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword;
   const dispatch = useDispatch();
 
   const companyList = useSelector((state) => state.companyList);
   const { loading, error, companies } = companyList;
 
   useEffect(() => {
-    dispatch(listCompanies());
-  }, [dispatch]);
+    dispatch(listCompanies(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>
