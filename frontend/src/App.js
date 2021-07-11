@@ -28,7 +28,17 @@ const App = () => {
           <Route path='/compare' component={CompareScreen} />
 
           <Route path='/admin/userlist' component={UserListScreen} />
-          <Route path='/admin/companylist' component={CompanyListScreen} />
+          <Route
+            path='/admin/companylist'
+            component={CompanyListScreen}
+            exact
+          />
+          <Route
+            path='/admin/companylist/:pageNumber'
+            component={CompanyListScreen}
+            exact
+          />
+
           <Route path='/admin/company/:id/edit' component={CompanyEditScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
 

@@ -10,13 +10,16 @@ import {
   createCompany,
 } from '../actions/companyActions';
 import NumFormat from '../components/NumFormat';
+import Paginate from '../components/Paginate';
 import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
 
 const ProductListScreen = ({ history, match }) => {
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
 
   const companyList = useSelector((state) => state.companyList);
-  const { loading, error, companies } = companyList;
+  const { loading, error, companies, page, pages } = companyList;
 
   const companyDelete = useSelector((state) => state.companyDelete);
   const {
@@ -46,7 +49,7 @@ const ProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/company/${createdCompany._id}/edit`);
     } else {
-      dispatch(listCompanies());
+      dispatch(listCompanies('', pageNumber));
     }
   }, [
     dispatch,
@@ -55,6 +58,7 @@ const ProductListScreen = ({ history, match }) => {
     successDelete,
     successCreate,
     createdCompany,
+    pageNumber,
   ]);
 
   const deleteHandler = (id) => {
@@ -88,54 +92,57 @@ const ProductListScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
-          <thead>
-            <tr>
-              <th className='p-1'>
-                <h5 className='m-0 text-center'>Name</h5>
-              </th>
-              <th className='p-1'>
-                <h5 className='m-0 text-center'>Ticker</h5>
-              </th>
-              <th className='p-1'>
-                <h5 className='m-0 text-center'>MCap</h5>
-              </th>
-              <th className='p-1'>
-                <h5 className='m-0 text-center'>Commodity</h5>
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {companies.map((company) => (
-              <tr key={company._id}>
-                <td className='p-2'>{company.name}</td>
-                <td className='p-2'>
-                  {company.trading.exchange}:{company.trading.ticker}
-                </td>
-                <td className='p-2'>
-                  {company.trading.currency}
-                  <NumFormat number={company.trading.mcap} dp='2' />
-                </td>
-                <td className='p-2'>{company.primaryCommodity}</td>
-                <td>
-                  <LinkContainer to={`/admin/company/${company._id}/edit`}>
-                    <Button variant='light' className='btn-sm'>
-                      <i className='fas fa-edit'></i>
-                    </Button>
-                  </LinkContainer>
-                  <Button
-                    variant='danger'
-                    className='btn-sm'
-                    onClick={() => deleteHandler(company._id)}
-                  >
-                    <i className='fas fa-trash'></i>
-                  </Button>
-                </td>
+        <>
+          <Table striped bordered hover responsive className='table-sm'>
+            <thead>
+              <tr>
+                <th className='p-1'>
+                  <h5 className='m-0 text-center'>Name</h5>
+                </th>
+                <th className='p-1'>
+                  <h5 className='m-0 text-center'>Ticker</h5>
+                </th>
+                <th className='p-1'>
+                  <h5 className='m-0 text-center'>MCap</h5>
+                </th>
+                <th className='p-1'>
+                  <h5 className='m-0 text-center'>Commodity</h5>
+                </th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {companies.map((company) => (
+                <tr key={company._id}>
+                  <td className='p-2'>{company.name}</td>
+                  <td className='p-2'>
+                    {company.trading.exchange}:{company.trading.ticker}
+                  </td>
+                  <td className='p-2'>
+                    {company.trading.currency}
+                    <NumFormat number={company.trading.mcap} dp='2' />
+                  </td>
+                  <td className='p-2'>{company.primaryCommodity}</td>
+                  <td>
+                    <LinkContainer to={`/admin/company/${company._id}/edit`}>
+                      <Button variant='light' className='btn-sm'>
+                        <i className='fas fa-edit'></i>
+                      </Button>
+                    </LinkContainer>
+                    <Button
+                      variant='danger'
+                      className='btn-sm'
+                      onClick={() => deleteHandler(company._id)}
+                    >
+                      <i className='fas fa-trash'></i>
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Paginate pages={pages} page={page} isAdmin={true} />
+        </>
       )}
     </>
   );

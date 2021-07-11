@@ -17,14 +17,11 @@ const getCompanies = asyncHandler(async (req, res) => {
       }
     : {};
 
-  console.log(page, keyword);
-
   const count = await Company.countDocuments({ ...keyword });
   const companies = await Company.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
-  console.log(companies);
   res.json({ companies, page, pages: Math.ceil(count / pageSize) });
 });
 
