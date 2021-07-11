@@ -18,12 +18,14 @@ import {
 } from '../constants/companyConstants';
 
 export const listCompanies =
-  (keyword = '') =>
+  (keyword = '', pageNumber = 1) =>
   async (dispatch) => {
     try {
       dispatch({ type: COMPANY_LIST_REQUEST });
 
-      const { data } = await axios.get(`/api/companies?keyword=${keyword}`);
+      const { data } = await axios.get(
+        `/api/companies?keyword=${keyword}&pageNumber=${pageNumber}`
+      );
 
       dispatch({
         type: COMPANY_LIST_SUCCESS,

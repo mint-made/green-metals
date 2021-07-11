@@ -26,11 +26,19 @@ const App = () => {
           <Route path='/profile' component={ProfileScreen} />
           <Route path='/company/:id' component={CompanyScreen} />
           <Route path='/compare' component={CompareScreen} />
+
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route path='/admin/companylist' component={CompanyListScreen} />
           <Route path='/admin/company/:id/edit' component={CompanyEditScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
+
           <Route path='/search/:keyword' component={HomeScreen} exact />
+          <Route path='/page/:pageNumber' component={HomeScreen} exact />
+          <Route
+            path='/search/:keyword/page/:pageNumber'
+            component={HomeScreen}
+            exact
+          />
           <Route path='/' component={HomeScreen} exact />
         </Container>
       </main>

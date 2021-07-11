@@ -6,6 +6,8 @@ import Company from '../models/companyModel.js';
 // @route GET /api/companies
 // @access Public
 const getCompanies = asyncHandler(async (req, res) => {
+  const pageSize = 3;
+  const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
         name: {
@@ -15,9 +17,15 @@ const getCompanies = asyncHandler(async (req, res) => {
       }
     : {};
 
-  const companies = await Company.find({ ...keyword });
+  console.log(page, keyword);
 
-  res.json(companies);
+  const count = await Company.countDocuments({ ...keyword });
+  const companies = await Company.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  console.log(companies);
+  res.json({ companies, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @description Fetch a single company

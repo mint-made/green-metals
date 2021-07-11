@@ -8,14 +8,15 @@ import Loader from '../components/Loader';
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
   const dispatch = useDispatch();
 
   const companyList = useSelector((state) => state.companyList);
   const { loading, error, companies } = companyList;
 
   useEffect(() => {
-    dispatch(listCompanies(keyword));
-  }, [dispatch, keyword]);
+    dispatch(listCompanies(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   return (
     <>
