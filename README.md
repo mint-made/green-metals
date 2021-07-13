@@ -1,4 +1,4 @@
-# resourcesinvesting
+# Resources Investing
 Company/asset information about different natural resource companies
 
 ## Resource Investing - An app to analyse and compare different public companies involved in natural resources (2019)
