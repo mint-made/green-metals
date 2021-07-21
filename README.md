@@ -9,7 +9,7 @@ This app enables users to quickly find companies involved in specific commoditie
 
 ### Technologies Utilized
 
--  React
+- React
 - Redux
 - Node
 - Express
@@ -19,3 +19,6 @@ This app enables users to quickly find companies involved in specific commoditie
 
 ### App features
 
+- Find and compare companies in specific sectors
+- Compare key statistics about companies such as market capitalization
+- Build your own compare list with the companies you are interested in.
