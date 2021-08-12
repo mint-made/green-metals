@@ -12,7 +12,7 @@ const Meta = ({ title, description, keywords }) => {
 };
 
 Meta.defaultProps = {
-  title: 'Resource Investing',
+  title: 'Green Future Investing',
   description:
     'Consolidated data on natural resource companies, to help individuals invest smarter.',
   keywords:

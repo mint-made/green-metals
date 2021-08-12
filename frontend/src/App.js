@@ -14,6 +14,7 @@ import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import CompanyListScreen from './screens/CompanyListScreen';
 import CompanyEditScreen from './screens/CompanyEditScreen';
+import ExploreScreen from './screens/ExploreScreen';
 
 const App = () => {
   return (
@@ -41,6 +42,8 @@ const App = () => {
 
           <Route path='/admin/company/:id/edit' component={CompanyEditScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
+
+          <Route path='/explore' component={ExploreScreen} exact />
 
           <Route path='/search/:keyword' component={HomeScreen} exact />
           <Route path='/page/:pageNumber' component={HomeScreen} exact />
