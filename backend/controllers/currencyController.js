@@ -7,7 +7,7 @@ import Currency from '../models/currencyModel.js';
 // @route GET /api/currency
 // @access Public
 const getCurrency = asyncHandler(async (req, res) => {
-  const currency = await Currency.find({});
+  const currency = await Currency.findById('6116c5d44f24fa3d3e18f886');
 
   res.json(currency);
 });

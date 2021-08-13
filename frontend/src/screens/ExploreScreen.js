@@ -40,7 +40,7 @@ const HomeScreen = ({ match, history }) => {
     return () => {
       clearTimeout(timerId);
     };
-  }, [term, history, location]);
+  }, [term, history, location, keyword]);
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);

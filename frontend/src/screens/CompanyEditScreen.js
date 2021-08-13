@@ -8,10 +8,12 @@ import Loader from '../components/Loader';
 import { listCompanyDetails, updateCompany } from '../actions/companyActions';
 import { COMPANY_UPDATE_RESET } from '../constants/companyConstants';
 import NumFormat from '../components/NumFormat';
+import { getCurrency } from '../actions/currencyActions';
 
 const ProductEditScreen = ({ match, history }) => {
-  const companyId = match.params.id;
+  const dispatch = useDispatch();
 
+  const companyId = match.params.id;
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
@@ -24,16 +26,6 @@ const ProductEditScreen = ({ match, history }) => {
   const [price, setPrice] = useState('');
   const [uploading, setUploading] = useState(false);
 
-  const conv = {
-    usd: {
-      cad: 1.25,
-      aud: 1.36,
-      gbp: 0.72,
-    },
-  };
-
-  const dispatch = useDispatch();
-
   const companyDetails = useSelector((state) => state.companyDetails);
   const { loading, error, company } = companyDetails;
 
@@ -44,6 +36,13 @@ const ProductEditScreen = ({ match, history }) => {
     success: successUpdate,
   } = companyUpdate;
 
+  const currencyList = useSelector((state) => state.currencyList);
+  const {
+    loading: loadingCurrency,
+    error: errorCurrency,
+    currency: currencyConv,
+  } = currencyList;
+
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: COMPANY_UPDATE_RESET });
@@ -52,6 +51,9 @@ const ProductEditScreen = ({ match, history }) => {
 
     if (!company.name || company._id !== companyId) {
       dispatch(listCompanyDetails(companyId));
+      if (!currencyConv.usd) {
+        dispatch(getCurrency());
+      }
     } else {
       setName(company.name);
       setIssuedShares(company.issuedShares);
@@ -63,7 +65,7 @@ const ProductEditScreen = ({ match, history }) => {
       setPrice(company.trading.price);
       setLogo(company.logo);
     }
-  }, [dispatch, history, companyId, company, successUpdate]);
+  }, [dispatch, history, companyId, company, successUpdate, currencyConv.usd]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -129,11 +131,11 @@ const ProductEditScreen = ({ match, history }) => {
   const toUSD = (value, currency) => {
     switch (currency) {
       case 'C$':
-        return value / conv.usd.cad;
+        return value / currencyConv.usd.cad;
       case 'A$':
-        return value / conv.usd.aud;
+        return value / currencyConv.usd.aud;
       case '£':
-        return value / conv.usd.gbp;
+        return value / currencyConv.usd.gbp;
       default:
         return value;
     }
@@ -147,10 +149,10 @@ const ProductEditScreen = ({ match, history }) => {
 
       {loadingUpdate && <Loader />}
       {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-      {loading ? (
+      {loading || loadingCurrency ? (
         <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
+      ) : error || errorCurrency ? (
+        <Message variant='danger'>{error || errorCurrency}</Message>
       ) : (
         <Row>
           <Col sm={3} md={4}>
