@@ -24,6 +24,14 @@ const ProductEditScreen = ({ match, history }) => {
   const [price, setPrice] = useState('');
   const [uploading, setUploading] = useState(false);
 
+  const conv = {
+    usd: {
+      cad: 1.25,
+      aud: 1.36,
+      gbp: 0.72,
+    },
+  };
+
   const dispatch = useDispatch();
 
   const companyDetails = useSelector((state) => state.companyDetails);
@@ -89,6 +97,7 @@ const ProductEditScreen = ({ match, history }) => {
         primaryCommodity,
         website,
         logo,
+        mcap: toUSD(mcap(), currency),
         trading: {
           exchange,
           ticker,
@@ -115,8 +124,24 @@ const ProductEditScreen = ({ match, history }) => {
         return '$';
     }
   };
-
+  console.log({
+    $: 1.2,
+    C$: 1.5,
+  });
   const mcap = () => issuedShares * Number(price);
+
+  const toUSD = (value, currency) => {
+    switch (currency) {
+      case 'C$':
+        return value * conv.usd.cad;
+      case 'A$':
+        return value * conv.usd.aud;
+      case '£':
+        return value * conv.usd.gbp;
+      default:
+        return value;
+    }
+  };
 
   return (
     <>
@@ -251,7 +276,7 @@ const ProductEditScreen = ({ match, history }) => {
                   <h3 className='mt-0 p-0'>
                     <Badge variant='primary'>
                       $
-                      <NumFormat number={mcap()} dp='0' />
+                      <NumFormat number={toUSD(mcap(), currency)} dp='2' />
                     </Badge>
                   </h3>
                 </Col>
@@ -262,7 +287,7 @@ const ProductEditScreen = ({ match, history }) => {
                       <h3 className='mt-0 p-0'>
                         <Badge variant='primary'>
                           {currency}
-                          <NumFormat number={mcap()} dp='0' />
+                          <NumFormat number={mcap()} dp='2' />
                         </Badge>
                       </h3>
                     </>
