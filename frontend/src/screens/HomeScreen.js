@@ -8,6 +8,7 @@ const HomeScreen = () => {
         <Col></Col>
         <Col></Col>
       </Row>
+      <h1>HOMEPAGE</h1>
     </div>
   );
 };

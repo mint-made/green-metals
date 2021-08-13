@@ -6,7 +6,7 @@ import Company from '../models/companyModel.js';
 // @route GET /api/companies
 // @access Public
 const getCompanies = asyncHandler(async (req, res) => {
-  const pageSize = 3;
+  const pageSize = 20;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
@@ -16,9 +16,33 @@ const getCompanies = asyncHandler(async (req, res) => {
         },
       }
     : {};
+  const primaryCommodity = req.query.metal
+    ? {
+        primaryCommodity: {
+          $regex: req.query.metal,
+          $options: 'i',
+        },
+      }
+    : {};
 
-  const count = await Company.countDocuments({ ...keyword });
-  const companies = await Company.find({ ...keyword })
+  const sort = {};
+  if (req.query.sort) {
+    const sortArr = req.query.sort.split('_');
+    const sortField = sortArr[0];
+    let sortValue;
+    if (sortArr[1] === 'asc') {
+      sortValue = 1;
+    } else if (sortArr[1] === 'desc') {
+      sortValue = -1;
+    }
+    sort[sortField] = sortValue;
+  }
+  console.log(primaryCommodity);
+  const count = await Company.countDocuments({
+    ...keyword,
+    ...primaryCommodity,
+  });
+  const companies = await Company.find({ ...keyword, ...primaryCommodity })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 

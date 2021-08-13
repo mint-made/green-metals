@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
 import { listCompanyDetails, updateCompany } from '../actions/companyActions';
 import { COMPANY_UPDATE_RESET } from '../constants/companyConstants';
 
@@ -104,121 +103,126 @@ const ProductEditScreen = ({ match, history }) => {
       <Link to='/admin/companylist' className='btn btn-light my-3'>
         Go back
       </Link>
-      <FormContainer>
-        <h1>Update Company Info</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant='danger'>{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
 
-            <Form.Group controlId='logo'>
-              <Form.Label>Logo</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter logo URL'
-                value={logo}
-                onChange={(e) => setLogo(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Loader />}
-            </Form.Group>
+      {loadingUpdate && <Loader />}
+      {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
+      ) : (
+        <Row>
+          <Col sm={3} md={4}>
+            <Image src={logo} fluid />
+          </Col>
+          <Col sm={9} md={8}>
+            <Form onSubmit={submitHandler}>
+              <Form.Group controlId='name'>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId='issuedShares'>
-              <Form.Label>Issued Shares</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter shares'
-                value={issuedShares}
-                onChange={(e) => setIssuedShares(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='logo'>
+                <Form.Label>Logo</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Enter logo URL'
+                  value={logo}
+                  onChange={(e) => setLogo(e.target.value)}
+                ></Form.Control>
+                <Form.File
+                  id='image-file'
+                  label='Choose File'
+                  custom
+                  onChange={uploadFileHandler}
+                ></Form.File>
+                {uploading && <Loader />}
+              </Form.Group>
 
-            <Form.Group controlId='primaryCommodity'>
-              <Form.Label>Primary Commodity</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Primary Commodity'
-                value={primaryCommodity}
-                onChange={(e) => setPrimaryCommodity(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='issuedShares'>
+                <Form.Label>Issued Shares</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter shares'
+                  value={issuedShares}
+                  onChange={(e) => setIssuedShares(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId='webiste'>
-              <Form.Label>Website</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Website'
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='primaryCommodity'>
+                <Form.Label>Primary Commodity</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Primary Commodity'
+                  value={primaryCommodity}
+                  onChange={(e) => setPrimaryCommodity(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <h1>Update Trading Data</h1>
+              <Form.Group controlId='webiste'>
+                <Form.Label>Website</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Website'
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId='exchange'>
-              <Form.Label>Exchange</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Exchange'
-                value={exchange}
-                onChange={(e) => setExchange(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <h1>Update Trading Data</h1>
 
-            <Form.Group controlId='ticker'>
-              <Form.Label>Ticker</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Ticker'
-                value={ticker}
-                onChange={(e) => setTicker(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='exchange'>
+                <Form.Label>Exchange</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Exchange'
+                  value={exchange}
+                  onChange={(e) => setExchange(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId='currency'>
-              <Form.Label>Currency</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Currency'
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='ticker'>
+                <Form.Label>Ticker</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Ticker'
+                  value={ticker}
+                  onChange={(e) => setTicker(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId='price'>
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter Price'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId='currency'>
+                <Form.Label>Currency</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Currency'
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Button type='submit' variant='primary'>
-              Update
-            </Button>
-          </Form>
-        )}
-      </FormContainer>
+              <Form.Group controlId='price'>
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter Price'
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Button type='submit' variant='primary'>
+                Update
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
