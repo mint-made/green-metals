@@ -19,8 +19,10 @@ import {
   userDeleteReducer,
   userUpdateReducer,
 } from './reducers/userReducers';
+import { currencyListReducer } from './reducers/currencyReducer';
 
 const reducer = combineReducers({
+  currencyList: currencyListReducer,
   companyList: companyListReducer,
   companyDetails: companyDetailsReducer,
   companyDelete: companyDeleteReducer,

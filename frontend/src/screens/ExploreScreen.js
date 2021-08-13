@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Col, Dropdown, Row, Table } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Breadcrumb, Col, Dropdown, Form, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listCompanies } from '../actions/companyActions';
@@ -16,7 +16,9 @@ const HomeScreen = ({ match, history }) => {
   const metal = match.params.metal || '';
   const keyword = useQuery().get('q') || '';
   const pageNo = useQuery().get('page') || 1;
-  const sort = useQuery().get('sort') || '';
+  const sort = useQuery().get('sort') || 'mcap_desc';
+
+  const [term, setTerm] = useState('');
 
   const companyList = useSelector((state) => state.companyList);
   const { loading, error, companies, pages, page } = companyList;
@@ -24,6 +26,21 @@ const HomeScreen = ({ match, history }) => {
   useEffect(() => {
     dispatch(listCompanies(keyword, Number(pageNo), sort, metal));
   }, [dispatch, keyword, pageNo, sort, metal]);
+
+  // Whenever the component is re-rendered and term has changed, run this function
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (term) {
+        history.push(`${location.pathname}?q=${term}`);
+      }
+      if (!term && keyword) {
+        history.push(`${location.pathname}`);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term, history, location]);
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -33,12 +50,45 @@ const HomeScreen = ({ match, history }) => {
     history.push(`${location.pathname}?sort=${value}`);
   };
 
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return '';
+    const sArr = s.split(' ').map((string) => {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    });
+    return sArr.join(' ');
+  };
+
   return (
     <>
       <Meta />
-      <h1 className='text-center'>Natural Resource Companies</h1>
-      <Row>
-        <Col xs={8}></Col>
+      <Row className='my-2'>
+        <Col xs={4}>
+          <Breadcrumb>
+            <Breadcrumb.Item href='/explore'>Companies</Breadcrumb.Item>
+            {metal && (
+              <Breadcrumb.Item href={`/explore/${metal}`}>
+                {capitalize(metal)}
+              </Breadcrumb.Item>
+            )}
+          </Breadcrumb>
+        </Col>
+        <Col xs={4}>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              history.push(`${location.pathname}?q=${term}`);
+            }}
+          >
+            <Form.Group controlId='search'>
+              <Form.Control
+                placeholder='Search'
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+
         <Col xs={4} className='d-flex justify-content-end'>
           <Dropdown>
             <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
@@ -70,7 +120,15 @@ const HomeScreen = ({ match, history }) => {
                   <h5 className='m-0 text-center'>Ticker</h5>
                 </th>
                 <th className='p-1'>
-                  <h5 className='m-0 text-center'>MCap</h5>
+                  <h5 className='m-0 text-center'>
+                    MCap{' '}
+                    {sort === 'mcap_desc' && (
+                      <i className='fas fa-sort-amount-up'></i>
+                    )}
+                    {sort === 'mcap_asc' && (
+                      <i className='fas fa-sort-amount-down-alt'></i>
+                    )}
+                  </h5>
                 </th>
                 <th className='p-1'>
                   <h5 className='m-0 text-center'>Commodity</h5>
@@ -91,7 +149,7 @@ const HomeScreen = ({ match, history }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} sort={sort} />
+          <Paginate pages={pages} page={page} sort={sort} keyword={keyword} />
         </>
       )}
     </>
