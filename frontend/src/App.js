@@ -35,7 +35,7 @@ const App = () => {
             exact
           />
           <Route
-            path='/admin/companylist/:pageNumber'
+            path='/admin/companylist/:metal'
             component={CompanyListScreen}
             exact
           />

@@ -91,7 +91,7 @@ const HomeScreen = ({ match, history }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} />
+          <Paginate pages={pages} page={page} sort={sort} />
         </>
       )}
     </>

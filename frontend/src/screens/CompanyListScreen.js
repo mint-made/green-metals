@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Row, Col } from 'react-bootstrap';
+import { Table, Button, Row, Col, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -12,14 +12,18 @@ import {
 import NumFormat from '../components/NumFormat';
 import Paginate from '../components/Paginate';
 import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
+import { useLocation } from 'react-router-dom';
 
 const ProductListScreen = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1;
+  const location = useLocation();
+  const metal = match.params.metal;
+  const pageNo = useQuery().get('page') || 1;
+  const sort = useQuery().get('sort') || '';
 
   const dispatch = useDispatch();
 
   const companyList = useSelector((state) => state.companyList);
-  const { loading, error, companies, page, pages } = companyList;
+  const { loading, error, companies, pages } = companyList;
 
   const companyDelete = useSelector((state) => state.companyDelete);
   const {
@@ -49,7 +53,7 @@ const ProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/company/${createdCompany._id}/edit`);
     } else {
-      dispatch(listCompanies('', pageNumber));
+      dispatch(listCompanies('', Number(pageNo), sort, metal));
     }
   }, [
     dispatch,
@@ -58,7 +62,9 @@ const ProductListScreen = ({ history, match }) => {
     successDelete,
     successCreate,
     createdCompany,
-    pageNumber,
+    pageNo,
+    metal,
+    sort,
   ]);
 
   const deleteHandler = (id) => {
@@ -71,14 +77,47 @@ const ProductListScreen = ({ history, match }) => {
     dispatch(createCompany());
   };
 
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  const sortSelectHandler = (value) => {
+    history.push(`${location.pathname}?sort=${value}`);
+  };
+
   return (
     <>
       <Row className='align-items-center'>
         <Col>
           <h1>Companies</h1>
         </Col>
-        <Col className='text-right'>
-          <Button className='my-3' onClick={createCompanyHandler}>
+        <Col className='text-right d-flex justify-content-around my-3'>
+          <Dropdown>
+            <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => sortSelectHandler('mcap_asc')}>
+                MCap: Low - High
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => sortSelectHandler('mcap_desc')}>
+                MCap: High - Low
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown>
+            <Dropdown.Toggle id='dropdown-basic'>Category:</Dropdown.Toggle>
+            <Dropdown.Menu>
+              {['', 'Lithium', 'REEs', 'Nickel', 'Copper'].map(
+                (metal, index) => (
+                  <Dropdown.Item
+                    key={index}
+                    onClick={() => history.push(`/admin/companylist/${metal}`)}
+                  >
+                    {metal ? metal : 'All'}
+                  </Dropdown.Item>
+                )
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
+          <Button onClick={createCompanyHandler} variant='success'>
             <i className='fas fa-plus'></i> Create Company
           </Button>
         </Col>
@@ -141,7 +180,7 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} isAdmin={true} />
+          <Paginate pages={pages} page={Number(pageNo)} sort={sort} />
         </>
       )}
     </>

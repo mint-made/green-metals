@@ -129,11 +129,11 @@ const ProductEditScreen = ({ match, history }) => {
   const toUSD = (value, currency) => {
     switch (currency) {
       case 'C$':
-        return value * conv.usd.cad;
+        return value / conv.usd.cad;
       case 'A$':
-        return value * conv.usd.aud;
+        return value / conv.usd.aud;
       case '£':
-        return value * conv.usd.gbp;
+        return value / conv.usd.gbp;
       default:
         return value;
     }
