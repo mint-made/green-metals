@@ -27,6 +27,10 @@ const companySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  mcap: {
+    type: Number,
+    required: true,
+  },
   primaryCommodity: {
     type: String,
     required: true,

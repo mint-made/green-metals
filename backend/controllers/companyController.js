@@ -92,10 +92,11 @@ const createCompany = asyncHandler(async (req, res) => {
       exchange: 'LSE',
       ticker: 'EG',
       date: '2021-05-29',
-      currency: '£',
+      currency: '$',
       price: '10',
       mcap: 10000000,
     },
+    mcap: 10000000,
     assets: [],
   });
 
@@ -110,6 +111,7 @@ const updateCompany = asyncHandler(async (req, res) => {
   const {
     name,
     issuedShares,
+    mcap,
     primaryCommodity,
     website,
     logo,
@@ -122,6 +124,7 @@ const updateCompany = asyncHandler(async (req, res) => {
   if (company) {
     company.name = name || company.name;
     company.issuedShares = issuedShares || company.issuedShares;
+    company.mcap = mcap || company.mcap;
     company.primaryCommodity = primaryCommodity || company.primaryCommodity;
     company.website = website || company.website;
     company.logo = logo || company.logo;

@@ -124,10 +124,6 @@ const ProductEditScreen = ({ match, history }) => {
         return '$';
     }
   };
-  console.log({
-    $: 1.2,
-    C$: 1.5,
-  });
   const mcap = () => issuedShares * Number(price);
 
   const toUSD = (value, currency) => {
@@ -272,26 +268,26 @@ const ProductEditScreen = ({ match, history }) => {
               </Row>
               <Row className='mb-3'>
                 <Col className='text-center'>
-                  <div>Mcap (USD$)</div>
-                  <h3 className='mt-0 p-0'>
-                    <Badge variant='primary'>
-                      $
-                      <NumFormat number={toUSD(mcap(), currency)} dp='2' />
-                    </Badge>
-                  </h3>
-                </Col>
-                <Col className='text-center'>
                   {currency !== '$' && (
                     <>
-                      <div>Mcap ({currency})</div>
+                      <div>Mcap (USD$)</div>
                       <h3 className='mt-0 p-0'>
                         <Badge variant='primary'>
-                          {currency}
-                          <NumFormat number={mcap()} dp='2' />
+                          $
+                          <NumFormat number={toUSD(mcap(), currency)} dp='2' />
                         </Badge>
                       </h3>
                     </>
                   )}
+                </Col>
+                <Col className='text-center'>
+                  <div>Mcap ({currency})</div>
+                  <h3 className='mt-0 p-0'>
+                    <Badge variant='primary'>
+                      {currency}
+                      <NumFormat number={mcap()} dp='2' />
+                    </Badge>
+                  </h3>
                 </Col>
               </Row>
               <Button type='submit' variant='success'>
