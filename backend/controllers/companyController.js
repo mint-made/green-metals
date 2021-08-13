@@ -37,15 +37,14 @@ const getCompanies = asyncHandler(async (req, res) => {
     }
     sort[sortField] = sortValue;
   }
-  console.log(primaryCommodity);
   const count = await Company.countDocuments({
     ...keyword,
     ...primaryCommodity,
   });
   const companies = await Company.find({ ...keyword, ...primaryCommodity })
+    .sort(sort)
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
   res.json({ companies, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -95,12 +94,10 @@ const createCompany = asyncHandler(async (req, res) => {
       date: '2021-05-29',
       currency: '£',
       price: '10',
-      mcap: 0,
+      mcap: 10000000,
     },
     assets: [],
   });
-
-  company.trading.mcap = company.trading.price * company.issuedShares;
 
   const createdCompany = await company.save();
   res.json(createdCompany);

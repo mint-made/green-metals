@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Col, Dropdown, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listCompanies } from '../actions/companyActions';
@@ -9,7 +9,8 @@ import Paginate from '../components/Paginate';
 import Meta from '../components/Meta';
 import { useLocation } from 'react-router-dom';
 
-const HomeScreen = ({ match }) => {
+const HomeScreen = ({ match, history }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const metal = match.params.metal || '';
@@ -28,11 +29,31 @@ const HomeScreen = ({ match }) => {
     return new URLSearchParams(useLocation().search);
   }
 
+  const sortSelectHandler = (value) => {
+    history.push(`${location.pathname}?sort=${value}`);
+  };
+
   return (
     <>
       <Meta />
       <h1 className='text-center'>Natural Resource Companies</h1>
-      <h2>{metal}</h2>
+      <Row>
+        <Col xs={8}></Col>
+        <Col xs={4} className='d-flex justify-content-end'>
+          <Dropdown>
+            <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => sortSelectHandler('mcap_asc')}>
+                MCap: Low - High
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => sortSelectHandler('mcap_desc')}>
+                MCap: High - Low
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
+      </Row>
       {loading ? (
         <Loader />
       ) : error ? (
