@@ -12,7 +12,7 @@ import {
 import NumFormat from '../components/NumFormat';
 import Paginate from '../components/Paginate';
 import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const ProductListScreen = ({ history, match }) => {
   const location = useLocation();
@@ -153,7 +153,9 @@ const ProductListScreen = ({ history, match }) => {
             <tbody>
               {companies.map((company) => (
                 <tr key={company._id}>
-                  <td className='p-2'>{company.name}</td>
+                  <td className='p-2'>
+                    <Link to={`/company/${company._id}`}>{company.name}</Link>
+                  </td>
                   <td className='p-2'>
                     {company.trading.exchange}:{company.trading.ticker}
                   </td>

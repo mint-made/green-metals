@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Image,
-  Jumbotron,
-  Row,
-} from 'react-bootstrap';
+import { Button, Card, Col, Container, Jumbotron, Row } from 'react-bootstrap';
 
 const HomeScreen = () => {
   return (
@@ -35,6 +27,11 @@ const HomeScreen = () => {
                     infrastructure is needed, requiring vast quantities of
                     critical metals, such as Lithium, Copper, Nickel and REEs.
                   </p>
+                  <div className='d-flex justify-content-center'>
+                    <Button variant='primary' href='/explore/'>
+                      Explore Companies
+                    </Button>
+                  </div>
                 </Col>
               </Container>
             </Row>

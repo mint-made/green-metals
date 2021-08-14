@@ -24,7 +24,9 @@ const CompanyTableRow = ({ company }) => {
 
   return (
     <tr key={company._id}>
-      <td className='p-2'>{company.name}</td>
+      <td className='p-2'>
+        <Link to={`/company/${company._id}`}>{company.name}</Link>
+      </td>
       <td className='p-2'>
         {company.trading.exchange}:{company.trading.ticker}
       </td>
