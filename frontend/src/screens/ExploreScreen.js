@@ -64,9 +64,7 @@ const HomeScreen = ({ match, history }) => {
       <Row className='my-2'>
         <Col xs={4}>
           <Breadcrumb>
-            <Breadcrumb.Item href='/explore' className='text-dark'>
-              Companies
-            </Breadcrumb.Item>
+            <Breadcrumb.Item href='/explore'>Companies</Breadcrumb.Item>
             {metal && (
               <Breadcrumb.Item href={`/explore/${metal}`}>
                 {capitalize(metal)}

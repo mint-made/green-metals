@@ -49,6 +49,7 @@ const Header = () => {
         expand='md'
         collapseOnSelect
         sticky='top'
+        className='py-3'
       >
         <Container>
           <LinkContainer to='/explore'>

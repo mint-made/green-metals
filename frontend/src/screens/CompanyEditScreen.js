@@ -43,7 +43,14 @@ const ProductEditScreen = ({ match, history }) => {
     currency: currencyConv,
   } = currencyList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
+    if (!userInfo || !userInfo.isAdmin) {
+      history.push('/login');
+    }
+
     if (successUpdate) {
       dispatch({ type: COMPANY_UPDATE_RESET });
       history.push('/admin/companylist');
@@ -66,7 +73,15 @@ const ProductEditScreen = ({ match, history }) => {
       setPrice(company.trading.price);
       setLogo(company.logo);
     }
-  }, [dispatch, history, companyId, company, successUpdate, currencyConv]);
+  }, [
+    dispatch,
+    history,
+    companyId,
+    company,
+    successUpdate,
+    currencyConv,
+    userInfo,
+  ]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -78,6 +93,7 @@ const ProductEditScreen = ({ match, history }) => {
       const config = {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.post('/api/upload', formData, config);

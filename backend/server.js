@@ -9,6 +9,7 @@ import companyRoutes from './routes/companyRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import currencyRoutes from './routes/currencyRoutes.js';
+import s3UploadRoutes from './routes/s3UploadRoutes.js';
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ app.use(express.json());
 
 app.use('/api/companies', companyRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/upload', uploadRoutes);
+app.use('/api/upload', s3UploadRoutes);
 app.use('/api/currency', currencyRoutes);
 
 const __dirname = path.resolve();
