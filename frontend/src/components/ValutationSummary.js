@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Table } from 'react-bootstrap';
 
 import NumFormat from './NumFormat';
+import ConvMcap from './ConvMcap';
 
 const ValutationSummary = ({ company }) => {
   return (
@@ -24,8 +25,7 @@ const ValutationSummary = ({ company }) => {
           <tr>
             <td>Market Cap</td>
             <td>
-              {company.trading.currency}
-              <NumFormat number={company.trading.mcap} dp='2' />
+              <ConvMcap company={company} />
             </td>
           </tr>
           <tr>
