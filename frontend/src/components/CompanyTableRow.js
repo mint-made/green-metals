@@ -33,6 +33,7 @@ const CompanyTableRow = ({ company }) => {
   };
 
   const convertedMcap = (mcap) => {
+    console.log(company);
     console.log(currency.selected);
     if (currency.selected === 'local') {
       return (

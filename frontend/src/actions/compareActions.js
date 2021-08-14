@@ -19,6 +19,7 @@ export const addToCompareList = (id) => async (dispatch, getState) => {
       logo: data.logo,
       assets: data.assets,
       trading: data.trading,
+      mcap: data.mcap,
     },
   });
 
