@@ -6,7 +6,8 @@ import ConvMcap from './ConvMcap';
 
 const ValutationSummary = ({ company }) => {
   return (
-    <Card>
+    <Card className='rounded'>
+      <h3 className='text-center p-3'>{company.name}</h3>
       <Table className='mb-0' size='sm'>
         <tbody>
           <tr>

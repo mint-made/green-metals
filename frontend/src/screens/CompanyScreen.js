@@ -28,9 +28,8 @@ const CompanyScreen = ({ match }) => {
       ) : (
         <>
           <Meta title={company.name} />
-          <h2 className='text-center'>{company.name}</h2>
           <Row className='mb-3'>
-            <Col md={6}>
+            <Col md={5}>
               <ListGroup variant='flush'>
                 <Image
                   src={company.logo}
@@ -47,12 +46,12 @@ const CompanyScreen = ({ match }) => {
                 </Button>
               </ListGroup>
             </Col>
-            <Col md={6}>
+            <Col md={7}>
               <ValutationSummary company={company} />
             </Col>
           </Row>
+          <h2 className='text-center'>Assets</h2>
           <Row>
-            <h2 className='text-center'>Assets</h2>
             {company.assets.map((asset) => (
               <Col key={asset._id} md={4}>
                 <AssetSummary asset={asset} />

@@ -52,7 +52,7 @@ const Header = () => {
         className='py-3'
       >
         <Container>
-          <LinkContainer to='/explore'>
+          <LinkContainer to='/'>
             <Navbar.Brand>Green Metals</Navbar.Brand>
           </LinkContainer>
 
