@@ -1,7 +1,8 @@
-import { Table } from 'react-bootstrap';
+import { Col, Row, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import CompanyTableRow from '../components/CompanyTableRow';
+import Message from '../components/Message';
 import Meta from '../components/Meta';
 
 const CompareScreen = () => {
@@ -42,6 +43,15 @@ const CompareScreen = () => {
           ))}
         </tbody>
       </Table>
+      <Row className='d-flex justify-content-center'>
+        <Col md={8} lg={6}>
+          {compareList.length === 0 && (
+            <Message variant='danger'>
+              Add Companies to your Compare List
+            </Message>
+          )}
+        </Col>
+      </Row>
     </>
   );
 };

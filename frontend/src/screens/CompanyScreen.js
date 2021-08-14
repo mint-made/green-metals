@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import AssetSummary from '../components/AssetSummary';
 import ValutationSummary from '../components/ValutationSummary';
 import Meta from '../components/Meta';
+import ConvMcap from '../components/ConvMcap';
 
 const CompanyScreen = ({ match }) => {
   const dispatch = useDispatch();
