@@ -52,6 +52,7 @@ const ProductEditScreen = ({ match, history }) => {
     if (!company.name || company._id !== companyId) {
       dispatch(listCompanyDetails(companyId));
       if (!currencyConv.usd) {
+        console.log(currencyConv);
         dispatch(getCurrency());
       }
     } else {

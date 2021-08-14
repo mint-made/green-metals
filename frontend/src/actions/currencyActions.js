@@ -1,11 +1,12 @@
 import axios from 'axios';
 import {
+  CURRENCY_CHANGE,
   CURRENCY_LIST_FAIL,
   CURRENCY_LIST_REQUEST,
   CURRENCY_LIST_SUCCESS,
 } from '../constants/currencyConstants';
 
-export const getCurrency = () => async (dispatch) => {
+export const getCurrency = () => async (dispatch, getState) => {
   try {
     dispatch({ type: CURRENCY_LIST_REQUEST });
 
@@ -13,8 +14,12 @@ export const getCurrency = () => async (dispatch) => {
 
     dispatch({
       type: CURRENCY_LIST_SUCCESS,
-      payload: data,
+      payload: data.usd,
     });
+    localStorage.setItem(
+      'currencyList',
+      JSON.stringify(getState().currencyList.currency)
+    );
   } catch (error) {
     dispatch({
       type: CURRENCY_LIST_FAIL,
@@ -24,4 +29,13 @@ export const getCurrency = () => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+export const changeCurrency = (currency) => async (dispatch, getState) => {
+  dispatch({ type: CURRENCY_CHANGE, payload: currency });
+
+  localStorage.setItem(
+    'currencyList',
+    JSON.stringify(getState().currencyList.currency)
+  );
 };

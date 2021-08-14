@@ -42,6 +42,10 @@ const compareListFromStorage = localStorage.getItem('compareList')
   ? JSON.parse(localStorage.getItem('compareList'))
   : [];
 
+const currencyListFromStorage = localStorage.getItem('currencyList')
+  ? JSON.parse(localStorage.getItem('currencyList'))
+  : {};
+
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
@@ -52,6 +56,9 @@ const initialState = {
   },
   userLogin: {
     userInfo: userInfoFromStorage,
+  },
+  currencyList: {
+    currency: currencyListFromStorage,
   },
 };
 

@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { logout } from '../actions/userActions';
+import { changeCurrency, getCurrency } from '../actions/currencyActions';
 
 const Header = () => {
+  const [currencyIcon, setCurrencyIcon] = useState('Local$');
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const currencyList = useSelector((state) => state.currencyList);
+  const { currency } = currencyList;
+
+  useEffect(() => {
+    // if (!currency.usd) {
+    //   dispatch(getCurrency());
+    // } else {
+    //   console.log('currency present');
+    // }
+  }, [dispatch, currency]);
+
   const logoutHandler = () => {
     dispatch(logout());
+  };
+
+  const curencyHandler = (value) => {
+    const currency = value.substring(1);
+    dispatch(changeCurrency(currency));
   };
 
   return (
@@ -45,6 +63,20 @@ const Header = () => {
                   <i className='fas fa-chart-pie'></i> Compare
                 </Nav.Link>
               </LinkContainer>
+
+              <NavDropdown className='mr-0' title={currencyIcon} id='username'>
+                {['$Local', '$AUD', '$CAD', '£GBP', '$USD'].map(
+                  (item, index) => (
+                    <NavDropdown.Item
+                      key={index}
+                      onClick={(e) => curencyHandler(item)}
+                    >
+                      {item}
+                    </NavDropdown.Item>
+                  )
+                )}
+              </NavDropdown>
+
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
