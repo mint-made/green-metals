@@ -13,7 +13,6 @@ export const currencyListReducer = (
     case CURRENCY_LIST_REQUEST:
       return { loading: true, ...state };
     case CURRENCY_LIST_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         loading: false,
@@ -22,7 +21,6 @@ export const currencyListReducer = (
     case CURRENCY_LIST_FAIL:
       return { loading: false, error: action.payload };
     case CURRENCY_CHANGE:
-      console.log(state);
       return {
         loading: false,
         currency: { ...state.currency, selected: action.payload },

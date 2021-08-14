@@ -66,7 +66,7 @@ const ProductEditScreen = ({ match, history }) => {
       setPrice(company.trading.price);
       setLogo(company.logo);
     }
-  }, [dispatch, history, companyId, company, successUpdate, currencyConv.usd]);
+  }, [dispatch, history, companyId, company, successUpdate, currencyConv]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];

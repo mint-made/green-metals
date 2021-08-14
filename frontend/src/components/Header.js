@@ -4,7 +4,7 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { logout } from '../actions/userActions';
-import { changeCurrency, getCurrency } from '../actions/currencyActions';
+import { changeCurrency } from '../actions/currencyActions';
 
 const Header = () => {
   const [currencyIcon, setCurrencyIcon] = useState('Local$');
@@ -17,11 +17,11 @@ const Header = () => {
   const { currency } = currencyList;
 
   useEffect(() => {
-    // if (!currency.usd) {
-    //   dispatch(getCurrency());
-    // } else {
-    //   console.log('currency present');
-    // }
+    if (!currency.selected) {
+      dispatch(changeCurrency('local'));
+    } else {
+      setCurrencyIcon(genCurrencyIcon(currency.selected));
+    }
   }, [dispatch, currency]);
 
   const logoutHandler = () => {
@@ -33,9 +33,17 @@ const Header = () => {
     dispatch(changeCurrency(currency));
   };
 
+  const genCurrencyIcon = (currencyText) => {
+    if (currencyText === 'gbp') {
+      return `£${currencyText}`;
+    } else {
+      return `$${currencyText}`;
+    }
+  };
+
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar bg='dark' variant='dark' expand='md' collapseOnSelect>
         <Container>
           <LinkContainer to='/explore'>
             <Navbar.Brand>Green Metals</Navbar.Brand>
@@ -44,7 +52,11 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              <NavDropdown title='Explore Companies' id='username'>
+              <NavDropdown
+                title='Explore Companies'
+                id='username'
+                className='mr-2'
+              >
                 <LinkContainer to='/explore/lithium'>
                   <NavDropdown.Item>Lithium</NavDropdown.Item>
                 </LinkContainer>
@@ -58,13 +70,13 @@ const Header = () => {
                   <NavDropdown.Item>Copper</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              <LinkContainer to='/compare'>
-                <Nav.Link>
-                  <i className='fas fa-chart-pie'></i> Compare
-                </Nav.Link>
-              </LinkContainer>
 
-              <NavDropdown className='mr-0' title={currencyIcon} id='username'>
+              <NavDropdown
+                className='mr-0 text-right'
+                title={currencyIcon}
+                id='username'
+                style={{ minWidth: '77px' }}
+              >
                 {['$Local', '$AUD', '$CAD', '£GBP', '$USD'].map(
                   (item, index) => (
                     <NavDropdown.Item
@@ -76,7 +88,11 @@ const Header = () => {
                   )
                 )}
               </NavDropdown>
-
+              <LinkContainer to='/compare'>
+                <Nav.Link>
+                  <i className='fas fa-chart-pie'></i> Compare
+                </Nav.Link>
+              </LinkContainer>
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
