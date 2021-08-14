@@ -240,6 +240,23 @@ const ProductEditScreen = ({ match, history }) => {
                       onChange={(e) => setPrimaryCommodity(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
+
+                  <Form.Group controlId='ontrolSelect1'>
+                    <Form.Label>Primary Commodity</Form.Label>
+                    <Form.Control
+                      as='select'
+                      value={primaryCommodity}
+                      onChange={(e) => {
+                        setPrimaryCommodity(e.target.value);
+                      }}
+                    >
+                      <option value='Lithium'>Lithium</option>
+                      <option value='REEs'>REEs</option>
+                      <option value='Nickel'>Nickel</option>
+                      <option value='Copper'>Copper</option>
+                      <option value='Platinum'>Platinum</option>
+                    </Form.Control>
+                  </Form.Group>
                 </Col>
               </Row>
               <Row>

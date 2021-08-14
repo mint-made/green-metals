@@ -51,7 +51,7 @@ const CompanyScreen = ({ match }) => {
             </Col>
           </Row>
           <h2 className='text-center'>Assets</h2>
-          <Row>
+          <Row className='d-flex justify-content-center'>
             {company.assets.map((asset) => (
               <Col key={asset._id} md={4}>
                 <AssetSummary asset={asset} />

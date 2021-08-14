@@ -6,7 +6,7 @@ import Company from '../models/companyModel.js';
 // @route GET /api/companies
 // @access Public
 const getCompanies = asyncHandler(async (req, res) => {
-  const pageSize = 6;
+  const pageSize = 20;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
