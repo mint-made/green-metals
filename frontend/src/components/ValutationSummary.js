@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Table } from 'react-bootstrap';
+import { Badge, Card, Table } from 'react-bootstrap';
 
 import NumFormat from './NumFormat';
 import ConvMcap from './ConvMcap';
@@ -26,7 +26,9 @@ const ValutationSummary = ({ company }) => {
           <tr>
             <td>Market Cap</td>
             <td>
-              <ConvMcap company={company} />
+              <Badge variant='primary'>
+                <ConvMcap company={company} />
+              </Badge>
             </td>
           </tr>
           <tr>

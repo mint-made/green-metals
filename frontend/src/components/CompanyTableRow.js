@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -31,7 +31,9 @@ const CompanyTableRow = ({ company }) => {
         {company.trading.exchange}:{company.trading.ticker}
       </td>
       <td className='p-2'>
-        <ConvMcap company={company} />
+        <Badge variant='primary'>
+          <ConvMcap company={company} />
+        </Badge>
       </td>
       <td className='p-2'>{company.primaryCommodity}</td>
       <td className='p-1 text-center'>
