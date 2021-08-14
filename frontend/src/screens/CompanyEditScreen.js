@@ -82,7 +82,7 @@ const ProductEditScreen = ({ match, history }) => {
     currencyConv,
     userInfo,
   ]);
-
+  console.log(primaryCommodity);
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -231,16 +231,6 @@ const ProductEditScreen = ({ match, history }) => {
                   </Form.Group>
                 </Col>
                 <Col>
-                  <Form.Group controlId='primaryCommodity'>
-                    <Form.Label>Primary Commodity</Form.Label>
-                    <Form.Control
-                      type='name'
-                      placeholder='Enter Primary Commodity'
-                      value={primaryCommodity}
-                      onChange={(e) => setPrimaryCommodity(e.target.value)}
-                    ></Form.Control>
-                  </Form.Group>
-
                   <Form.Group controlId='ontrolSelect1'>
                     <Form.Label>Primary Commodity</Form.Label>
                     <Form.Control
@@ -250,6 +240,7 @@ const ProductEditScreen = ({ match, history }) => {
                         setPrimaryCommodity(e.target.value);
                       }}
                     >
+                      <option value='-'>-</option>
                       <option value='Lithium'>Lithium</option>
                       <option value='REEs'>REEs</option>
                       <option value='Nickel'>Nickel</option>

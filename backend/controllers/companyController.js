@@ -83,20 +83,20 @@ const deleteCompany = asyncHandler(async (req, res) => {
 const createCompany = asyncHandler(async (req, res) => {
   const company = new Company({
     user: req.user._id,
-    name: 'example corp',
-    issuedShares: 1000000,
-    primaryCommodity: 'copper',
-    website: 'example.com',
+    name: '-',
+    issuedShares: 1,
+    primaryCommodity: '-',
+    website: '-',
     logo: '/images/sample.jpeg',
     trading: {
       exchange: 'LSE',
-      ticker: 'EG',
+      ticker: '-',
       date: '2021-05-29',
       currency: '$',
-      price: '10',
-      mcap: 10000000,
+      price: '1',
+      mcap: 1,
     },
-    mcap: 10000000,
+    mcap: 1,
     assets: [],
   });
 
