@@ -43,7 +43,13 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='md' collapseOnSelect>
+      <Navbar
+        bg='secondary'
+        variant='dark'
+        expand='md'
+        collapseOnSelect
+        sticky='top'
+      >
         <Container>
           <LinkContainer to='/explore'>
             <Navbar.Brand>Green Metals</Navbar.Brand>

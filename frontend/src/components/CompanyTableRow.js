@@ -48,7 +48,7 @@ const CompanyTableRow = ({ company }) => {
           </Button>
         ) : (
           <Button
-            className='btn btn-danger p-1 mx-1'
+            className='btn btn-warning p-1 mx-1'
             type='button'
             onClick={() => addToCompareListHandler(company._id)}
           >
