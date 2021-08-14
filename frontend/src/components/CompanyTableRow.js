@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,13 +7,22 @@ import {
   addToCompareList,
   removeFromCompareList,
 } from '../actions/compareActions';
+import { getCurrency } from '../actions/currencyActions';
 import NumFormat from './NumFormat';
 
 const CompanyTableRow = ({ company }) => {
+  const dispatch = useDispatch();
   const compare = useSelector((state) => state.compare);
   const { compareList } = compare;
 
-  const dispatch = useDispatch();
+  const currencyList = useSelector((state) => state.currencyList);
+  const { currency, loading, error } = currencyList;
+
+  useEffect(() => {
+    if (!currency.usd) {
+      dispatch(getCurrency());
+    }
+  }, [currency, dispatch]);
 
   const addToCompareListHandler = (id) => {
     dispatch(addToCompareList(id));
@@ -23,6 +32,41 @@ const CompanyTableRow = ({ company }) => {
     dispatch(removeFromCompareList(id));
   };
 
+  const convertedMcap = (mcap) => {
+    console.log(currency.selected);
+    if (currency.selected === 'local') {
+      return (
+        <>
+          {company.trading.currency}
+          <NumFormat number={company.trading.mcap} dp='2' />
+        </>
+      );
+    } else {
+      const currencySymbol =
+        currency.selected === 'gbp'
+          ? '£'
+          : currency.selected === 'aud'
+          ? 'A$'
+          : currency.selected === 'usd'
+          ? '$'
+          : currency.selected === 'cad'
+          ? 'C$'
+          : '';
+
+      const convMcap = mcap * currency.usd[currency.selected];
+
+      return (
+        <>
+          {currencySymbol}
+          <NumFormat number={convMcap} dp='2' />
+        </>
+      );
+    }
+
+    // {company.trading.currency}
+    // <NumFormat number={company.trading.mcap} dp='2' />
+  };
+
   return (
     <tr key={company._id}>
       <td className='p-2'>{company.name}</td>
@@ -30,8 +74,7 @@ const CompanyTableRow = ({ company }) => {
         {company.trading.exchange}:{company.trading.ticker}
       </td>
       <td className='p-2'>
-        {company.trading.currency}
-        <NumFormat number={company.trading.mcap} dp='2' />
+        {loading ? '-' : error ? 'errror' : <>{convertedMcap(company.mcap)}</>}
       </td>
       <td className='p-2'>{company.primaryCommodity}</td>
       <td className='p-1 text-center'>

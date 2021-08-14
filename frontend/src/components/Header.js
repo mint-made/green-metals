@@ -77,13 +77,13 @@ const Header = () => {
                 id='username'
                 style={{ minWidth: '77px' }}
               >
-                {['$Local', '$AUD', '$CAD', '£GBP', '$USD'].map(
+                {['$local', '$usd', '£gbp', '$aud', '$cad'].map(
                   (item, index) => (
                     <NavDropdown.Item
                       key={index}
                       onClick={(e) => curencyHandler(item)}
                     >
-                      {item}
+                      {item.toUpperCase()}
                     </NavDropdown.Item>
                   )
                 )}
