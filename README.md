@@ -3,7 +3,7 @@ An app providing Information/Analysis of companies involved in producing critica
 
 ### Project Overview
 
-This app enables users to quickly find companies involved in specific commodities and analyse/compare key company criteria such as market capitalization, resources and stage of project development. This can help individual investors make better decisions when choosing which companies to invest in within the natural resource sector. **[Project Website](greenmetals.herokuapp.com/ "Green Metals")**
+This app enables users to quickly find companies involved in specific commodities and analyse/compare key company criteria such as market capitalization, resources and stage of project development. This can help individual investors make better decisions when choosing which companies to invest in within the natural resource sector. **[Project Website](https://greenmetals.herokuapp.com)**
 
 ### Technologies Utilized
 
