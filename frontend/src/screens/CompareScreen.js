@@ -1,18 +1,46 @@
-import { Col, Row, Table } from 'react-bootstrap';
+import { Col, Dropdown, Row, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import CompanyTableRow from '../components/CompanyTableRow';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 
-const CompareScreen = () => {
+const CompareScreen = ({ history }) => {
+  const location = useLocation();
+  const sort = useQuery().get('sort') || '';
   const compare = useSelector((state) => state.compare);
   const { compareList } = compare;
+
+  const sortSelectHandler = (value) => {
+    history.push(`${location.pathname}?sort=${value}`);
+  };
+
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 
   return (
     <>
       <Meta title='Compare Companies' />
-      <h1 className='text-center'>Compare List</h1>
+      <Row className='mb-2'>
+        <Col>
+          <h1 className='text-center'>Compare List</h1>
+        </Col>
+        <Col className='d-flex justify-content-end'>
+          <Dropdown>
+            <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => sortSelectHandler('mcap_asc')}>
+                MCap: Low - High
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => sortSelectHandler('mcap_desc')}>
+                MCap: High - Low
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
+      </Row>
 
       <Table size='sm' striped bordered hover responsive>
         <thead>
