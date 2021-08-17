@@ -24,8 +24,16 @@ const CompanyTableRow = ({ company }) => {
 
   return (
     <tr key={company._id}>
-      <td className='p-2'>
-        <Link to={`/company/${company._id}`}>{company.name}</Link>
+      <td className='p-0'>
+        <Link to={`/company/${company._id}`}>
+          <div className='d-flex justify-content-between p-2 '>
+            <p className='mb-0 text-dark'>{company.name}</p>
+
+            <span>
+              <i className='fas fa-info-circle text-info'></i>
+            </span>
+          </div>{' '}
+        </Link>
       </td>
       <td className='p-2'>
         {company.trading.exchange}:{company.trading.ticker}
@@ -37,11 +45,6 @@ const CompanyTableRow = ({ company }) => {
       </td>
       <td className='p-2'>{company.primaryCommodity}</td>
       <td className='p-1 text-center'>
-        <Link className='btn btn-dark p-1' to={`/company/${company._id}`}>
-          Info
-        </Link>
-      </td>
-      <td className='p-1 text-center'>
         {compareList.find((x) => x._id === company._id) ? (
           <Button
             className='btn btn-success p-1 mx-1'
@@ -52,7 +55,7 @@ const CompanyTableRow = ({ company }) => {
           </Button>
         ) : (
           <Button
-            className='btn btn-warning p-1 mx-1'
+            className='btn btn-danger p-1 mx-1'
             type='button'
             onClick={() => addToCompareListHandler(company._id)}
           >

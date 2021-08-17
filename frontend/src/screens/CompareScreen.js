@@ -9,6 +9,7 @@ import Meta from '../components/Meta';
 const CompareScreen = ({ history }) => {
   const location = useLocation();
   const sort = useQuery().get('sort') || '';
+
   const compare = useSelector((state) => state.compare);
   const { compareList } = compare;
 
@@ -58,10 +59,9 @@ const CompareScreen = ({ history }) => {
               <h5 className='m-0 text-center'>Commodity</h5>
             </th>
             <th className='p-1'>
-              <h5 className='m-0 text-center'>Info</h5>
-            </th>
-            <th className='p-1'>
-              <h5 className='m-0 text-center'>Compare</h5>
+              <h5 className='m-0 text-center'>
+                <i className='fas fa-chart-pie mr-1'></i>Compare
+              </h5>
             </th>
           </tr>
         </thead>

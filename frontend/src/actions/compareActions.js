@@ -5,9 +5,8 @@ import {
 } from '../constants/compareConstants';
 
 export const addToCompareList = (id) => async (dispatch, getState) => {
-  console.log('addtocompare action - ', 'id:', id);
   const { data } = await axios.get(`/api/companies/${id}`);
-  console.log('data', data);
+
   dispatch({
     type: COMPARE_ADD_COMPANY,
     payload: {

@@ -82,7 +82,7 @@ const ProductEditScreen = ({ match, history }) => {
     currencyConv,
     userInfo,
   ]);
-  console.log(primaryCommodity);
+
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();

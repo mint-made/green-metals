@@ -134,11 +134,8 @@ const HomeScreen = ({ match, history }) => {
                   <h5 className='m-0 text-center'>Commodity</h5>
                 </th>
                 <th className='p-1'>
-                  <h5 className='m-0 text-center'>Info</h5>
-                </th>
-                <th className='p-1'>
                   <h5 className='m-0 text-center'>
-                    <i className='fas fa-chart-pie'></i> Compare
+                    <i className='fas fa-chart-pie mr-1'></i>Compare
                   </h5>
                 </th>
               </tr>
