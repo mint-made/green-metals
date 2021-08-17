@@ -60,7 +60,7 @@ const HomeScreen = ({ match, history }) => {
 
   return (
     <>
-      <Meta />
+      <Meta title='Green Metals - Explore' />
       <Row className='my-2'>
         <Col xs={4}>
           <Breadcrumb>

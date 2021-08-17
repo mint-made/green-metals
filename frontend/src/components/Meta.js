@@ -12,11 +12,11 @@ const Meta = ({ title, description, keywords }) => {
 };
 
 Meta.defaultProps = {
-  title: 'Green Future Investing',
+  title: 'Green Metals',
   description:
-    'Consolidated data on natural resource companies, to help individuals invest smarter.',
+    'Information/Analysis of companies involved in producing critical metals for the zero-carbon future ',
   keywords:
-    'investing, commodities, resources, natural resources, stocks, shares, stocks',
+    'investing, commodities, resources, renewables, energy, zero-carbon, natural resources, stocks, shares, stocks',
 };
 
 export default Meta;
