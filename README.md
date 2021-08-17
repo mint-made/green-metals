@@ -18,6 +18,6 @@ This app enables users to quickly find companies involved in specific commoditie
 
 ### App features
 
-- Find and compare companies in specific sectors
+- Find and compare companies in specific sectors such as Copper, Rare Earths, Lithium and Nickel
 - Compare key statistics about companies such as market capitalization
-- Build your own compare list with the companies you are interested in.
+- Build lists to compare companies through different metrics
