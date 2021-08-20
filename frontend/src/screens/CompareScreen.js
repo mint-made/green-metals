@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Col, Dropdown, Row, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -9,9 +10,26 @@ import Meta from '../components/Meta';
 const CompareScreen = ({ history }) => {
   const location = useLocation();
   const sort = useQuery().get('sort') || '';
+  const [compareList, setCompareList] = useState([]);
 
   const compare = useSelector((state) => state.compare);
-  const { compareList } = compare;
+  const { compareList: compareListData } = compare;
+
+  useEffect(() => {
+    if (sort === 'mcap_asc') {
+      let sortedListAsc = compareListData.sort(function (a, b) {
+        return a.mcap - b.mcap;
+      });
+      setCompareList([...sortedListAsc]);
+    } else if (sort === 'mcap_desc') {
+      let sortedListDesc = compareListData.sort(function (a, b) {
+        return a.mcap + b.mcap;
+      });
+      setCompareList([...sortedListDesc]);
+    } else {
+      setCompareList([...compareListData]);
+    }
+  }, [compareListData, sort]);
 
   const sortSelectHandler = (value) => {
     history.push(`${location.pathname}?sort=${value}`);
@@ -26,7 +44,7 @@ const CompareScreen = ({ history }) => {
       <Meta title='Green Metals - Compare' />
       <Row className='mb-2'>
         <Col>
-          <h1 className='text-center'>Compare List</h1>
+          <h1 className='text-center'>Compare List </h1>
         </Col>
         <Col className='d-flex justify-content-end'>
           <Dropdown>
@@ -37,6 +55,9 @@ const CompareScreen = ({ history }) => {
               </Dropdown.Item>
               <Dropdown.Item onClick={() => sortSelectHandler('mcap_desc')}>
                 MCap: High - Low
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => sortSelectHandler('')}>
+                None
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
