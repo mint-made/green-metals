@@ -105,7 +105,7 @@ const ProductListScreen = ({ history, match }) => {
           <Dropdown>
             <Dropdown.Toggle id='dropdown-basic'>Category:</Dropdown.Toggle>
             <Dropdown.Menu>
-              {['', 'Lithium', 'REEs', 'Nickel', 'Copper'].map(
+              {['', 'Lithium', 'REEs', 'Nickel', 'Copper', 'Potash', '-'].map(
                 (metal, index) => (
                   <Dropdown.Item
                     key={index}

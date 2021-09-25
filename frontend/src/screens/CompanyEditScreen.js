@@ -246,6 +246,7 @@ const ProductEditScreen = ({ match, history }) => {
                       <option value='Nickel'>Nickel</option>
                       <option value='Copper'>Copper</option>
                       <option value='Platinum'>Platinum</option>
+                      <option value='Potash'>Potash</option>
                     </Form.Control>
                   </Form.Group>
                 </Col>
