@@ -87,7 +87,7 @@ const Header = () => {
                 id='username'
                 style={{ minWidth: '77px' }}
               >
-                {['$local', '$usd', '£gbp', '$aud', '$cad', '€eur'].map(
+                {['$local', '$usd', '£gbp', '$aud', '$cad', '€eur', '₽rub'].map(
                   (item, index) => (
                     <NavDropdown.Item
                       key={index}

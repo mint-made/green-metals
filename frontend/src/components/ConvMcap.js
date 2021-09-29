@@ -34,8 +34,10 @@ const ConvMcap = ({ company }) => {
           ? '$'
           : currency.selected === 'cad'
           ? 'C$'
+          : currency.selected === 'rub'
+          ? '₽'
           : '';
-      console.log(currency.usd);
+
       const convMcap = mcap * currency.usd[currency.selected];
 
       return (
