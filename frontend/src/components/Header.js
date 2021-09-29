@@ -76,6 +76,9 @@ const Header = () => {
                 <LinkContainer to='/explore/copper'>
                   <NavDropdown.Item>Copper</NavDropdown.Item>
                 </LinkContainer>
+                <LinkContainer to='/explore/potash'>
+                  <NavDropdown.Item>Potash</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
 
               <NavDropdown
@@ -84,7 +87,7 @@ const Header = () => {
                 id='username'
                 style={{ minWidth: '77px' }}
               >
-                {['$local', '$usd', '£gbp', '$aud', '$cad'].map(
+                {['$local', '$usd', '£gbp', '$aud', '$cad', '€eur'].map(
                   (item, index) => (
                     <NavDropdown.Item
                       key={index}

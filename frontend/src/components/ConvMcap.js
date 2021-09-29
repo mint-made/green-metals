@@ -26,6 +26,8 @@ const ConvMcap = ({ company }) => {
       const currencySymbol =
         currency.selected === 'gbp'
           ? '£'
+          : currency.selected === 'eur'
+          ? '€'
           : currency.selected === 'aud'
           ? 'A$'
           : currency.selected === 'usd'
@@ -33,7 +35,7 @@ const ConvMcap = ({ company }) => {
           : currency.selected === 'cad'
           ? 'C$'
           : '';
-
+      console.log(currency.usd);
       const convMcap = mcap * currency.usd[currency.selected];
 
       return (
