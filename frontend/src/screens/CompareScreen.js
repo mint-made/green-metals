@@ -41,7 +41,7 @@ const CompareScreen = ({ history }) => {
 
   return (
     <>
-      <Meta title='Green Metals - Compare' />
+      <Meta title='Compare Companies' />
       <Row className='mb-2'>
         <Col>
           <h1 className='text-center'>Compare List </h1>

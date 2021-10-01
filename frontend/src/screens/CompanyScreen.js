@@ -28,7 +28,7 @@ const CompanyScreen = ({ match }) => {
       ) : (
         <>
           <Meta
-            title={`Green Metals - ${company.trading.exchange}:${company.trading.ticker}`}
+            title={`${company.trading.exchange}:${company.trading.ticker}`}
           />
           <Row className='mb-3'>
             <Col md={5}>

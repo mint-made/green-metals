@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button, Card, Col, Container, Jumbotron, Row } from 'react-bootstrap';
+import Meta from '../components/Meta';
 
 const HomeScreen = () => {
   return (
     <>
+      <Meta title='Green Metals' />
       <Row>
         <Col className='d-flex justify-content-center'>
           <Jumbotron
