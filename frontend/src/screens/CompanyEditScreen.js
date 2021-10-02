@@ -164,10 +164,6 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <>
-      <Link to='/admin/companylist' className='btn btn-light my-3'>
-        Go back
-      </Link>
-
       {loadingUpdate && <Loader />}
       {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading || loadingCurrency ? (
