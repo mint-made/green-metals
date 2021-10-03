@@ -2,7 +2,11 @@ import mongoose from 'mongoose';
 
 const assetSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  location: { type: String, required: true },
+  location: {
+    country: { type: String, required: true },
+    province: { type: String },
+    lat: { type: Number },
+  },
   stage: { type: String, required: true },
   resource: [
     {

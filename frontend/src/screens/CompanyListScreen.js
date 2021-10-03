@@ -13,6 +13,7 @@ import NumFormat from '../components/NumFormat';
 import Paginate from '../components/Paginate';
 import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
 import { Link, useLocation } from 'react-router-dom';
+import Meta from '../components/Meta';
 
 const ProductListScreen = ({ history, match }) => {
   const location = useLocation();
@@ -86,6 +87,7 @@ const ProductListScreen = ({ history, match }) => {
 
   return (
     <>
+      <Meta title='Company List' />
       <Row className='align-items-center'>
         <Col>
           <h1>Companies</h1>
