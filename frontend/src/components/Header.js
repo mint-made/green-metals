@@ -79,6 +79,9 @@ const Header = () => {
                 <LinkContainer to='/explore/potash'>
                   <NavDropdown.Item>Potash</NavDropdown.Item>
                 </LinkContainer>
+                <LinkContainer to='/explore/scandium'>
+                  <NavDropdown.Item>Scandium</NavDropdown.Item>
+                </LinkContainer>
               </NavDropdown>
 
               <NavDropdown

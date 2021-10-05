@@ -107,16 +107,23 @@ const ProductListScreen = ({ history, match }) => {
           <Dropdown>
             <Dropdown.Toggle id='dropdown-basic'>Category:</Dropdown.Toggle>
             <Dropdown.Menu>
-              {['', 'Lithium', 'REEs', 'Nickel', 'Copper', 'Potash', '-'].map(
-                (metal, index) => (
-                  <Dropdown.Item
-                    key={index}
-                    onClick={() => history.push(`/admin/companylist/${metal}`)}
-                  >
-                    {metal ? metal : 'All'}
-                  </Dropdown.Item>
-                )
-              )}
+              {[
+                '',
+                'Lithium',
+                'REEs',
+                'Nickel',
+                'Copper',
+                'Potash',
+                'Scandium',
+                '-',
+              ].map((metal, index) => (
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => history.push(`/admin/companylist/${metal}`)}
+                >
+                  {metal ? metal : 'All'}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
           <Button onClick={createCompanyHandler} variant='success'>

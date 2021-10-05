@@ -143,6 +143,8 @@ const ProductEditScreen = ({ match, history }) => {
         return '€';
       case 'MOEX':
         return '₽';
+      case 'TSXV':
+        return 'C$';
       default:
         return '$';
     }
@@ -255,6 +257,7 @@ const ProductEditScreen = ({ match, history }) => {
                         <option value='Copper'>Copper</option>
                         <option value='Platinum'>Platinum</option>
                         <option value='Potash'>Potash</option>
+                        <option value='Scandium'>Scandium</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
@@ -275,6 +278,7 @@ const ProductEditScreen = ({ match, history }) => {
                         <option value='LSE'>LSE</option>
                         <option value='ASX'>ASX</option>
                         <option value='TSX'>TSX</option>
+                        <option value='TSXV'>TSXV</option>
                         <option value='XTRA'>XTRA</option>
                         <option value='MOEX'>MOEX</option>
                         <option value='OTC'>OTC</option>
