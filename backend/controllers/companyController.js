@@ -78,7 +78,7 @@ const deleteCompany = asyncHandler(async (req, res) => {
 });
 
 // @description Create a company
-// @route POST /api/companies/:id
+// @route POST /api/companies/
 // @access Private/Admin
 const createCompany = asyncHandler(async (req, res) => {
   const company = new Company({

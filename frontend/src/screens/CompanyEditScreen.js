@@ -14,6 +14,7 @@ const ProductEditScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const companyId = match.params.id;
+  const [user, setUser] = useState('');
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
@@ -63,6 +64,7 @@ const ProductEditScreen = ({ match, history }) => {
         dispatch(getCurrency());
       }
     } else {
+      setUser(company.user);
       setName(company.name);
       setIssuedShares(company.issuedShares);
       setPrimaryCommodity(company.primaryCommodity);
@@ -183,6 +185,15 @@ const ProductEditScreen = ({ match, history }) => {
           />
           <Row>
             <Col sm={3} md={4}>
+              <Form.Group controlId='logo'>
+                <Form.Label>User</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='User'
+                  value={user}
+                  onChange={(e) => console.log(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
               <Form.Group controlId='logo'>
                 <Form.Label>Logo</Form.Label>
                 <Form.Control
