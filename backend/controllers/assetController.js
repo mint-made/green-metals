@@ -41,4 +41,37 @@ const createAsset = asyncHandler(async (req, res) => {
   res.json(createdAsset);
 });
 
-export { createAsset, getAssets, getAssetById };
+// @description Update an assets information
+// @route PUT /api/asset/:id
+// @access Private/Admin
+const updateAsset = asyncHandler(async (req, res) => {
+  const {
+    name,
+    stage,
+    study,
+    ownership,
+    resource,
+    location: { country } = {},
+  } = req.body;
+
+  const asset = await Asset.findById(req.params.id);
+
+  if (asset) {
+    asset.name = name || asset.name;
+    asset.stage = stage || asset.stage;
+    asset.study = study || asset.study;
+    asset.ownership = ownership || asset.ownership;
+    asset.resource = resource || asset.resource;
+    asset.location = {
+      country: country ? country : asset.location.country,
+    };
+
+    const updatedAsset = await asset.save();
+    res.json(updatedAsset);
+  } else {
+    res.status(404);
+    throw new Error('Asset not found');
+  }
+});
+
+export { createAsset, getAssets, getAssetById, updateAsset };
