@@ -6,7 +6,7 @@ import Asset from '../models/assetModel.js';
 // @route POST /api/assets/
 // @access Private/Admin
 const createAsset = asyncHandler(async (req, res) => {
-  const createdAsset = new Asset({
+  const asset = new Asset({
     user: req.user._id,
     name: 'Racecourse',
     location: { country: 'Australia' },
@@ -15,7 +15,7 @@ const createAsset = asyncHandler(async (req, res) => {
     ownership: '-',
   });
 
-  const createdasset = await Asset.save();
+  const createdAsset = await asset.save();
   res.json(createdAsset);
 });
 
