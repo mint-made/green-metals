@@ -9,6 +9,7 @@ import companyRoutes from './routes/companyRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import currencyRoutes from './routes/currencyRoutes.js';
+import assetRoutes from './routes/assetRoutes.js';
 import s3UploadRoutes from './routes/s3UploadRoutes.js';
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', s3UploadRoutes);
 app.use('/api/currency', currencyRoutes);
+app.use('/api/assets', assetRoutes);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
