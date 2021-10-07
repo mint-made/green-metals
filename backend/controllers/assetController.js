@@ -2,6 +2,14 @@ import asyncHandler from 'express-async-handler';
 
 import Asset from '../models/assetModel.js';
 
+// @description Fetch all companies
+// @route GET /api/companies
+// @access Public
+const getAssets = asyncHandler(async (req, res) => {
+  const assets = await Asset.find({});
+  res.json(assets);
+});
+
 // @description Create an Asset
 // @route POST /api/assets/
 // @access Private/Admin
@@ -19,4 +27,4 @@ const createAsset = asyncHandler(async (req, res) => {
   res.json(createdAsset);
 });
 
-export { createAsset };
+export { createAsset, getAssets };
