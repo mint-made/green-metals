@@ -1,35 +1,60 @@
 import React, { useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { listAssets } from '../actions/assetActions';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { Link } from 'react-router-dom';
 
 const AssetListScreen = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  const assetList = useSelector((state) => state.assetList);
+  const { loading, error, assets } = assetList;
+
+  useEffect(() => {
+    dispatch(listAssets());
+  }, [dispatch]);
 
   return (
-    <div>
-      <Table striped bordered hover responsive className='table-sm'>
-        <thead>
-          <tr>
-            <th className='p-1'>
-              <h5 className='m-0 text-center'>Name</h5>
-            </th>
-            <th className='p-1'>
-              <h5 className='m-0 text-center'>Ticker</h5>
-            </th>
-            <th className='p-1'>
-              <h5 className='m-0 text-center'>MCap</h5>
-            </th>
-            <th className='p-1'>
-              <h5 className='m-0 text-center'>Commodity</h5>
-            </th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </Table>
-    </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
+      ) : (
+        <Table striped bordered hover responsive className='table-sm'>
+          <thead>
+            <tr>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Name</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Location</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Stage</h5>
+              </th>
+              <th className='p-1'>
+                <h5 className='m-0 text-center'>Resource</h5>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {assets.map((asset) => (
+              <tr key={asset._id}>
+                <td className='p-2'>{asset.name}</td>
+                <td className='p-2'></td>
+                <td className='p-2'></td>
+                <td className='p-2'></td>
+                <td></td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </>
   );
 };
 
