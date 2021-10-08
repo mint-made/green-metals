@@ -41,6 +41,21 @@ const createAsset = asyncHandler(async (req, res) => {
   res.json(createdAsset);
 });
 
+// @description Delete an asset
+// @route DELETE /api/asset/:id
+// @access Private/Admin
+const deleteAsset = asyncHandler(async (req, res) => {
+  const asset = await Asset.findById(req.params.id);
+
+  if (asset) {
+    await asset.remove();
+    res.json({ message: 'Asset removed' });
+  } else {
+    res.status(404);
+    throw new Error('Asset not found');
+  }
+});
+
 // @description Update an assets information
 // @route PUT /api/asset/:id
 // @access Private/Admin
@@ -74,4 +89,4 @@ const updateAsset = asyncHandler(async (req, res) => {
   }
 });
 
-export { createAsset, getAssets, getAssetById, updateAsset };
+export { createAsset, getAssets, getAssetById, updateAsset, deleteAsset };

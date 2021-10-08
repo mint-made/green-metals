@@ -6,11 +6,16 @@ import {
   getAssets,
   getAssetById,
   updateAsset,
+  deleteAsset,
 } from '../controllers/assetController.js';
 
 const router = express.Router();
 
 router.route('/').post(protect, isAdmin, createAsset).get(getAssets);
-router.route('/:id').get(getAssetById).put(protect, isAdmin, updateAsset);
+router
+  .route('/:id')
+  .get(getAssetById)
+  .delete(protect, isAdmin, deleteAsset)
+  .put(protect, isAdmin, updateAsset);
 
 export default router;
