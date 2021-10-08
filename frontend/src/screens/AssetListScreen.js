@@ -45,9 +45,11 @@ const AssetListScreen = () => {
             {assets.map((asset) => (
               <tr key={asset._id}>
                 <td className='p-2'>{asset.name}</td>
-                <td className='p-2'></td>
-                <td className='p-2'></td>
-                <td className='p-2'></td>
+                <td className='p-2'>{asset.location.country}</td>
+                <td className='p-2'>{asset.stage}</td>
+                <td className='p-2'>
+                  {asset.resource.map((resource) => `${resource.type}`)}
+                </td>
                 <td></td>
               </tr>
             ))}

@@ -18,11 +18,10 @@ const assetSchema = new mongoose.Schema({
   study: { type: String, required: true },
   resource: [
     {
-      inferred: { type: Number },
-      indicated: { type: Number },
-      measured: { type: Number },
+      i: { type: Number },
+      mi: { type: Number },
       units: { type: String },
-      commodity: { type: String },
+      type: { type: String },
     },
   ],
   npv: {
