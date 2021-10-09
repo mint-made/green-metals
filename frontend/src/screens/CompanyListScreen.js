@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Row, Col, Dropdown } from 'react-bootstrap';
+import { Table, Button, Row, Col, Dropdown, Badge } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -14,6 +14,7 @@ import Paginate from '../components/Paginate';
 import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
 import { Link, useLocation } from 'react-router-dom';
 import Meta from '../components/Meta';
+import ConvMcap from '../components/ConvMcap';
 
 const ProductListScreen = ({ history, match }) => {
   const location = useLocation();
@@ -162,15 +163,23 @@ const ProductListScreen = ({ history, match }) => {
             <tbody>
               {companies.map((company) => (
                 <tr key={company._id}>
-                  <td className='p-2'>
-                    <Link to={`/company/${company._id}`}>{company.name}</Link>
-                  </td>
+                  <Link to={`/company/${company._id}`}>
+                    <div className='d-flex justify-content-between p-2 '>
+                      <p className='mb-0 text-dark'>
+                        {company.name}
+                        <span>
+                          <i className='pl-1 fas fa-info-circle text-info'></i>
+                        </span>
+                      </p>
+                    </div>
+                  </Link>
                   <td className='p-2'>
                     {company.trading.exchange}:{company.trading.ticker}
                   </td>
                   <td className='p-2'>
-                    {company.trading.currency}
-                    <NumFormat number={company.trading.mcap} dp='2' />
+                    <Badge variant='primary'>
+                      <ConvMcap company={company} />
+                    </Badge>
                   </td>
                   <td className='p-2'>{company.primaryCommodity}</td>
                   <td>
