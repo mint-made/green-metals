@@ -61,7 +61,7 @@ const HomeScreen = ({ match, history }) => {
   return (
     <>
       <Meta
-        title={metal ? `Explore - ${capitalize(metal)}` : 'Explore - All'}
+        title={metal ? `Companies - ${capitalize(metal)}` : 'Explore - All'}
       />
       <Row className='my-2'>
         <Col xs={4}>

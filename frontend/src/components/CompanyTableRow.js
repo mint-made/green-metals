@@ -23,15 +23,16 @@ const CompanyTableRow = ({ company }) => {
   };
 
   return (
-    <tr key={company._id}>
+    <tr>
       <td className='p-0'>
         <Link to={`/company/${company._id}`}>
           <div className='d-flex justify-content-between p-2 '>
-            <p className='mb-0 text-dark'>{company.name}</p>
-
-            <span>
-              <i className='fas fa-info-circle text-info'></i>
-            </span>
+            <p className='mb-0 text-dark'>
+              {company.name}
+              <span>
+                <i className='pl-1 fas fa-info-circle text-info'></i>
+              </span>
+            </p>
           </div>
         </Link>
       </td>

@@ -60,22 +60,22 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               <NavDropdown title='Companies' id='companies' className='mr-2'>
-                <LinkContainer to='/explore/lithium'>
+                <LinkContainer to='/companies/lithium'>
                   <NavDropdown.Item>Lithium</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/explore/rees'>
+                <LinkContainer to='/companies/rees'>
                   <NavDropdown.Item>REEs</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/explore/nickel'>
+                <LinkContainer to='/companies/nickel'>
                   <NavDropdown.Item>Nickel</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/explore/copper'>
+                <LinkContainer to='/companies/copper'>
                   <NavDropdown.Item>Copper</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/explore/potash'>
+                <LinkContainer to='/companies/potash'>
                   <NavDropdown.Item>Potash</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/explore/scandium'>
+                <LinkContainer to='/companies/scandium'>
                   <NavDropdown.Item>Scandium</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

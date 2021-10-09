@@ -30,7 +30,7 @@ const HomeScreen = () => {
                     critical metals, such as Lithium, Copper, Nickel and REEs.
                   </p>
                   <div className='d-flex justify-content-center'>
-                    <Button variant='primary' href='/explore/'>
+                    <Button variant='primary' href='/companies/'>
                       Explore Companies
                     </Button>
                   </div>
@@ -54,7 +54,7 @@ const HomeScreen = () => {
                 Everything which is to be electrified requires copper, making
                 copper completely indispensable in the green transition.
               </Card.Text>
-              <Button variant='primary' href='/explore/copper'>
+              <Button variant='primary' href='/companies/copper'>
                 Explore Copper
               </Button>
             </Card.Body>
@@ -73,7 +73,7 @@ const HomeScreen = () => {
                 REEs applications include batteries, electric motors, wind
                 turbines, catalysers and efficient LED,
               </Card.Text>
-              <Button variant='primary' href='/explore/rees'>
+              <Button variant='primary' href='/companies/rees'>
                 Explore REEs
               </Button>
             </Card.Body>
@@ -92,7 +92,7 @@ const HomeScreen = () => {
                 With increasing electrification of transport and growth in
                 consumer technology, demand for lithium is only set to grow
               </Card.Text>
-              <Button variant='primary' href='/explore/lithium'>
+              <Button variant='primary' href='/companies/lithium'>
                 Explore Lithium
               </Button>
             </Card.Body>
@@ -111,7 +111,7 @@ const HomeScreen = () => {
                 Primarily used to make stainless steel, Nickel is also a key
                 component of future battery tech.
               </Card.Text>
-              <Button variant='primary' href='/explore/nickel'>
+              <Button variant='primary' href='/companies/nickel'>
                 Explore Nickel
               </Button>
             </Card.Body>

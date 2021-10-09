@@ -66,7 +66,7 @@ const AssetListScreen = () => {
                   )}
                 </td>
                 <td className='p-0'>
-                  <Link to={`/asset/${asset._id}`}>
+                  <Link to={`/company/${asset.ownership[0].companyRef}`}>
                     <div className=' p-2 '>
                       <p className='mb-0 text-dark'>
                         {asset.ownership

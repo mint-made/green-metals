@@ -14,7 +14,7 @@ import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import CompanyListScreen from './screens/CompanyListScreen';
 import CompanyEditScreen from './screens/CompanyEditScreen';
-import ExploreScreen from './screens/ExploreScreen';
+import ExploreCompaniesScreen from './screens/ExploreCompaniesScreen';
 import AssetListScreen from './screens/AssetListScreen';
 
 const App = () => {
@@ -47,8 +47,12 @@ const App = () => {
           <Route path='/assets/' component={AssetListScreen} exact />
           <Route path='/assets/:metal' component={AssetListScreen} exact />
 
-          <Route path='/explore/' component={ExploreScreen} exact />
-          <Route path='/explore/:metal' component={ExploreScreen} exact />
+          <Route path='/companies/' component={ExploreCompaniesScreen} exact />
+          <Route
+            path='/companies/:metal'
+            component={ExploreCompaniesScreen}
+            exact
+          />
 
           <Route path='/search/:keyword' component={HomeScreen} exact />
           <Route path='/page/:pageNumber' component={HomeScreen} exact />
