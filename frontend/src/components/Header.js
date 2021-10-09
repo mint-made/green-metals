@@ -59,7 +59,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              <NavDropdown title='Companies' id='username' className='mr-2'>
+              <NavDropdown title='Companies' id='companies' className='mr-2'>
                 <LinkContainer to='/explore/lithium'>
                   <NavDropdown.Item>Lithium</NavDropdown.Item>
                 </LinkContainer>
@@ -76,6 +76,27 @@ const Header = () => {
                   <NavDropdown.Item>Potash</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to='/explore/scandium'>
+                  <NavDropdown.Item>Scandium</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+
+              <NavDropdown title='Assets' id='assets' className='mr-2'>
+                <LinkContainer to='/assets/lithium'>
+                  <NavDropdown.Item>Lithium</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/assets/rees'>
+                  <NavDropdown.Item>REEs</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/assets/nickel'>
+                  <NavDropdown.Item>Nickel</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/assets/copper'>
+                  <NavDropdown.Item>Copper</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/assets/potash'>
+                  <NavDropdown.Item>Potash</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/assets/scandium'>
                   <NavDropdown.Item>Scandium</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

@@ -14,7 +14,16 @@ const assetSchema = new mongoose.Schema({
     lng: { type: Number },
   },
   stage: { type: String, required: true },
-  ownership: { type: String, required: true },
+  ownership: [
+    {
+      name: { type: String, required: true },
+      stakePercent: { type: Number, required: true },
+      companyRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+      },
+    },
+  ],
   study: { type: String, required: true },
   resource: [
     {

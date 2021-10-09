@@ -32,7 +32,7 @@ const CompanyTableRow = ({ company }) => {
             <span>
               <i className='fas fa-info-circle text-info'></i>
             </span>
-          </div>{' '}
+          </div>
         </Link>
       </td>
       <td className='p-2'>
