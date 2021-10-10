@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssets, deleteAsset } from '../actions/assetActions';
@@ -33,8 +33,23 @@ const AssetListScreen = () => {
     }
   };
 
+  const createCompanyHandler = () => {
+    console.log('Creating');
+  };
+
   return (
     <>
+      <Row className='align-items-center'>
+        <Col>
+          <h1>Assets</h1>
+        </Col>
+        <Col className='text-right d-flex justify-content-around my-3'>
+          <Button onClick={createCompanyHandler} variant='success'>
+            <i className='fas fa-plus'></i> Create Company
+          </Button>
+        </Col>
+      </Row>
+
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
