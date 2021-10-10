@@ -34,7 +34,7 @@ const AssetListScreen = () => {
   };
 
   const createCompanyHandler = () => {
-    console.log('Creating');
+    dispatch(createAsset());
   };
 
   return (
@@ -44,9 +44,11 @@ const AssetListScreen = () => {
           <h1>Assets</h1>
         </Col>
         <Col className='text-right d-flex justify-content-around my-3'>
-          <Button onClick={createCompanyHandler} variant='success'>
-            <i className='fas fa-plus'></i> Create Company
-          </Button>
+          {userInfo && userInfo.isAdmin && (
+            <Button onClick={createCompanyHandler} variant='success'>
+              <i className='fas fa-plus'></i> Create Company
+            </Button>
+          )}
         </Col>
       </Row>
 
