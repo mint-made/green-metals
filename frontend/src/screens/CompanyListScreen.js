@@ -9,7 +9,6 @@ import {
   deleteCompany,
   createCompany,
 } from '../actions/companyActions';
-import NumFormat from '../components/NumFormat';
 import Paginate from '../components/Paginate';
 import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
 import { Link, useLocation } from 'react-router-dom';

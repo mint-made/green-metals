@@ -34,7 +34,6 @@ const createAsset = asyncHandler(async (req, res) => {
     location: { country: 'Australia' },
     stage: 'Exploration',
     study: '-',
-    ownership: '-',
   });
 
   const createdAsset = await asset.save();

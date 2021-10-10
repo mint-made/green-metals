@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { listAssets } from '../actions/assetActions';
+import { listAssets, deleteAsset } from '../actions/assetActions';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
@@ -12,12 +13,30 @@ const AssetListScreen = () => {
   const assetList = useSelector((state) => state.assetList);
   const { loading, error, assets } = assetList;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const assetDelete = useSelector((state) => state.assetDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = assetDelete;
+
   useEffect(() => {
     dispatch(listAssets());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
+
+  const deleteHandler = (id) => {
+    if (window.confirm('Are you sure?')) {
+      dispatch(deleteAsset(id));
+    }
+  };
 
   return (
     <>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -41,6 +60,7 @@ const AssetListScreen = () => {
               <th className='p-1'>
                 <h5 className='m-0 text-center'>Owner</h5>
               </th>
+              <th className='p-1'></th>
             </tr>
           </thead>
           <tbody>
@@ -66,18 +86,38 @@ const AssetListScreen = () => {
                   )}
                 </td>
                 <td className='p-0'>
-                  <Link to={`/company/${asset.ownership[0].companyRef}`}>
-                    <div className=' p-2 '>
-                      <p className='mb-0 text-dark'>
-                        {asset.ownership
-                          ? `${asset.ownership[0].name} (${asset.ownership[0].stakePercent}%)`
-                          : '-'}
-                        <span>
-                          <i className='pl-1 fas fa-info-circle text-info'></i>
-                        </span>
-                      </p>
-                    </div>
-                  </Link>
+                  {asset.ownership.length > 0 && (
+                    <Link to={`/company/${asset.ownership[0].companyRef}`}>
+                      <div className=' p-2 '>
+                        <p className='mb-0 text-dark'>
+                          {asset.ownership
+                            ? `${asset.ownership[0].name} (${asset.ownership[0].stakePercent}%)`
+                            : '-'}
+                          <span>
+                            <i className='pl-1 fas fa-info-circle text-info'></i>
+                          </span>
+                        </p>
+                      </div>
+                    </Link>
+                  )}
+                </td>
+                <td className='p-2'>
+                  {userInfo && userInfo.isAdmin && (
+                    <>
+                      <LinkContainer to={`/admin/asset/${asset._id}/edit`}>
+                        <Button variant='light' className='btn-sm'>
+                          <i className='fas fa-edit'></i>
+                        </Button>
+                      </LinkContainer>
+                      <Button
+                        variant='danger'
+                        className='btn-sm'
+                        onClick={() => deleteHandler(asset._id)}
+                      >
+                        <i className='fas fa-trash'></i>
+                      </Button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

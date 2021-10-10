@@ -2,6 +2,9 @@ import {
   ASSET_LIST_REQUEST,
   ASSET_LIST_SUCCESS,
   ASSET_LIST_FAIL,
+  ASSET_DELETE_REQUEST,
+  ASSET_DELETE_SUCCESS,
+  ASSET_DELETE_FAIL,
 } from '../constants/assetConstants';
 
 export const assetListReducer = (state = { assets: [] }, action) => {
@@ -14,6 +17,19 @@ export const assetListReducer = (state = { assets: [] }, action) => {
         assets: action.payload,
       };
     case ASSET_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const assetDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ASSET_DELETE_REQUEST:
+      return { loading: true };
+    case ASSET_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case ASSET_DELETE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
