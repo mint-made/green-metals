@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { listAssets, deleteAsset } from '../actions/assetActions';
+import { listAssets, deleteAsset, createAsset } from '../actions/assetActions';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
+import { ASSET_CREATE_RESET } from '../constants/assetConstants';
 
-const AssetListScreen = () => {
+const AssetListScreen = ({ history }) => {
   const dispatch = useDispatch();
 
   const assetList = useSelector((state) => state.assetList);
@@ -23,9 +24,25 @@ const AssetListScreen = () => {
     success: successDelete,
   } = assetDelete;
 
+  const assetCreate = useSelector((state) => state.assetCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    asset: createdAsset,
+  } = assetCreate;
+
   useEffect(() => {
+    dispatch({ type: ASSET_CREATE_RESET });
+
     dispatch(listAssets());
-  }, [dispatch, successDelete]);
+
+    if (successCreate) {
+      history.push(`/admin/asset/${createdAsset._id}/edit`);
+    } else {
+      dispatch(listAssets());
+    }
+  }, [dispatch, successDelete, createdAsset, successCreate, history]);
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -54,6 +71,8 @@ const AssetListScreen = () => {
 
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
