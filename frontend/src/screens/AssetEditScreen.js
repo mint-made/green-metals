@@ -17,6 +17,8 @@ const AssetEditScreen = ({ history, match }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  console.log(asset);
+
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/login');

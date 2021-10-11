@@ -10,6 +10,9 @@ import {
   ASSET_CREATE_REQUEST,
   ASSET_CREATE_SUCCESS,
   ASSET_CREATE_FAIL,
+  ASSET_DETAILS_REQUEST,
+  ASSET_DETAILS_FAIL,
+  ASSET_DETAILS_SUCCESS,
 } from '../constants/assetConstants';
 
 export const listAssets = () => async (dispatch) => {
@@ -90,6 +93,27 @@ export const createAsset = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ASSET_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listAssetDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ASSET_DETAILS_REQUEST });
+
+    const { data } = await axios.get(`/api/assets/${id}`);
+
+    dispatch({
+      type: ASSET_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ASSET_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

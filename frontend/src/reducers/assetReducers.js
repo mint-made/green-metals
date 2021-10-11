@@ -9,6 +9,9 @@ import {
   ASSET_CREATE_SUCCESS,
   ASSET_CREATE_REQUEST,
   ASSET_CREATE_RESET,
+  ASSET_DETAILS_REQUEST,
+  ASSET_DETAILS_FAIL,
+  ASSET_DETAILS_SUCCESS,
 } from '../constants/assetConstants';
 
 export const assetListReducer = (state = { assets: [] }, action) => {
@@ -50,6 +53,22 @@ export const assetCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ASSET_CREATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const assetDetailsReducer = (
+  state = { asset: { location: {}, ownership: [], resource: [] } },
+  action
+) => {
+  switch (action.type) {
+    case ASSET_DETAILS_REQUEST:
+      return { loading: true, ...state };
+    case ASSET_DETAILS_SUCCESS:
+      return { loading: false, asset: action.payload };
+    case ASSET_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

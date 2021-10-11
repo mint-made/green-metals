@@ -23,6 +23,7 @@ import {
   assetListReducer,
   assetDeleteReducer,
   assetCreateReducer,
+  assetDetailsReducer,
 } from './reducers/assetReducers';
 import { currencyListReducer } from './reducers/currencyReducer';
 
@@ -44,6 +45,7 @@ const reducer = combineReducers({
   assetList: assetListReducer,
   assetDelete: assetDeleteReducer,
   assetCreate: assetCreateReducer,
+  assetDetails: assetDetailsReducer,
 });
 
 const compareListFromStorage = localStorage.getItem('compareList')
