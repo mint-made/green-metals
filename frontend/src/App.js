@@ -16,6 +16,7 @@ import CompanyListScreen from './screens/CompanyListScreen';
 import CompanyEditScreen from './screens/CompanyEditScreen';
 import ExploreCompaniesScreen from './screens/ExploreCompaniesScreen';
 import AssetListScreen from './screens/AssetListScreen';
+import AssetEditScreen from './screens/AssetEditScreen';
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
 
           <Route path='/admin/company/:id/edit' component={CompanyEditScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
+          <Route path='/admin/asset/:id/edit' component={AssetEditScreen} />
 
           <Route path='/assets/' component={AssetListScreen} exact />
           <Route path='/assets/:metal' component={AssetListScreen} exact />
