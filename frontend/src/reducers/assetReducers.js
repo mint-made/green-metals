@@ -12,6 +12,10 @@ import {
   ASSET_DETAILS_REQUEST,
   ASSET_DETAILS_FAIL,
   ASSET_DETAILS_SUCCESS,
+  ASSET_UPDATE_REQUEST,
+  ASSET_UPDATE_FAIL,
+  ASSET_UPDATE_SUCCESS,
+  ASSET_UPDATE_RESET,
 } from '../constants/assetConstants';
 
 export const assetListReducer = (state = { assets: [] }, action) => {
@@ -69,6 +73,21 @@ export const assetDetailsReducer = (
       return { loading: false, asset: action.payload };
     case ASSET_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const companyUpdateReducer = (state = { asset: {} }, action) => {
+  switch (action.type) {
+    case ASSET_UPDATE_REQUEST:
+      return { loading: true };
+    case ASSET_UPDATE_SUCCESS:
+      return { loading: false, success: true, asset: action.payload };
+    case ASSET_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case ASSET_UPDATE_RESET:
+      return { company: {} };
     default:
       return state;
   }
