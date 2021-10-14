@@ -78,7 +78,7 @@ export const assetDetailsReducer = (
   }
 };
 
-export const companyUpdateReducer = (state = { asset: {} }, action) => {
+export const assetUpdateReducer = (state = { asset: {} }, action) => {
   switch (action.type) {
     case ASSET_UPDATE_REQUEST:
       return { loading: true };
