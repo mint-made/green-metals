@@ -3,6 +3,7 @@ import { Col, Row, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssetDetails, updateAsset } from '../actions/assetActions';
+import { ASSET_UPDATE_RESET } from '../constants/assetConstants';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 
@@ -17,24 +18,34 @@ const AssetEditScreen = ({ history, match }) => {
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
 
+  const assetUpdate = useSelector((state) => state.assetUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = assetUpdate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  console.log(asset);
 
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/login');
     }
 
-    if (!asset.name) {
+    if (successUpdate) {
+      dispatch({ type: ASSET_UPDATE_RESET });
+      history.push('/assets');
+    }
+
+    if (!asset.name || asset._id !== assetId) {
       dispatch(listAssetDetails(assetId));
     } else {
       setName(asset.name);
       setStage(asset.stage);
       setStudy(asset.study);
     }
-  }, [history, userInfo]);
+  }, [dispatch, history, assetId, asset, successUpdate, userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -50,6 +61,8 @@ const AssetEditScreen = ({ history, match }) => {
 
   return (
     <>
+      {loadingUpdate && <Loader />}
+      {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

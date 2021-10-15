@@ -47,7 +47,7 @@ const reducer = combineReducers({
   assetDelete: assetDeleteReducer,
   assetCreate: assetCreateReducer,
   assetDetails: assetDetailsReducer,
-  assetUpdateReducer: assetUpdateReducer,
+  assetUpdate: assetUpdateReducer,
 });
 
 const compareListFromStorage = localStorage.getItem('compareList')
