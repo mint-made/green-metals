@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Button, Form } from 'react-bootstrap';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssetDetails, updateAsset } from '../actions/assetActions';
 import { ASSET_UPDATE_RESET } from '../constants/assetConstants';
@@ -14,6 +13,7 @@ const AssetEditScreen = ({ history, match }) => {
   const [name, setName] = useState('');
   const [stage, setStage] = useState('');
   const [study, setStudy] = useState('');
+  const [country, setCountry] = useState('');
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -44,6 +44,7 @@ const AssetEditScreen = ({ history, match }) => {
       setName(asset.name);
       setStage(asset.stage);
       setStudy(asset.study);
+      setCountry(asset.location.country);
     }
   }, [dispatch, history, assetId, asset, successUpdate, userInfo]);
 
@@ -55,6 +56,7 @@ const AssetEditScreen = ({ history, match }) => {
         name,
         stage,
         study,
+        location: { country },
       })
     );
   };
@@ -100,7 +102,7 @@ const AssetEditScreen = ({ history, match }) => {
                       <Form.Label>Stage</Form.Label>
                       <Form.Control
                         type='name'
-                        placeholder='Enter Website'
+                        placeholder='Enter Stage'
                         value={stage}
                         onChange={(e) => setStage(e.target.value)}
                       ></Form.Control>
@@ -123,6 +125,17 @@ const AssetEditScreen = ({ history, match }) => {
                         <option value='DFS'>DFS</option>
                         <option value='BFS'>BFS</option>
                       </Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='country'>
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='Enter Country'
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
+                      ></Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>
