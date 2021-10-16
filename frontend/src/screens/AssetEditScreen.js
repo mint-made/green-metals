@@ -14,6 +14,8 @@ const AssetEditScreen = ({ history, match }) => {
   const [stage, setStage] = useState('');
   const [study, setStudy] = useState('');
   const [country, setCountry] = useState('');
+  const [npv, setNpv] = useState(0);
+  const [npvDiscount, setNpvDiscount] = useState(8);
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -45,6 +47,10 @@ const AssetEditScreen = ({ history, match }) => {
       setStage(asset.stage);
       setStudy(asset.study);
       setCountry(asset.location.country);
+      if (asset.npv) {
+        setNpv(asset.npv.value);
+        setNpvDiscount(asset.npv.discount);
+      }
     }
   }, [dispatch, history, assetId, asset, successUpdate, userInfo]);
 
@@ -57,6 +63,7 @@ const AssetEditScreen = ({ history, match }) => {
         stage,
         study,
         location: { country },
+        npv: { value: npv, discount: npvDiscount },
       })
     );
   };
@@ -127,6 +134,30 @@ const AssetEditScreen = ({ history, match }) => {
                       </Form.Control>
                     </Form.Group>
                   </Col>
+                  <Col>
+                    <Form.Group controlId='NPV'>
+                      <Form.Label>NPV</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='Enter NPV'
+                        value={npv}
+                        onChange={(e) => setNpv(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='NPV discount'>
+                      <Form.Label>NPV discount</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='NPV discount'
+                        value={npvDiscount}
+                        onChange={(e) => setNpvDiscount(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
                   <Col>
                     <Form.Group controlId='country'>
                       <Form.Label>Country</Form.Label>

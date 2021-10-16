@@ -66,6 +66,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     ownership,
     resource,
     location: { country } = {},
+    npv: { value, discount } = {},
   } = req.body;
 
   const asset = await Asset.findById(req.params.id);
@@ -78,6 +79,10 @@ const updateAsset = asyncHandler(async (req, res) => {
     asset.resource = resource || asset.resource;
     asset.location = {
       country: country ? country : asset.location.country,
+    };
+    asset.npv = {
+      value: value ? value : asset.npv.value,
+      discount: discount ? discount : asset.npv.discount,
     };
 
     const updatedAsset = await asset.save();
