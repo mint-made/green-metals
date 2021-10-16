@@ -16,6 +16,10 @@ const AssetEditScreen = ({ history, match }) => {
   const [country, setCountry] = useState('');
   const [npv, setNpv] = useState(0);
   const [npvDiscount, setNpvDiscount] = useState(8);
+  const [i, setI] = useState('');
+  const [mi, setMi] = useState('');
+  const [units, setUnits] = useState('');
+  const [type, setType] = useState('');
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -80,17 +84,6 @@ const AssetEditScreen = ({ history, match }) => {
         <>
           <Form onSubmit={(e) => submitHandler(e)}>
             <Row>
-              <Col sm={3} md={4}>
-                <Form.Group controlId='logo'>
-                  <Form.Label>AssetId</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='assetId'
-                    value={assetId}
-                    onChange={(e) => console.log(e.target.value)}
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
               <Col sm={9} md={8}>
                 <Row>
                   <Col>
@@ -171,15 +164,64 @@ const AssetEditScreen = ({ history, match }) => {
                   </Col>
                 </Row>
               </Col>
-            </Row>
-            <Row>
-              <Col></Col>
-              <Col></Col>
-            </Row>
-            <Row>
-              <Col></Col>
-              <Col></Col>
-              <Col></Col>
+              <Col sm={3} md={4}>
+                <p className='mb-2'>Resource</p>
+                <Row>
+                  <Col>
+                    <Form.Group controlId='i'>
+                      <Form.Control
+                        type='name'
+                        placeholder='Infered'
+                        value={i}
+                        onChange={(e) => setI(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='mi'>
+                      <Form.Control
+                        type='name'
+                        placeholder='M+I'
+                        value={mi}
+                        onChange={(e) => setMi(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group controlId='units'>
+                      <Form.Control
+                        type='name'
+                        placeholder='Units'
+                        value={units}
+                        onChange={(e) => setUnits(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='type'>
+                      <Form.Control
+                        as='select'
+                        placeholder='Type'
+                        value={type}
+                        onChange={(e) => {
+                          setType(e.target.value);
+                        }}
+                      >
+                        <option value='-'>-</option>
+                        <option value='Lithium'>Lithium</option>
+                        <option value='REEs'>REEs</option>
+                        <option value='Nickel'>Nickel</option>
+                        <option value='Copper'>Copper</option>
+                        <option value='Platinum'>Platinum</option>
+                        <option value='Potash'>Potash</option>
+                        <option value='Scandium'>Scandium</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Col>
             </Row>
 
             <Button type='submit' variant='success'>
