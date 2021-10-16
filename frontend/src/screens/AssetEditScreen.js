@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row, Button, Form } from 'react-bootstrap';
+import { Col, Row, Button, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssetDetails, updateAsset } from '../actions/assetActions';
 import { ASSET_UPDATE_RESET } from '../constants/assetConstants';
@@ -220,6 +220,17 @@ const AssetEditScreen = ({ history, match }) => {
                       </Form.Control>
                     </Form.Group>
                   </Col>
+                </Row>
+                <Row className='d-flex justify-content-center'>
+                  <ListGroup>
+                    {asset.resource.map((r) => (
+                      <ListGroup.Item>
+                        {r.i &&
+                          `${r.i}${r.units} infered ` + r.mi &&
+                          `${r.i}${r.units} M+I ` + r.type}
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
                 </Row>
               </Col>
             </Row>
