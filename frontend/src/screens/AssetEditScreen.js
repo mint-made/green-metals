@@ -119,7 +119,7 @@ const AssetEditScreen = ({ history, match }) => {
       {
         name: companyName,
         stakePercent,
-        ref: companyRef,
+        companyRef,
       },
     ]);
     setCompanyName('');

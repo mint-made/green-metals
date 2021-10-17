@@ -53,7 +53,7 @@ const AssetListScreen = ({ history }) => {
   const createCompanyHandler = () => {
     dispatch(createAsset());
   };
-
+  console.log(assets);
   return (
     <>
       <Row className='align-items-center'>
@@ -121,13 +121,13 @@ const AssetListScreen = ({ history }) => {
                     (res) => `${res.i + res.mi}${res.units} ${res.type}`
                   )}
                 </td>
-                <td className='p-0'>
-                  {asset.ownership.length > 0 && (
-                    <Link to={`/company/${asset.ownership[0].companyRef}`}>
-                      <div className=' p-2 '>
-                        <p className='mb-0 text-dark'>
-                          {asset.ownership
-                            ? `${asset.ownership[0].name} (${asset.ownership[0].stakePercent}%)`
+                <td className='p-2'>
+                  {asset.ownership.map((owner, index) => (
+                    <Link to={`/company/${owner.companyRef}`} key={index}>
+                      <div className=' '>
+                        <p className='m-0 text-dark'>
+                          {owner
+                            ? `${owner.name} (${owner.stakePercent}%)`
                             : '-'}
                           <span>
                             <i className='pl-1 fas fa-info-circle text-info'></i>
@@ -135,7 +135,7 @@ const AssetListScreen = ({ history }) => {
                         </p>
                       </div>
                     </Link>
-                  )}
+                  ))}
                 </td>
                 <td className='p-2'>
                   {userInfo && userInfo.isAdmin && (
