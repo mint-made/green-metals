@@ -109,7 +109,7 @@ export const createCompany = () => async (dispatch, getState) => {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
-    };
+    }; 
 
     const { data } = await axios.post('/api/companies', {}, config);
 

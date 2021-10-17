@@ -13,7 +13,7 @@ import Meta from '../components/Meta';
 const ProductEditScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
-  const companyId = match.params.id;
+  const companyId = match.params.id; 
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
