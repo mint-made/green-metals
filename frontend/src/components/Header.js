@@ -120,11 +120,18 @@ const Header = () => {
               </NavDropdown>
               <LinkContainer to='/compare'>
                 <Nav.Link>
-                  <i className='fas fa-chart-pie'></i> Compare
+                  <i className='fas fa-chart-pie'></i>
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+                <NavDropdown
+                  title={
+                    <>
+                      <i className='fas fa-user'></i>
+                    </>
+                  }
+                  id='username'
+                >
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

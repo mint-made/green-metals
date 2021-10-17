@@ -20,6 +20,7 @@ const AssetEditScreen = ({ history, match }) => {
   const [mi, setMi] = useState('');
   const [units, setUnits] = useState('');
   const [type, setType] = useState('');
+  const [resourceArray, setResourceArray] = useState([]);
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -51,6 +52,7 @@ const AssetEditScreen = ({ history, match }) => {
       setStage(asset.stage);
       setStudy(asset.study);
       setCountry(asset.location.country);
+      setResourceArray(asset.resource);
       if (asset.npv) {
         setNpv(asset.npv.value);
         setNpvDiscount(asset.npv.discount);
@@ -72,6 +74,23 @@ const AssetEditScreen = ({ history, match }) => {
     );
   };
 
+  const addResourceHandler = () => {
+    setResourceArray((resourceArray) => [
+      ...resourceArray,
+      {
+        i,
+        mi,
+        units,
+        type,
+      },
+    ]);
+    setI('');
+    setMi('');
+    setUnits('');
+    setType('');
+  };
+  console.log(resourceArray);
+  console.log(i, mi, units, type);
   return (
     <>
       {loadingUpdate && <Loader />}
@@ -190,16 +209,6 @@ const AssetEditScreen = ({ history, match }) => {
                 </Row>
                 <Row>
                   <Col>
-                    <Form.Group controlId='units'>
-                      <Form.Control
-                        type='name'
-                        placeholder='Units'
-                        value={units}
-                        onChange={(e) => setUnits(e.target.value)}
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col>
                     <Form.Group controlId='type'>
                       <Form.Control
                         as='select'
@@ -220,14 +229,61 @@ const AssetEditScreen = ({ history, match }) => {
                       </Form.Control>
                     </Form.Group>
                   </Col>
+                  <Col className='d-flex justify-content-between'>
+                    <Form.Group controlId='units'>
+                      <Form.Control
+                        as='select'
+                        placeholder='Units'
+                        value={units}
+                        onChange={(e) => {
+                          setUnits(e.target.value);
+                        }}
+                      >
+                        <option value='-'>-</option>
+                        <option value='mt'>mt</option>
+                        <option value='moz'>moz</option>
+                        <option value='mlbs'>mlbs</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <div className='d-flex align-items-center mb-3'>
+                      <Button
+                        variant='success'
+                        className='btn-sm px-2 py-1 ml-1 rounded'
+                        onClick={() => {
+                          addResourceHandler();
+                        }}
+                      >
+                        <i className='fas fa-plus'></i>
+                      </Button>
+                    </div>
+                  </Col>
                 </Row>
                 <Row className='d-flex justify-content-center'>
                   <ListGroup>
-                    {asset.resource.map((r) => (
-                      <ListGroup.Item>
-                        {r.i &&
-                          `${r.i}${r.units} infered ` + r.mi &&
-                          `${r.i}${r.units} M+I ` + r.type}
+                    {resourceArray.map((r, index) => (
+                      <ListGroup.Item
+                        key={index}
+                        className='d-flex justify-content-between'
+                      >
+                        <p className='m-0'>
+                          {r.i && r.mi
+                            ? `${r.i}${r.units} Inf. ${r.mi}${r.units} M+I ${r.type}`
+                            : r.i
+                            ? `${r.i}${r.units} Inf. ${r.type}`
+                            : r.mi
+                            ? `${r.mi}${r.units} M+I ${r.type}`
+                            : ''}
+                        </p>
+                        <Button
+                          variant='danger'
+                          className='btn-sm px-2 py-1 ml-2 rounded'
+                          onClick={() => {
+                            resourceArray.splice(index, 1);
+                            setResourceArray([...resourceArray]);
+                          }}
+                        >
+                          <i className='fas fa-trash'></i>
+                        </Button>
                       </ListGroup.Item>
                     ))}
                   </ListGroup>
