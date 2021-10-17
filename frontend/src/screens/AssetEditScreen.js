@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row, Button, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssetDetails, updateAsset } from '../actions/assetActions';
+import { listCompanies } from '../actions/companyActions';
 import { ASSET_UPDATE_RESET } from '../constants/assetConstants';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -14,16 +15,18 @@ const AssetEditScreen = ({ history, match }) => {
   const [stage, setStage] = useState('');
   const [study, setStudy] = useState('');
   const [country, setCountry] = useState('');
-  const [npv, setNpv] = useState(0);
+  const [npv, setNpv] = useState('');
   const [npvDiscount, setNpvDiscount] = useState(8);
   const [i, setI] = useState('');
   const [mi, setMi] = useState('');
   const [units, setUnits] = useState('');
   const [type, setType] = useState('');
   const [resourceArray, setResourceArray] = useState([]);
-  const [stakePercent, setStakePercent] = useState([]);
+  const [stakePercent, setStakePercent] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [companyRef, setCompanyRef] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [company, setCompany] = useState('');
+  const [ownershipArray, setOwnershipArray] = useState([]);
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -34,6 +37,9 @@ const AssetEditScreen = ({ history, match }) => {
     error: errorUpdate,
     success: successUpdate,
   } = assetUpdate;
+
+  const companyList = useSelector((state) => state.companyList);
+  const { loadingCompanies, errorCompanies, companies } = companyList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -56,12 +62,25 @@ const AssetEditScreen = ({ history, match }) => {
       setStudy(asset.study);
       setCountry(asset.location.country);
       setResourceArray(asset.resource);
+      setOwnershipArray(asset.ownership);
       if (asset.npv) {
         setNpv(asset.npv.value);
         setNpvDiscount(asset.npv.discount);
       }
     }
   }, [dispatch, history, assetId, asset, successUpdate, userInfo]);
+
+  // Whenever the component is re-rendered and term has changed, run this function
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (searchTerm) {
+        dispatch(listCompanies(searchTerm));
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -74,6 +93,7 @@ const AssetEditScreen = ({ history, match }) => {
         location: { country },
         npv: { value: npv, discount: npvDiscount },
         resource: resourceArray,
+        ownership: ownershipArray,
       })
     );
   };
@@ -93,7 +113,20 @@ const AssetEditScreen = ({ history, match }) => {
     setUnits('');
     setType('');
   };
-
+  const addOwnershipHandler = () => {
+    setOwnershipArray((ownershipArray) => [
+      ...ownershipArray,
+      {
+        name: companyName,
+        stakePercent,
+        ref: companyRef,
+      },
+    ]);
+    setCompanyName('');
+    setCompanyRef('');
+    setStakePercent('');
+  };
+  console.log(asset);
   return (
     <>
       {loadingUpdate && <Loader />}
@@ -198,19 +231,34 @@ const AssetEditScreen = ({ history, match }) => {
                     </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Group controlId='company'>
-                      <Form.Control
-                        as='select'
-                        value={company}
-                        onChange={(e) => {
-                          setCompany(e.target.value);
-                        }}
-                      >
-                        <option value='-'>-</option>
-                      </Form.Control>
-                    </Form.Group>
+                    {loadingCompanies ? (
+                      <Loader />
+                    ) : errorCompanies ? (
+                      <Message variant='danger'>{error}</Message>
+                    ) : (
+                      <Form.Group controlId='company'>
+                        <Form.Control
+                          as='select'
+                          value={`${companyRef},${companyName}`}
+                          onChange={(e) => {
+                            setCompanyName(e.target.value.split(',')[1]);
+                            setCompanyRef(e.target.value.split(',')[0]);
+                          }}
+                        >
+                          <option value='-'>Select Company</option>
+                          {companies.map((company, index) => (
+                            <option
+                              key={index}
+                              value={company._id + ',' + company.name}
+                            >
+                              {company.name}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Form.Group>
+                    )}
                   </Col>
-                  <Col>
+                  <Col className='d-flex justify-content-between'>
                     <Form.Group controlId='stakePercent'>
                       <Form.Control
                         type='name'
@@ -219,7 +267,44 @@ const AssetEditScreen = ({ history, match }) => {
                         onChange={(e) => setStakePercent(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
+                    <div className='d-flex align-items-center mb-3'>
+                      <Button
+                        variant='success'
+                        className='btn-sm px-2 py-1 ml-1 rounded'
+                        onClick={() => {
+                          addOwnershipHandler();
+                        }}
+                      >
+                        <i className='fas fa-plus'></i>
+                      </Button>
+                    </div>
                   </Col>
+                </Row>
+                <Row className='d-flex justify-content-center'>
+                  <ListGroup>
+                    {ownershipArray.map((owner, index) => (
+                      <ListGroup.Item
+                        key={index}
+                        className='d-flex justify-content-between'
+                      >
+                        <p className='m-0'>
+                          {`${owner.name} - ${owner.stakePercent}%`}
+                        </p>
+                        <div className='d-flex align-items-center'>
+                          <Button
+                            variant='danger'
+                            className='btn-sm px-2 py-1 ml-2 rounded'
+                            onClick={() => {
+                              ownershipArray.splice(index, 1);
+                              setOwnershipArray([...ownershipArray]);
+                            }}
+                          >
+                            <i className='fas fa-trash'></i>
+                          </Button>
+                        </div>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
                 </Row>
               </Col>
               <Col sm={3} md={4}>
