@@ -21,6 +21,9 @@ const AssetEditScreen = ({ history, match }) => {
   const [units, setUnits] = useState('');
   const [type, setType] = useState('');
   const [resourceArray, setResourceArray] = useState([]);
+  const [stakePercent, setStakePercent] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [company, setCompany] = useState('');
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -70,6 +73,7 @@ const AssetEditScreen = ({ history, match }) => {
         study,
         location: { country },
         npv: { value: npv, discount: npvDiscount },
+        resource: resourceArray,
       })
     );
   };
@@ -89,8 +93,7 @@ const AssetEditScreen = ({ history, match }) => {
     setUnits('');
     setType('');
   };
-  console.log(resourceArray);
-  console.log(i, mi, units, type);
+
   return (
     <>
       {loadingUpdate && <Loader />}
@@ -178,6 +181,42 @@ const AssetEditScreen = ({ history, match }) => {
                         placeholder='Enter Country'
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <p className='mb-2'>Ownership</p>
+                <Row>
+                  <Col>
+                    <Form.Group controlId='search'>
+                      <Form.Control
+                        placeholder='Search Companies'
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='company'>
+                      <Form.Control
+                        as='select'
+                        value={company}
+                        onChange={(e) => {
+                          setCompany(e.target.value);
+                        }}
+                      >
+                        <option value='-'>-</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='stakePercent'>
+                      <Form.Control
+                        type='name'
+                        placeholder='Stake Percent'
+                        value={stakePercent}
+                        onChange={(e) => setStakePercent(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
                   </Col>
@@ -274,23 +313,24 @@ const AssetEditScreen = ({ history, match }) => {
                             ? `${r.mi}${r.units} M+I ${r.type}`
                             : ''}
                         </p>
-                        <Button
-                          variant='danger'
-                          className='btn-sm px-2 py-1 ml-2 rounded'
-                          onClick={() => {
-                            resourceArray.splice(index, 1);
-                            setResourceArray([...resourceArray]);
-                          }}
-                        >
-                          <i className='fas fa-trash'></i>
-                        </Button>
+                        <div className='d-flex align-items-center'>
+                          <Button
+                            variant='danger'
+                            className='btn-sm px-2 py-1 ml-2 rounded'
+                            onClick={() => {
+                              resourceArray.splice(index, 1);
+                              setResourceArray([...resourceArray]);
+                            }}
+                          >
+                            <i className='fas fa-trash'></i>
+                          </Button>
+                        </div>
                       </ListGroup.Item>
                     ))}
                   </ListGroup>
                 </Row>
               </Col>
             </Row>
-
             <Button type='submit' variant='success'>
               Update
             </Button>
