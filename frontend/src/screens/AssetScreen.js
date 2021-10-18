@@ -64,29 +64,40 @@ const AssetScreen = ({ match }) => {
                       </td>
                     </tr>
                     <tr>
-                      <td>Share Price</td>
+                      <td>Stage</td>
+                      <td>{asset.stage}</td>
+                    </tr>
+                    <tr>
+                      <td>Resource</td>
                       <td>
-                        {company.trading.currency}
-                        {company.trading.price}
+                        {asset.resource.map((r, index) => (
+                          <ListGroup.Item
+                            key={index}
+                            className='d-flex justify-content-between'
+                          >
+                            <p className='m-0'>
+                              {r.i && r.mi
+                                ? `${r.i}${r.units} Inf. ${r.mi}${r.units} M+I ${r.type}`
+                                : r.i
+                                ? `${r.i}${r.units} Inf. ${r.type}`
+                                : r.mi
+                                ? `${r.mi}${r.units} M+I ${r.type}`
+                                : ''}
+                            </p>
+                          </ListGroup.Item>
+                        ))}
                       </td>
                     </tr>
                     <tr>
-                      <td>Market Cap</td>
-                      <td>
-                        <Badge variant='primary'>
-                          <ConvMcap company={company} />
-                        </Badge>
-                      </td>
+                      <td>Study</td>
+                      <td>{asset.study}</td>
                     </tr>
                     <tr>
-                      <td>Shares Issued</td>
+                      <td>Net Present Value</td>
                       <td>
-                        <NumFormat number={company.issuedShares} dp='2' />
+                        {asset.npv &&
+                          `${asset.npv.value}^${asset.npv.discount}`}
                       </td>
-                    </tr>
-                    <tr>
-                      <td>Primary Commodity</td>
-                      <td>{company.primaryCommodity}</td>
                     </tr>
                   </tbody>
                 </Table>

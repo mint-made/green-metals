@@ -17,6 +17,7 @@ import CompanyEditScreen from './screens/CompanyEditScreen';
 import ExploreCompaniesScreen from './screens/ExploreCompaniesScreen';
 import AssetListScreen from './screens/AssetListScreen';
 import AssetEditScreen from './screens/AssetEditScreen';
+import AssetScreen from './screens/AssetScreen';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/login' component={LoginScreen} />
           <Route path='/profile' component={ProfileScreen} />
           <Route path='/company/:id' component={CompanyScreen} />
+          <Route path='/asset/:id' component={AssetScreen} />
           <Route path='/compare' component={CompareScreen} />
 
           <Route path='/admin/userlist' component={UserListScreen} />
