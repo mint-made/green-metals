@@ -9,6 +9,7 @@ import {
   Card,
   Table,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { listAssetDetails } from '../actions/assetActions';
 import Loader from '../components/Loader';
@@ -97,6 +98,32 @@ const AssetScreen = ({ match }) => {
                       <td>
                         {asset.npv &&
                           `${asset.npv.value}^${asset.npv.discount}`}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ownership</td>
+                      <td>
+                        {asset.ownership && (
+                          <ListGroup>
+                            {asset.ownership.map((owner, index) => (
+                              <Link
+                                to={`/company/${owner.companyRef}`}
+                                key={index}
+                              >
+                                <div className=' '>
+                                  <p className='m-0 text-dark'>
+                                    {owner
+                                      ? `${owner.name} (${owner.stakePercent}%)`
+                                      : '-'}
+                                    <span>
+                                      <i className='pl-1 fas fa-info-circle text-info'></i>
+                                    </span>
+                                  </p>
+                                </div>
+                              </Link>
+                            ))}
+                          </ListGroup>
+                        )}
                       </td>
                     </tr>
                   </tbody>
