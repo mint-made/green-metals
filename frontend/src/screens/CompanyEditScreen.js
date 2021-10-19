@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listCompanyDetails, updateCompany } from '../actions/companyActions';
+import { listAssets } from '../actions/assetActions';
 import { COMPANY_UPDATE_RESET } from '../constants/companyConstants';
 import NumFormat from '../components/NumFormat';
 import { getCurrency } from '../actions/currencyActions';
@@ -13,7 +14,7 @@ import Meta from '../components/Meta';
 const ProductEditScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
-  const companyId = match.params.id; 
+  const companyId = match.params.id;
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
@@ -25,6 +26,9 @@ const ProductEditScreen = ({ match, history }) => {
   const [currency, setCurrency] = useState('');
   const [price, setPrice] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [assetRef, setAssetRef] = useState('');
+  const [assetName, setAssetName] = useState('');
 
   const companyDetails = useSelector((state) => state.companyDetails);
   const { loading, error, company } = companyDetails;
@@ -42,6 +46,9 @@ const ProductEditScreen = ({ match, history }) => {
     error: errorCurrency,
     currency: currencyConv,
   } = currencyList;
+
+  const assetList = useSelector((state) => state.assetList);
+  const { loadingAssets, errorAssets, assets } = assetList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -82,6 +89,18 @@ const ProductEditScreen = ({ match, history }) => {
     currencyConv,
     userInfo,
   ]);
+
+  // Whenever the component is re-rendered and term has changed, run this function
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (searchTerm) {
+        dispatch(listAssets(searchTerm));
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm, dispatch]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -342,6 +361,45 @@ const ProductEditScreen = ({ match, history }) => {
                         <NumFormat number={mcap()} dp='2' />
                       </Badge>
                     </h3>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group controlId='search'>
+                      <Form.Control
+                        placeholder='Search Companies'
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    {loadingAssets ? (
+                      <Loader />
+                    ) : errorAssets ? (
+                      <Message variant='danger'>{error}</Message>
+                    ) : (
+                      <Form.Group controlId='company'>
+                        <Form.Control
+                          as='select'
+                          value={`${assetRef},${assetName}`}
+                          onChange={(e) => {
+                            setAssetName(e.target.value.split(',')[1]);
+                            setAssetRef(e.target.value.split(',')[0]);
+                          }}
+                        >
+                          <option value='-'>Select Company</option>
+                          {assets.map((asset, index) => (
+                            <option
+                              key={index}
+                              value={asset._id + ',' + asset.name}
+                            >
+                              {asset.name}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Form.Group>
+                    )}
                   </Col>
                 </Row>
                 <Button type='submit' variant='success'>
