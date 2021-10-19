@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Button, Row, Col, Image, Badge } from 'react-bootstrap';
+import {
+  Form,
+  Button,
+  Row,
+  Col,
+  Image,
+  Badge,
+  ListGroup,
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -29,6 +37,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [assetRef, setAssetRef] = useState('');
   const [assetName, setAssetName] = useState('');
+  const [assetArray, setAssetArray] = useState([]);
 
   const companyDetails = useSelector((state) => state.companyDetails);
   const { loading, error, company } = companyDetails;
@@ -95,6 +104,7 @@ const ProductEditScreen = ({ match, history }) => {
     const timerId = setTimeout(() => {
       if (searchTerm) {
         dispatch(listAssets(searchTerm));
+        console.log(searchTerm);
       }
     }, 1000);
     return () => {
@@ -185,6 +195,19 @@ const ProductEditScreen = ({ match, history }) => {
       default:
         return value;
     }
+  };
+
+  const addAssetHandler = () => {
+    setAssetArray((assetArray) => [
+      ...assetArray,
+      {
+        name: assetName,
+        assetRef,
+      },
+    ]);
+    setAssetName('');
+    setAssetRef('');
+    //setAssetPercent('');
   };
 
   return (
@@ -388,7 +411,7 @@ const ProductEditScreen = ({ match, history }) => {
                             setAssetRef(e.target.value.split(',')[0]);
                           }}
                         >
-                          <option value='-'>Select Company</option>
+                          <option value='-'>Select Asset</option>
                           {assets.map((asset, index) => (
                             <option
                               key={index}
@@ -400,7 +423,44 @@ const ProductEditScreen = ({ match, history }) => {
                         </Form.Control>
                       </Form.Group>
                     )}
+                    <div className='d-flex align-items-center mb-3'>
+                      <Button
+                        variant='success'
+                        className='btn-sm px-2 py-1 ml-1 rounded'
+                        onClick={() => {
+                          addAssetHandler();
+                        }}
+                      >
+                        <i className='fas fa-plus'></i>
+                      </Button>
+                    </div>
                   </Col>
+                </Row>
+                <Row className='d-flex justify-content-center'>
+                  <ListGroup>
+                    {assetArray.map((owner, index) => (
+                      <ListGroup.Item
+                        key={index}
+                        className='d-flex justify-content-between'
+                      >
+                        <p className='m-0'>
+                          {`${owner.name} - ${owner.stakePercent}%`}
+                        </p>
+                        <div className='d-flex align-items-center'>
+                          <Button
+                            variant='danger'
+                            className='btn-sm px-2 py-1 ml-2 rounded'
+                            onClick={() => {
+                              assetArray.splice(index, 1);
+                              setAssetArray([...assetArray]);
+                            }}
+                          >
+                            <i className='fas fa-trash'></i>
+                          </Button>
+                        </div>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
                 </Row>
                 <Button type='submit' variant='success'>
                   Update
