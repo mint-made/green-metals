@@ -37,6 +37,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [assetRef, setAssetRef] = useState('');
   const [assetName, setAssetName] = useState('');
+  const [stakePercent, setStakePercent] = useState('');
   const [assetArray, setAssetArray] = useState([]);
 
   const companyDetails = useSelector((state) => state.companyDetails);
@@ -203,11 +204,12 @@ const ProductEditScreen = ({ match, history }) => {
       {
         name: assetName,
         assetRef,
+        stakePercent,
       },
     ]);
     setAssetName('');
     setAssetRef('');
-    //setAssetPercent('');
+    setStakePercent('');
   };
 
   return (
@@ -423,6 +425,16 @@ const ProductEditScreen = ({ match, history }) => {
                         </Form.Control>
                       </Form.Group>
                     )}
+                  </Col>
+                  <Col className='d-flex justify-content-between'>
+                    <Form.Group controlId='stakePercent'>
+                      <Form.Control
+                        type='name'
+                        placeholder='Stake Percent'
+                        value={stakePercent}
+                        onChange={(e) => setStakePercent(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
                     <div className='d-flex align-items-center mb-3'>
                       <Button
                         variant='success'
