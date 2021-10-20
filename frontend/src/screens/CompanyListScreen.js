@@ -162,16 +162,18 @@ const ProductListScreen = ({ history, match }) => {
             <tbody>
               {companies.map((company) => (
                 <tr key={company._id}>
-                  <Link to={`/company/${company._id}`}>
-                    <div className='d-flex justify-content-between p-2 '>
-                      <p className='mb-0 text-dark'>
-                        {company.name}
-                        <span>
-                          <i className='pl-1 fas fa-info-circle text-info'></i>
-                        </span>
-                      </p>
-                    </div>
-                  </Link>
+                  <td>
+                    <Link to={`/company/${company._id}`}>
+                      <div className='d-flex justify-content-between p-2 '>
+                        <p className='mb-0 text-dark'>
+                          {company.name}
+                          <span>
+                            <i className='pl-1 fas fa-info-circle text-info'></i>
+                          </span>
+                        </p>
+                      </div>
+                    </Link>
+                  </td>
                   <td className='p-2'>
                     {company.trading.exchange}:{company.trading.ticker}
                   </td>

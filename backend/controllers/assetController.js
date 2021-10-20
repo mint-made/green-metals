@@ -6,7 +6,16 @@ import Asset from '../models/assetModel.js';
 // @route GET /api/assets
 // @access Public
 const getAssets = asyncHandler(async (req, res) => {
-  const assets = await Asset.find({});
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const assets = await Asset.find({ ...keyword });
   res.json(assets);
 });
 
