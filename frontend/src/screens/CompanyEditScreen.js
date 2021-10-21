@@ -89,6 +89,7 @@ const ProductEditScreen = ({ match, history }) => {
       setCurrency(company.trading.currency);
       setPrice(company.trading.price);
       setLogo(company.logo);
+      setAssetArray(company.assets);
     }
   }, [
     dispatch,
@@ -153,6 +154,7 @@ const ProductEditScreen = ({ match, history }) => {
           currency,
           price,
         },
+        assets: assetArray,
       })
     );
   };
@@ -211,6 +213,9 @@ const ProductEditScreen = ({ match, history }) => {
     setAssetRef('');
     setStakePercent('');
   };
+
+  //**Remove */
+  console.log(company);
 
   return (
     <>

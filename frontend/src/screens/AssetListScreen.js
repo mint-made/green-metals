@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Table, Button, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Table, Button, Row, Col, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssets, deleteAsset, createAsset } from '../actions/assetActions';
@@ -10,6 +10,8 @@ import { ASSET_CREATE_RESET } from '../constants/assetConstants';
 
 const AssetListScreen = ({ history }) => {
   const dispatch = useDispatch();
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   const assetList = useSelector((state) => state.assetList);
   const { loading, error, assets } = assetList;
@@ -44,6 +46,19 @@ const AssetListScreen = ({ history }) => {
     }
   }, [dispatch, successDelete, createdAsset, successCreate, history]);
 
+  // Whenever the component is re-rendered and term has changed, run this function
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (searchTerm) {
+        dispatch(listAssets(searchTerm));
+        console.log(searchTerm);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm, dispatch]);
+
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
       dispatch(deleteAsset(id));
@@ -59,6 +74,17 @@ const AssetListScreen = ({ history }) => {
       <Row className='align-items-center'>
         <Col>
           <h1>Assets</h1>
+        </Col>
+        <Col>
+          <Col>
+            <Form.Group controlId='search'>
+              <Form.Control
+                placeholder='Search Companies'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
         </Col>
         <Col className='text-right d-flex justify-content-around my-3'>
           {userInfo && userInfo.isAdmin && (
