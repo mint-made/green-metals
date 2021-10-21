@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Row, Col, Form } from 'react-bootstrap';
+import { Table, Button, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssets, deleteAsset, createAsset } from '../actions/assetActions';
@@ -7,9 +7,11 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
 import { ASSET_CREATE_RESET } from '../constants/assetConstants';
+import capitalize from '../components/util';
 
-const AssetListScreen = ({ history }) => {
+const AssetListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
+  const metal = match.params.metal;
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -42,9 +44,9 @@ const AssetListScreen = ({ history }) => {
     if (successCreate) {
       history.push(`/admin/asset/${createdAsset._id}/edit`);
     } else {
-      dispatch(listAssets());
+      dispatch(listAssets(metal));
     }
-  }, [dispatch, successDelete, createdAsset, successCreate, history]);
+  }, [dispatch, successDelete, createdAsset, successCreate, history, metal]);
 
   // Whenever the component is re-rendered and term has changed, run this function
   useEffect(() => {
@@ -72,8 +74,15 @@ const AssetListScreen = ({ history }) => {
   return (
     <>
       <Row className='align-items-center'>
-        <Col>
-          <h1>Assets</h1>
+        <Col xs={4}>
+          <Breadcrumb>
+            <Breadcrumb.Item href='/assets'>Assets</Breadcrumb.Item>
+            {metal && (
+              <Breadcrumb.Item href={`/assets/${metal}`}>
+                {capitalize(metal)}
+              </Breadcrumb.Item>
+            )}
+          </Breadcrumb>
         </Col>
         <Col>
           <Col>
