@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row, Button, Form, ListGroup } from 'react-bootstrap';
+import axios from 'axios';
+import { Col, Row, Button, Form, ListGroup, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssetDetails, updateAsset } from '../actions/assetActions';
 import { listCompanies } from '../actions/companyActions';
@@ -16,6 +17,8 @@ const AssetEditScreen = ({ history, match }) => {
   const [study, setStudy] = useState('');
   const [country, setCountry] = useState('');
   const [link, setLink] = useState('');
+  const [image, setImage] = useState('');
+  const [uploading, setUploading] = useState(false);
   const [npv, setNpv] = useState('');
   const [npvDiscount, setNpvDiscount] = useState('');
   const [i, setI] = useState('');
@@ -65,6 +68,7 @@ const AssetEditScreen = ({ history, match }) => {
       setResourceArray(asset.resource);
       setOwnershipArray(asset.ownership);
       setLink(asset.link || '');
+      setImage(asset.image || '');
       if (asset.npv) {
         setNpv(asset.npv.value);
         setNpvDiscount(asset.npv.discount);
@@ -84,6 +88,29 @@ const AssetEditScreen = ({ history, match }) => {
     };
   }, [searchTerm, dispatch]);
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      setImage(data.imagePath);
+      setUploading(false);
+    } catch (e) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
@@ -93,6 +120,7 @@ const AssetEditScreen = ({ history, match }) => {
         stage,
         study,
         link,
+        image,
         location: { country },
         npv: { value: npv, discount: npvDiscount },
         resource: resourceArray,
@@ -320,6 +348,13 @@ const AssetEditScreen = ({ history, match }) => {
                     ))}
                   </ListGroup>
                 </Row>
+                <Row>
+                  <Col>
+                    <Button type='submit' variant='success'>
+                      Update
+                    </Button>
+                  </Col>
+                </Row>
               </Col>
               <Col sm={3} md={4}>
                 <p className='mb-2'>Resource</p>
@@ -428,11 +463,27 @@ const AssetEditScreen = ({ history, match }) => {
                     ))}
                   </ListGroup>
                 </Row>
+                <Row className='d-flex justify-content-center'>
+                  <Form.Group controlId='image'>
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                      type='text'
+                      placeholder='Enter Image URL'
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                    ></Form.Control>
+                    <Form.File
+                      id='image-file'
+                      label='File'
+                      custom
+                      onChange={uploadFileHandler}
+                    ></Form.File>
+                    {uploading && <Loader />}
+                  </Form.Group>
+                  <Image src={image} fluid />
+                </Row>
               </Col>
             </Row>
-            <Button type='submit' variant='success'>
-              Update
-            </Button>
           </Form>
         </>
       )}

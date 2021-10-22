@@ -84,6 +84,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     study,
     ownership,
     resource,
+    image,
     link,
     location: { country } = {},
     npv: { value, discount } = {},
@@ -96,6 +97,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     asset.stage = stage || asset.stage;
     asset.study = study || asset.study;
     asset.link = link || asset.link;
+    asset.image = image || asset.image;
     asset.ownership = ownership || asset.ownership;
     asset.resource = resource || asset.resource;
     asset.location = {
