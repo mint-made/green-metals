@@ -38,14 +38,10 @@ const AssetScreen = ({ match }) => {
           <Row>
             <Col>
               <ListGroup variant='flush'>
-                <Image
-                  src='frontend/public/images/sample.jpeg'
-                  fluid
-                  style={{ maxHeight: '180px' }}
-                />
+                <Image src={asset.image} fluid />
                 <Button
                   className='btn btn-dark my-3'
-                  href='https://www.google.com'
+                  href={asset.link}
                   target='_blank'
                 >
                   Asset Website
