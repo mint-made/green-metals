@@ -19,12 +19,14 @@ import {
 } from '../constants/assetConstants';
 
 export const listAssets =
-  (keyword = '') =>
+  (keyword = '', metal = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: ASSET_LIST_REQUEST });
 
-      const { data } = await axios.get(`/api/assets?keyword=${keyword}`);
+      const { data } = await axios.get(
+        `/api/assets?keyword=${keyword}&metal=${metal}`
+      );
 
       dispatch({
         type: ASSET_LIST_SUCCESS,

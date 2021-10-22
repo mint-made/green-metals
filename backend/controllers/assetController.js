@@ -14,7 +14,20 @@ const getAssets = asyncHandler(async (req, res) => {
         },
       }
     : {};
+  const metal = req.query.metal
+    ? {
+        resource: {
+          $elemMatch: {
+            type: {
+              $regex: req.query.metal,
+              $options: 'i',
+            },
+          },
+        },
+      }
+    : {};
 
+  console.log(req.query);
   const assets = await Asset.find({ ...keyword });
   res.json(assets);
 });

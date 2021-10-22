@@ -3,6 +3,7 @@ import { Table, Button, Row, Col, Form, Breadcrumb } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssets, deleteAsset, createAsset } from '../actions/assetActions';
+import { useLocation } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,10 @@ import capitalize from '../components/util';
 
 const AssetListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const metal = match.params.metal;
+  const keyword = useQuery().get('q') || '';
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -39,27 +43,39 @@ const AssetListScreen = ({ history, match }) => {
   useEffect(() => {
     dispatch({ type: ASSET_CREATE_RESET });
 
-    dispatch(listAssets());
+    dispatch(listAssets(keyword, metal));
 
     if (successCreate) {
       history.push(`/admin/asset/${createdAsset._id}/edit`);
-    } else {
-      dispatch(listAssets(metal));
     }
-  }, [dispatch, successDelete, createdAsset, successCreate, history, metal]);
+  }, [
+    keyword,
+    dispatch,
+    successDelete,
+    createdAsset,
+    successCreate,
+    metal,
+    history,
+  ]);
 
   // Whenever the component is re-rendered and term has changed, run this function
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (searchTerm) {
-        dispatch(listAssets(searchTerm));
-        console.log(searchTerm);
+        history.push(`${location.pathname}?q=${searchTerm}`);
+      }
+      if (!searchTerm && keyword) {
+        history.push(`${location.pathname}`);
       }
     }, 1000);
     return () => {
       clearTimeout(timerId);
     };
-  }, [searchTerm, dispatch]);
+  }, [searchTerm, history, location, keyword]);
+
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -70,7 +86,7 @@ const AssetListScreen = ({ history, match }) => {
   const createCompanyHandler = () => {
     dispatch(createAsset());
   };
-  console.log(assets);
+
   return (
     <>
       <Row className='align-items-center'>
