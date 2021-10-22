@@ -28,7 +28,7 @@ const getAssets = asyncHandler(async (req, res) => {
     : {};
 
   console.log(req.query);
-  const assets = await Asset.find({ ...keyword });
+  const assets = await Asset.find({ ...keyword, ...metal });
   res.json(assets);
 });
 

@@ -104,17 +104,17 @@ const AssetListScreen = ({ history, match }) => {
           <Col>
             <Form.Group controlId='search'>
               <Form.Control
-                placeholder='Search Companies'
+                placeholder='Search Assets'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Form.Group>
           </Col>
         </Col>
-        <Col className='text-right d-flex justify-content-around my-3'>
+        <Col className='text-right d-flex justify-content-end mb-3'>
           {userInfo && userInfo.isAdmin && (
             <Button onClick={createCompanyHandler} variant='success'>
-              <i className='fas fa-plus'></i> Create Company
+              <i className='fas fa-plus'></i> Asset
             </Button>
           )}
         </Col>
