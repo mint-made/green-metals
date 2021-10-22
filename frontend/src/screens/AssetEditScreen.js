@@ -15,8 +15,9 @@ const AssetEditScreen = ({ history, match }) => {
   const [stage, setStage] = useState('');
   const [study, setStudy] = useState('');
   const [country, setCountry] = useState('');
+  const [link, setLink] = useState('');
   const [npv, setNpv] = useState('');
-  const [npvDiscount, setNpvDiscount] = useState(8);
+  const [npvDiscount, setNpvDiscount] = useState('');
   const [i, setI] = useState('');
   const [mi, setMi] = useState('');
   const [units, setUnits] = useState('');
@@ -57,12 +58,13 @@ const AssetEditScreen = ({ history, match }) => {
     if (!asset.name || asset._id !== assetId) {
       dispatch(listAssetDetails(assetId));
     } else {
-      setName(asset.name);
-      setStage(asset.stage);
-      setStudy(asset.study);
+      setName(asset.name || '');
+      setStage(asset.stage || '');
+      setStudy(asset.study || '');
       setCountry(asset.location.country);
       setResourceArray(asset.resource);
       setOwnershipArray(asset.ownership);
+      setLink(asset.link || '');
       if (asset.npv) {
         setNpv(asset.npv.value);
         setNpvDiscount(asset.npv.discount);
@@ -90,6 +92,7 @@ const AssetEditScreen = ({ history, match }) => {
         name,
         stage,
         study,
+        link,
         location: { country },
         npv: { value: npv, discount: npvDiscount },
         resource: resourceArray,
@@ -126,7 +129,7 @@ const AssetEditScreen = ({ history, match }) => {
     setCompanyRef('');
     setStakePercent('');
   };
-  console.log(asset);
+
   return (
     <>
       {loadingUpdate && <Loader />}
@@ -214,6 +217,17 @@ const AssetEditScreen = ({ history, match }) => {
                         placeholder='Enter Country'
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='link'>
+                      <Form.Label>Link</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='Enter Link'
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
                   </Col>

@@ -52,10 +52,7 @@ const getAssetById = asyncHandler(async (req, res) => {
 const createAsset = asyncHandler(async (req, res) => {
   const asset = new Asset({
     user: req.user._id,
-    name: 'Racecourse',
     location: { country: 'Australia' },
-    stage: 'Exploration',
-    study: '-',
   });
 
   const createdAsset = await asset.save();
@@ -87,6 +84,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     study,
     ownership,
     resource,
+    link,
     location: { country } = {},
     npv: { value, discount } = {},
   } = req.body;
@@ -97,6 +95,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     asset.name = name || asset.name;
     asset.stage = stage || asset.stage;
     asset.study = study || asset.study;
+    asset.link = link || asset.link;
     asset.ownership = ownership || asset.ownership;
     asset.resource = resource || asset.resource;
     asset.location = {

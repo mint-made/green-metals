@@ -6,14 +6,21 @@ const assetSchema = new mongoose.Schema({
     required: true,
     ref: 'User',
   },
-  name: { type: String, required: true },
+  name: { type: String },
+  stage: { type: String },
+  study: { type: String },
+  link: { type: String },
+  image: { type: String },
   location: {
     country: { type: String, required: true },
     province: { type: String },
     lat: { type: Number },
     lng: { type: Number },
   },
-  stage: { type: String, required: true },
+  npv: {
+    value: { type: Number },
+    discount: { type: Number },
+  },
   ownership: [
     {
       name: { type: String, required: true },
@@ -24,7 +31,6 @@ const assetSchema = new mongoose.Schema({
       },
     },
   ],
-  study: { type: String, required: true },
   resource: [
     {
       i: { type: Number },
@@ -33,10 +39,6 @@ const assetSchema = new mongoose.Schema({
       type: { type: String },
     },
   ],
-  npv: {
-    value: { type: Number },
-    discount: { type: Number },
-  },
 });
 
 const Asset = mongoose.model('Asset', assetSchema);
