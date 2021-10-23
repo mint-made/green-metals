@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAssetDetails } from '../actions/assetActions';
-import { Table, Card } from 'react-bootstrap';
+import { Table, Card, Badge, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import NumFormat from '../components/NumFormat';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
@@ -44,13 +45,9 @@ const AssetSummary = ({ assetRef, companyRef }) => {
               </Link>
             </Card.Title>
 
-            <Card.Body className='pt-0'>
+            <Card.Body className='p-0'>
               <Table className='mb-0' size='sm'>
                 <tbody>
-                  <tr>
-                    <td>Stake Percent</td>
-                    <td></td>
-                  </tr>
                   <tr>
                     <td>Location</td>
                     <td>
@@ -58,6 +55,44 @@ const AssetSummary = ({ assetRef, companyRef }) => {
                       {asset.location.province
                         ? `, ${asset.location.province}`
                         : ''}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Stage</td>
+                    <td>{asset.stage}</td>
+                  </tr>
+                  <tr>
+                    <td>Study</td>
+                    <td>{asset.study}</td>
+                  </tr>
+                  {asset.npv && asset.npv.value ? (
+                    <tr>
+                      <td>
+                        NPV<sub>{asset.npv.discount}%</sub>
+                      </td>
+                      <td>
+                        <Badge variant='primary'>
+                          $<NumFormat number={asset.npv.value} dp='2' />
+                        </Badge>
+                      </td>
+                    </tr>
+                  ) : (
+                    ''
+                  )}
+                  <tr>
+                    <td>Resource</td>
+                    <td>
+                      {asset.resource.map((r, index) => (
+                        <p key={index} className='m-0'>
+                          {r.i && r.mi
+                            ? `${r.i}${r.units} Inf. & ${r.mi}${r.units} M+I ${r.type}`
+                            : r.i
+                            ? `${r.i}${r.units} Inf. ${r.type}`
+                            : r.mi
+                            ? `${r.mi}${r.units} M+I ${r.type}`
+                            : ''}
+                        </p>
+                      ))}
                     </td>
                   </tr>
                 </tbody>

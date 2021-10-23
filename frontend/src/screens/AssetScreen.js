@@ -74,7 +74,10 @@ const AssetScreen = ({ match }) => {
                     <tr>
                       <td>Location</td>
                       <td>
-                        {asset.location.country} {asset.location.province}
+                        {asset.location.country}
+                        {asset.location.province
+                          ? `, ${asset.location.province}`
+                          : ''}
                       </td>
                     </tr>
                     <tr>
