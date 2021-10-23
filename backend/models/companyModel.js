@@ -1,14 +1,5 @@
 import mongoose from 'mongoose';
 
-const assetSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  stakePercent: { type: Number, required: true },
-  assetRef: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Asset',
-  },
-});
-
 const companySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -47,7 +38,19 @@ const companySchema = new mongoose.Schema({
     price: { type: Number, required: true },
     mcap: { type: Number, required: true },
   },
-  assets: [assetSchema],
+  assets: [
+    {
+      assetRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Asset',
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 const Company = mongoose.model('Company', companySchema);

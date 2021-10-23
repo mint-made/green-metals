@@ -9,6 +9,7 @@ import {
   Badge,
   ListGroup,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -37,8 +38,8 @@ const ProductEditScreen = ({ match, history }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [assetRef, setAssetRef] = useState('');
   const [assetName, setAssetName] = useState('');
-  const [stakePercent, setStakePercent] = useState('');
   const [assetArray, setAssetArray] = useState([]);
+  const [typing, setTyping] = useState(false);
 
   const companyDetails = useSelector((state) => state.companyDetails);
   const { loading, error, company } = companyDetails;
@@ -108,9 +109,11 @@ const ProductEditScreen = ({ match, history }) => {
         dispatch(listAssets(searchTerm));
         console.log(searchTerm);
       }
+      setTyping(false);
     }, 500);
     return () => {
       clearTimeout(timerId);
+      setTyping(true);
     };
   }, [searchTerm, dispatch]);
 
@@ -204,18 +207,13 @@ const ProductEditScreen = ({ match, history }) => {
     setAssetArray((assetArray) => [
       ...assetArray,
       {
-        name: assetName,
         assetRef,
-        stakePercent,
+        name: assetName,
       },
     ]);
     setAssetName('');
     setAssetRef('');
-    setStakePercent('');
   };
-
-  //**Remove */
-  console.log(company);
 
   return (
     <>
@@ -257,7 +255,9 @@ const ProductEditScreen = ({ match, history }) => {
                 ></Form.File>
                 {uploading && <Loader />}
               </Form.Group>
-              <Image src={logo} fluid />
+              <Link to={`/company/${company._id}`}>
+                <Image src={logo} fluid />
+              </Link>
             </Col>
             <Col sm={9} md={8}>
               <Form onSubmit={submitHandler}>
@@ -403,9 +403,9 @@ const ProductEditScreen = ({ match, history }) => {
                       />
                     </Form.Group>
                   </Col>
-                  <Col>
-                    {loadingAssets ? (
-                      <Loader />
+                  <Col className='d-flex justify-content-around'>
+                    {loadingAssets || typing ? (
+                      <Loader size='20' />
                     ) : errorAssets ? (
                       <Message variant='danger'>{error}</Message>
                     ) : (
@@ -430,16 +430,6 @@ const ProductEditScreen = ({ match, history }) => {
                         </Form.Control>
                       </Form.Group>
                     )}
-                  </Col>
-                  <Col className='d-flex justify-content-between'>
-                    <Form.Group controlId='stakePercent'>
-                      <Form.Control
-                        type='name'
-                        placeholder='Stake Percent'
-                        value={stakePercent}
-                        onChange={(e) => setStakePercent(e.target.value)}
-                      ></Form.Control>
-                    </Form.Group>
                     <div className='d-flex align-items-center mb-3'>
                       <Button
                         variant='success'
@@ -460,9 +450,7 @@ const ProductEditScreen = ({ match, history }) => {
                         key={index}
                         className='d-flex justify-content-between'
                       >
-                        <p className='m-0'>
-                          {`${owner.name} - ${owner.stakePercent}%`}
-                        </p>
+                        <p className='m-0'>{owner.name}</p>
                         <div className='d-flex align-items-center'>
                           <Button
                             variant='danger'
