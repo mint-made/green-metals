@@ -14,7 +14,6 @@ const getAssets = asyncHandler(async (req, res) => {
         },
       }
     : {};
-
   const country = req.query.keyword
     ? {
         'location.country': {
@@ -35,10 +34,18 @@ const getAssets = asyncHandler(async (req, res) => {
         },
       }
     : {};
+  const assetRefArray = req.query.assetRefs.split('-');
+  console.log(assetRefArray);
 
   console.log(req.query);
-  const assets = await Asset.find({ $or: [keyword, country], ...metal });
-  res.json(assets);
+  if (!assetRefArray) {
+    const assets = await Asset.find({ $or: [keyword, country], ...metal });
+    res.json(assets);
+  } else {
+    console.log('assetRefArray');
+    const assets = await Asset.find({ _id: { $in: assetRefArray } });
+    res.json(assets);
+  }
 });
 
 // @description Fetch a single asset

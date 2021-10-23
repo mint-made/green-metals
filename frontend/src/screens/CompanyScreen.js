@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Image, ListGroup, Button } from 'react-bootstrap';
 
 import { listCompanyDetails } from '../actions/companyActions';
+import { listAssets } from '../actions/assetActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import AssetSummary from '../components/AssetSummary';
@@ -15,15 +16,24 @@ const CompanyScreen = ({ match }) => {
   const companyDetails = useSelector((state) => state.companyDetails);
   const { loading, error, company } = companyDetails;
 
+  const assetList = useSelector((state) => state.assetList);
+  const { assetsLoading, assetsError, assets } = assetList;
+
   useEffect(() => {
     dispatch(listCompanyDetails(match.params.id));
+
+    if (company.assets[0]) {
+      const assetRefArray = company.assets.map((asset) => asset.assetRef);
+      dispatch(listAssets('', '', assetRefArray));
+    }
   }, [dispatch, match]);
+  console.log(assets);
 
   return (
     <>
-      {loading ? (
+      {loading || assetsLoading ? (
         <Loader />
-      ) : error ? (
+      ) : error || assetsError ? (
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
@@ -56,6 +66,7 @@ const CompanyScreen = ({ match }) => {
           <Row className='d-flex justify-content-center'>
             {company.assets.map((asset) => (
               <Col key={asset._id} md={4}>
+                <h2>{asset.name}</h2>
                 <AssetSummary
                   assetRef={asset.assetRef}
                   companyRef={company._id}

@@ -15,9 +15,28 @@ const AssetSummary = ({ assetRef, companyRef }) => {
   const { loading, error, asset } = assetDetails;
 
   useEffect(() => {
-    dispatch(listAssetDetails(assetRef));
+    if (assetRef !== asset._id) {
+      dispatch(listAssetDetails(assetRef));
+    }
   }, [dispatch, assetRef]);
-  console.log(asset.ownership);
+
+  const renderNpv = () => {
+    if (asset.npv && asset.npv.value && asset.npv.discount) {
+      return (
+        <tr>
+          <td>
+            NPV<sub>{asset.npv.discount}%</sub>
+          </td>
+          <td>
+            <Badge variant='primary'>
+              $<NumFormat number={asset.npv.value} dp='2' />
+            </Badge>
+          </td>
+        </tr>
+      );
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -63,22 +82,9 @@ const AssetSummary = ({ assetRef, companyRef }) => {
                   </tr>
                   <tr>
                     <td>Study</td>
-                    <td>{asset.study}</td>
+                    <td>{asset.study ? asset.study : '-'}</td>
                   </tr>
-                  {asset.npv && asset.npv.value ? (
-                    <tr>
-                      <td>
-                        NPV<sub>{asset.npv.discount}%</sub>
-                      </td>
-                      <td>
-                        <Badge variant='primary'>
-                          $<NumFormat number={asset.npv.value} dp='2' />
-                        </Badge>
-                      </td>
-                    </tr>
-                  ) : (
-                    ''
-                  )}
+                  {renderNpv()}
                   <tr>
                     <td>Resource</td>
                     <td>
