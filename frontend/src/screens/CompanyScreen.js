@@ -21,13 +21,14 @@ const CompanyScreen = ({ match }) => {
 
   useEffect(() => {
     dispatch(listCompanyDetails(match.params.id));
+  }, [dispatch, match]);
 
+  useEffect(() => {
     if (company.assets[0]) {
       const assetRefArray = company.assets.map((asset) => asset.assetRef);
       dispatch(listAssets('', '', assetRefArray));
     }
-  }, [dispatch, match]);
-  console.log(assets);
+  }, [dispatch, company.assets]);
 
   return (
     <>
@@ -64,15 +65,19 @@ const CompanyScreen = ({ match }) => {
           </Row>
           <h2 className='text-center'>Assets</h2>
           <Row className='d-flex justify-content-center'>
-            {company.assets.map((asset) => (
-              <Col key={asset._id} md={4}>
-                <h2>{asset.name}</h2>
-                <AssetSummary
-                  assetRef={asset.assetRef}
-                  companyRef={company._id}
-                />
-              </Col>
-            ))}
+            {assetsLoading ? (
+              <Loader />
+            ) : assetsError ? (
+              <Message variant='danger'>{error}</Message>
+            ) : (
+              <>
+                {assets.map((asset) => (
+                  <Col key={asset._id} xs={12} sm={6} md={6} lg={4}>
+                    <AssetSummary asset={asset} companyRef={company._id} />
+                  </Col>
+                ))}
+              </>
+            )}
           </Row>
         </>
       )}

@@ -1,25 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { listAssetDetails } from '../actions/assetActions';
+import React from 'react';
 import { Table, Card, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import NumFormat from '../components/NumFormat';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
 
-const AssetSummary = ({ assetRef, companyRef }) => {
-  const dispatch = useDispatch();
-
-  const assetDetails = useSelector((state) => state.assetDetails);
-  const { loading, error, asset } = assetDetails;
-
-  useEffect(() => {
-    if (assetRef !== asset._id) {
-      dispatch(listAssetDetails(assetRef));
-    }
-  }, [dispatch, assetRef]);
-
+const AssetSummary = ({ asset, companyRef }) => {
   const renderNpv = () => {
     if (asset.npv && asset.npv.value && asset.npv.discount) {
       return (
@@ -38,76 +23,64 @@ const AssetSummary = ({ assetRef, companyRef }) => {
   };
 
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
-      ) : (
-        <>
-          <Card className='mb-1 rounded pt-3'>
-            <Card.Title>
-              <Link to={`/asset/${assetRef}`}>
-                <div className=' '>
-                  <h5 className='text-center mb-0'>
-                    {asset.name} (
-                    {asset.ownership.map((owner) =>
-                      owner.companyRef === companyRef ? owner.stakePercent : ''
-                    )}
-                    {''}
-                    %)
-                    <span>
-                      <i className='pl-1 fas fa-info-circle text-info'></i>
-                    </span>
-                  </h5>
-                </div>
-              </Link>
-            </Card.Title>
+    <Card className='mb-1 rounded pt-3 mb-4'>
+      <Card.Title>
+        <Link to={`/asset/${asset._id}`}>
+          <div className=' '>
+            <h5 className='text-center mb-0'>
+              {asset.name} (
+              {asset.ownership.map((owner) =>
+                owner.companyRef === companyRef ? owner.stakePercent : ''
+              )}
+              {''}
+              %)
+              <span>
+                <i className='pl-1 fas fa-info-circle text-info'></i>
+              </span>
+            </h5>
+          </div>
+        </Link>
+      </Card.Title>
 
-            <Card.Body className='p-0'>
-              <Table className='mb-0' size='sm'>
-                <tbody>
-                  <tr>
-                    <td>Location</td>
-                    <td>
-                      {asset.location.country}
-                      {asset.location.province
-                        ? `, ${asset.location.province}`
-                        : ''}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Stage</td>
-                    <td>{asset.stage}</td>
-                  </tr>
-                  <tr>
-                    <td>Study</td>
-                    <td>{asset.study ? asset.study : '-'}</td>
-                  </tr>
-                  {renderNpv()}
-                  <tr>
-                    <td>Resource</td>
-                    <td>
-                      {asset.resource.map((r, index) => (
-                        <p key={index} className='m-0'>
-                          {r.i && r.mi
-                            ? `${r.i}${r.units} Inf. & ${r.mi}${r.units} M+I ${r.type}`
-                            : r.i
-                            ? `${r.i}${r.units} Inf. ${r.type}`
-                            : r.mi
-                            ? `${r.mi}${r.units} M+I ${r.type}`
-                            : ''}
-                        </p>
-                      ))}
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-        </>
-      )}
-    </>
+      <Card.Body className='p-0'>
+        <Table className='mb-0' size='sm'>
+          <tbody>
+            <tr>
+              <td>Location</td>
+              <td>
+                {asset.location.country}
+                {asset.location.province ? `, ${asset.location.province}` : ''}
+              </td>
+            </tr>
+            <tr>
+              <td>Stage</td>
+              <td>{asset.stage}</td>
+            </tr>
+            <tr>
+              <td>Study</td>
+              <td>{asset.study ? asset.study : '-'}</td>
+            </tr>
+            {renderNpv()}
+            <tr>
+              <td>Resource</td>
+              <td>
+                {asset.resource.map((r, index) => (
+                  <p key={index} className='m-0'>
+                    {r.i && r.mi
+                      ? `${r.i}${r.units} Inf. & ${r.mi}${r.units} M+I ${r.type}`
+                      : r.i
+                      ? `${r.i}${r.units} Inf. ${r.type}`
+                      : r.mi
+                      ? `${r.mi}${r.units} M+I ${r.type}`
+                      : ''}
+                  </p>
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
   );
 };
 
