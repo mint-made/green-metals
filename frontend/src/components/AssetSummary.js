@@ -53,7 +53,12 @@ const AssetSummary = ({ assetRef, companyRef }) => {
                   </tr>
                   <tr>
                     <td>Location</td>
-                    <td>{asset.location.country}</td>
+                    <td>
+                      {asset.location.country}
+                      {asset.location.province
+                        ? `, ${asset.location.province}`
+                        : ''}
+                    </td>
                   </tr>
                 </tbody>
               </Table>

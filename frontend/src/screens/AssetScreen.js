@@ -10,6 +10,7 @@ import {
   Table,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { listAssetDetails } from '../actions/assetActions';
 import Loader from '../components/Loader';
@@ -21,6 +22,9 @@ const AssetScreen = ({ match }) => {
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     dispatch(listAssetDetails(match.params.id));
@@ -51,13 +55,26 @@ const AssetScreen = ({ match }) => {
 
             <Col>
               <Card className='rounded'>
-                <h3 className='text-center p-3'>{asset.name}</h3>
+                <div className='d-flex justify-content-center'>
+                  <h3 className='text-center p-3'>{asset.name}</h3>
+                  <div className='p-3'>
+                    {userInfo && userInfo.isAdmin && (
+                      <>
+                        <LinkContainer to={`/admin/asset/${asset._id}/edit`}>
+                          <Button variant='light' className='btn-sm'>
+                            <i className='fas fa-edit'></i>
+                          </Button>
+                        </LinkContainer>
+                      </>
+                    )}
+                  </div>
+                </div>
                 <Table className='mb-0' size='sm'>
                   <tbody>
                     <tr>
                       <td>Location</td>
                       <td>
-                        {asset.location.country}, {asset.location.province}
+                        {asset.location.country} {asset.location.province}
                       </td>
                     </tr>
                     <tr>
