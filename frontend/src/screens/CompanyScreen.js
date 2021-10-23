@@ -56,7 +56,10 @@ const CompanyScreen = ({ match }) => {
           <Row className='d-flex justify-content-center'>
             {company.assets.map((asset) => (
               <Col key={asset._id} md={4}>
-                <AssetSummary asset={asset} />
+                <AssetSummary
+                  assetRef={asset.assetRef}
+                  companyRef={company._id}
+                />
               </Col>
             ))}
           </Row>
