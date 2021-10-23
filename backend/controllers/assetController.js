@@ -14,6 +14,15 @@ const getAssets = asyncHandler(async (req, res) => {
         },
       }
     : {};
+
+  const country = req.query.keyword
+    ? {
+        'location.country': {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
   const metal = req.query.metal
     ? {
         resource: {
@@ -28,7 +37,7 @@ const getAssets = asyncHandler(async (req, res) => {
     : {};
 
   console.log(req.query);
-  const assets = await Asset.find({ ...keyword, ...metal });
+  const assets = await Asset.find({ $or: [keyword, country], ...metal });
   res.json(assets);
 });
 

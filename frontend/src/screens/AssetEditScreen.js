@@ -82,7 +82,7 @@ const AssetEditScreen = ({ history, match }) => {
       if (searchTerm) {
         dispatch(listCompanies(searchTerm));
       }
-    }, 1000);
+    }, 500);
     return () => {
       clearTimeout(timerId);
     };

@@ -67,7 +67,7 @@ const AssetListScreen = ({ history, match }) => {
       if (!searchTerm && keyword) {
         history.push(`${location.pathname}`);
       }
-    }, 1000);
+    }, 500);
     return () => {
       clearTimeout(timerId);
     };
@@ -104,7 +104,7 @@ const AssetListScreen = ({ history, match }) => {
           <Col>
             <Form.Group controlId='search'>
               <Form.Control
-                placeholder='Search Assets'
+                placeholder='Search by Name or location'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

@@ -36,7 +36,7 @@ const HomeScreen = ({ match, history }) => {
       if (!term && keyword) {
         history.push(`${location.pathname}`);
       }
-    }, 1000);
+    }, 500);
     return () => {
       clearTimeout(timerId);
     };
