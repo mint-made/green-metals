@@ -16,6 +16,14 @@ const getCompanies = asyncHandler(async (req, res) => {
         },
       }
     : {};
+  const ticker = req.query.keyword
+    ? {
+        'trading.ticker': {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
   const primaryCommodity = req.query.metal
     ? {
         primaryCommodity: {
@@ -41,7 +49,10 @@ const getCompanies = asyncHandler(async (req, res) => {
     ...keyword,
     ...primaryCommodity,
   });
-  const companies = await Company.find({ ...keyword, ...primaryCommodity })
+  const companies = await Company.find({
+    $or: [keyword, ticker],
+    ...primaryCommodity,
+  })
     .sort(sort)
     .limit(pageSize)
     .skip(pageSize * (page - 1));

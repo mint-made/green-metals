@@ -83,7 +83,7 @@ const HomeScreen = ({ match, history }) => {
           >
             <Form.Group controlId='search'>
               <Form.Control
-                placeholder='Search'
+                placeholder='Search by Name or Ticker'
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
               />
