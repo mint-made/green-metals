@@ -16,6 +16,7 @@ const AssetEditScreen = ({ history, match }) => {
   const [stage, setStage] = useState('');
   const [study, setStudy] = useState('');
   const [country, setCountry] = useState('');
+  const [province, setProvince] = useState('');
   const [link, setLink] = useState('');
   const [image, setImage] = useState('');
   const [uploading, setUploading] = useState(false);
@@ -121,7 +122,7 @@ const AssetEditScreen = ({ history, match }) => {
         study,
         link,
         image,
-        location: { country },
+        location: { country, province },
         npv: { value: npv, discount: npvDiscount },
         resource: resourceArray,
         ownership: ownershipArray,
@@ -245,6 +246,17 @@ const AssetEditScreen = ({ history, match }) => {
                         placeholder='Enter Country'
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='province'>
+                      <Form.Label>Province</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='Enter Province'
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
                   </Col>
