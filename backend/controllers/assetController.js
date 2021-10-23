@@ -6,41 +6,40 @@ import Asset from '../models/assetModel.js';
 // @route GET /api/assets
 // @access Public
 const getAssets = asyncHandler(async (req, res) => {
-  const keyword = req.query.keyword
-    ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {};
-  const country = req.query.keyword
-    ? {
-        'location.country': {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {};
-  const metal = req.query.metal
-    ? {
-        resource: {
-          $elemMatch: {
-            type: {
-              $regex: req.query.metal,
-              $options: 'i',
+  if (!req.query.assetRefs) {
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: 'i',
+          },
+        }
+      : {};
+    const country = req.query.keyword
+      ? {
+          'location.country': {
+            $regex: req.query.keyword,
+            $options: 'i',
+          },
+        }
+      : {};
+    const metal = req.query.metal
+      ? {
+          resource: {
+            $elemMatch: {
+              type: {
+                $regex: req.query.metal,
+                $options: 'i',
+              },
             },
           },
-        },
-      }
-    : {};
-  const assetRefArray = req.query.assetRefs.split('-');
+        }
+      : {};
 
-  console.log(req.query);
-  if (!assetRefArray) {
     const assets = await Asset.find({ $or: [keyword, country], ...metal });
     res.json(assets);
-  } else {
+  } else if (req.query.assetRefs) {
+    const assetRefArray = req.query.assetRefs.split('-');
     const assets = await Asset.find({ _id: { $in: assetRefArray } });
     res.json(assets);
   }

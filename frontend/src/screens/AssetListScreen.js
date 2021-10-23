@@ -168,9 +168,12 @@ const AssetListScreen = ({ history, match }) => {
                 <td className='p-2'>{asset.location.country}</td>
                 <td className='p-2'>{asset.stage}</td>
                 <td className='p-2'>
-                  {asset.resource.map(
-                    (res) => `${res.i + res.mi}${res.units} ${res.type}`
-                  )}
+                  {asset.resource.map((res, index) => (
+                    <p key={index} className='m-0'>
+                      {(res.i + res.mi).toFixed(2)}
+                      {`${res.units} ${res.type}`}
+                    </p>
+                  ))}
                 </td>
                 <td className='p-2'>
                   {asset.ownership.map((owner, index) => (

@@ -40,8 +40,8 @@ const HomeScreen = () => {
           </Jumbotron>
         </Col>
       </Row>
-      <Row>
-        <Col>
+      <Row className='d-flex justify-content-center'>
+        <Col xs={10} sm={6} md={4} lg={3} className='mb-4'>
           <Card className='rounded'>
             <Card.Img
               variant='top'
@@ -60,7 +60,7 @@ const HomeScreen = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
+        <Col xs={10} sm={6} md={4} lg={3} className='mb-4'>
           <Card className='rounded'>
             <Card.Img
               variant='top'
@@ -79,7 +79,7 @@ const HomeScreen = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
+        <Col xs={10} sm={6} md={4} lg={3} className='mb-4'>
           <Card className='rounded'>
             <Card.Img
               variant='top'
@@ -98,7 +98,7 @@ const HomeScreen = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col>
+        <Col xs={10} sm={6} md={4} lg={3} className='mb-4'>
           <Card className='rounded'>
             <Card.Img
               variant='top'

@@ -19,7 +19,7 @@ import {
 } from '../constants/assetConstants';
 
 export const listAssets =
-  (keyword = '', metal = '', assetRefArray) =>
+  (keyword = '', metal = '', assetRefArray = []) =>
   async (dispatch) => {
     try {
       dispatch({ type: ASSET_LIST_REQUEST });
