@@ -95,12 +95,12 @@ const updateAsset = asyncHandler(async (req, res) => {
     name,
     stage,
     study,
+    npv: { value, discount } = {},
+    location: { country, province, lat, lng } = {},
+    link,
     ownership,
     resource,
     image,
-    link,
-    location: { country } = {},
-    npv: { value, discount } = {},
   } = req.body;
 
   const asset = await Asset.findById(req.params.id);
@@ -109,17 +109,20 @@ const updateAsset = asyncHandler(async (req, res) => {
     asset.name = name || asset.name;
     asset.stage = stage || asset.stage;
     asset.study = study || asset.study;
-    asset.link = link || asset.link;
-    asset.image = image || asset.image;
-    asset.ownership = ownership || asset.ownership;
-    asset.resource = resource || asset.resource;
-    asset.location = {
-      country: country ? country : asset.location.country,
-    };
     asset.npv = {
       value: value ? value : asset.npv.value,
       discount: discount ? discount : asset.npv.discount,
     };
+    asset.location = {
+      country: country ? country : asset.location.country,
+      province: province ? province : asset.location.province,
+      lat: lat ? lat : asset.location.lat,
+      lng: lng ? lng : asset.location.lng,
+    };
+    asset.link = link || asset.link;
+    asset.ownership = ownership || asset.ownership;
+    asset.resource = resource || asset.resource;
+    asset.image = image || asset.image;
 
     const updatedAsset = await asset.save();
     res.json(updatedAsset);

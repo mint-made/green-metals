@@ -65,15 +65,14 @@ const AssetEditScreen = ({ history, match }) => {
       setName(asset.name || '');
       setStage(asset.stage || '');
       setStudy(asset.study || '');
-      setCountry(asset.location.country);
-      setResourceArray(asset.resource);
-      setOwnershipArray(asset.ownership);
+      setNpv(asset.npv.value || '');
+      setNpvDiscount(asset.npv.discount || '');
+      setCountry(asset.location.country || '');
+      setProvince(asset.location.province || '');
       setLink(asset.link || '');
+      setOwnershipArray(asset.ownership || '');
+      setResourceArray(asset.resource || '');
       setImage(asset.image || '');
-      if (asset.npv) {
-        setNpv(asset.npv.value);
-        setNpvDiscount(asset.npv.discount);
-      }
     }
   }, [dispatch, history, assetId, asset, successUpdate, userInfo]);
 
@@ -120,12 +119,12 @@ const AssetEditScreen = ({ history, match }) => {
         name,
         stage,
         study,
-        link,
-        image,
-        location: { country, province },
         npv: { value: npv, discount: npvDiscount },
-        resource: resourceArray,
+        location: { country, province },
+        link,
         ownership: ownershipArray,
+        resource: resourceArray,
+        image,
       })
     );
   };
@@ -188,11 +187,18 @@ const AssetEditScreen = ({ history, match }) => {
                     <Form.Group controlId='stage'>
                       <Form.Label>Stage</Form.Label>
                       <Form.Control
-                        type='name'
-                        placeholder='Enter Stage'
+                        as='select'
                         value={stage}
-                        onChange={(e) => setStage(e.target.value)}
-                      ></Form.Control>
+                        onChange={(e) => {
+                          setStage(e.target.value);
+                        }}
+                      >
+                        <option value='-'>-</option>
+                        <option value='Exploration'>Exploration</option>
+                        <option value='Development'>Development</option>
+                        <option value='C&M'>C&M</option>
+                        <option value='Production'>Production</option>
+                      </Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>
@@ -411,6 +417,7 @@ const AssetEditScreen = ({ history, match }) => {
                         <option value='Platinum'>Platinum</option>
                         <option value='Potash'>Potash</option>
                         <option value='Scandium'>Scandium</option>
+                        <option value='Gold'>Gold</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
