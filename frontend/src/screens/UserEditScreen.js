@@ -86,7 +86,7 @@ const UserEditScreen = ({ match, history }) => {
               <Form.Group controlId='isadmin' className='mr-4'>
                 <Form.Check
                   type='checkbox'
-                  label='Is Subscriber'
+                  label='Is Admin'
                   checked={isAdmin}
                   onChange={(e) => setIsAdmin(e.target.checked)}
                 ></Form.Check>
@@ -94,7 +94,7 @@ const UserEditScreen = ({ match, history }) => {
               <Form.Group controlId='isSubscriber'>
                 <Form.Check
                   type='checkbox'
-                  label='Is Admin'
+                  label='Is Subscriber'
                   checked={isSubscriber}
                   onChange={(e) => setIsSubscriber(e.target.checked)}
                 ></Form.Check>
