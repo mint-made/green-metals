@@ -14,6 +14,7 @@ const UserEditScreen = ({ match, history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isSubscriber, setIsSubscriber] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -38,13 +39,14 @@ const UserEditScreen = ({ match, history }) => {
         setName(user.name);
         setEmail(user.email);
         setIsAdmin(user.isAdmin);
+        setIsSubscriber(user.isSubscriber);
       }
     }
   }, [dispatch, history, userId, user, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUser({ _id: userId, name, email, isAdmin }));
+    dispatch(updateUser({ _id: userId, name, email, isAdmin, isSubscriber }));
   };
 
   return (
@@ -80,14 +82,24 @@ const UserEditScreen = ({ match, history }) => {
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            <Form.Group controlId='isadmin'>
-              <Form.Check
-                type='checkbox'
-                label='Is Admin'
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              ></Form.Check>
-            </Form.Group>
+            <div className='d-flex justify-content-start'>
+              <Form.Group controlId='isadmin' className='mr-4'>
+                <Form.Check
+                  type='checkbox'
+                  label='Is Subscriber'
+                  checked={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                ></Form.Check>
+              </Form.Group>
+              <Form.Group controlId='isSubscriber'>
+                <Form.Check
+                  type='checkbox'
+                  label='Is Admin'
+                  checked={isSubscriber}
+                  onChange={(e) => setIsSubscriber(e.target.checked)}
+                ></Form.Check>
+              </Form.Group>
+            </div>
             <Button type='submit' variant='primary'>
               Update
             </Button>
