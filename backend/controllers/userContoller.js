@@ -17,6 +17,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isSubscriber: user.isSubscriber,
       token: generateToken(user._id),
     });
   } else {
@@ -50,6 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isSubscriber: user.isSubscriber,
       token: generateToken(user._id),
     });
   } else {
@@ -70,6 +72,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isSubscriber: user.isSubscriber,
     });
   } else {
     res.status(404);
@@ -97,6 +100,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isSubscriber: user.isSubscriber,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -153,6 +157,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.isAdmin = req.body.isAdmin;
+    user.isSubscriber = req.body.isSubscriber;
     const updatedUser = await user.save();
 
     res.json({
@@ -160,6 +165,7 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isSubscriber: updatedUser.isSubscriber,
     });
   } else {
     res.status(404);
