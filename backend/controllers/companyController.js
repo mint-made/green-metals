@@ -64,7 +64,14 @@ const getCompanies = asyncHandler(async (req, res) => {
 // @route GET /api/companies/:id
 // @access Public
 const getCompanyById = asyncHandler(async (req, res) => {
-  const company = await Company.findById(req.params.id).select('-user');
+  let company;
+  if (req.user.isSubscriber) {
+    company = await Company.findById(req.params.id).select('-user');
+  } else if (!req.user.isSubscriber) {
+    company = await Company.findById(req.params.id)
+      .select('-user')
+      .select('-enterpriseValue');
+  }
 
   if (company) {
     res.json(company);
@@ -97,6 +104,7 @@ const createCompany = asyncHandler(async (req, res) => {
     user: req.user._id,
     name: '-',
     issuedShares: 1,
+    netCash: 0,
     primaryCommodity: '-',
     website: '-',
     logo: '/images/sample.jpeg',
@@ -123,6 +131,7 @@ const updateCompany = asyncHandler(async (req, res) => {
   const {
     name,
     issuedShares,
+    netCash,
     mcap,
     primaryCommodity,
     website,
@@ -137,6 +146,7 @@ const updateCompany = asyncHandler(async (req, res) => {
     company.name = name || company.name;
     company.issuedShares = issuedShares || company.issuedShares;
     company.mcap = mcap || company.mcap;
+    company.netCash = netCash || company.netCash;
     company.primaryCommodity = primaryCommodity || company.primaryCommodity;
     company.website = website || company.website;
     company.logo = logo || company.logo;

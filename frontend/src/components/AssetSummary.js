@@ -5,23 +5,6 @@ import { Link } from 'react-router-dom';
 import NumFormat from '../components/NumFormat';
 
 const AssetSummary = ({ asset, companyRef }) => {
-  const renderNpv = () => {
-    if (asset.npv && asset.npv.value && asset.npv.discount) {
-      return (
-        <tr>
-          <td>
-            NPV<sub>{asset.npv.discount}%</sub>
-          </td>
-          <td>
-            <Badge variant='primary'>
-              $<NumFormat number={asset.npv.value} dp='2' />
-            </Badge>
-          </td>
-        </tr>
-      );
-    }
-  };
-
   return (
     <Card className='mb-1 rounded pt-3 mb-4'>
       <Card.Title>
@@ -65,7 +48,11 @@ const AssetSummary = ({ asset, companyRef }) => {
                 <td>
                   NPV<sub>{asset.npv.discount}</sub>
                 </td>
-                <td>{asset.npv && `$${asset.npv.value}m`}</td>
+                <td>
+                  <Badge variant='primary'>
+                    $<NumFormat number={asset.npv.value} dp='2' />
+                  </Badge>
+                </td>
               </tr>
             ) : !asset.npv ? (
               <tr>
@@ -85,9 +72,9 @@ const AssetSummary = ({ asset, companyRef }) => {
                       <div className='p-3-5 d-flex justify-content-left align-items-center'>
                         <p
                           className='m-0 text-dark'
-                          style={{ filter: 'blur(3px)' }}
+                          style={{ filter: 'blur(4px)' }}
                         >
-                          $1000m
+                          $1234m
                         </p>
 
                         <span>

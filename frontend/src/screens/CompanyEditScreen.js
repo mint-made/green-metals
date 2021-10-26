@@ -27,6 +27,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
+  const [netCash, setNetCash] = useState(0);
   const [primaryCommodity, setPrimaryCommodity] = useState('');
   const [website, setWebsite] = useState('');
   // Trading object
@@ -83,6 +84,7 @@ const ProductEditScreen = ({ match, history }) => {
     } else {
       setName(company.name);
       setIssuedShares(company.issuedShares);
+      setNetCash(company.netCash);
       setPrimaryCommodity(company.primaryCommodity);
       setWebsite(company.website);
       setExchange(company.trading.exchange);
@@ -147,6 +149,7 @@ const ProductEditScreen = ({ match, history }) => {
         _id: companyId,
         name,
         issuedShares,
+        netCash,
         primaryCommodity,
         website,
         logo,
@@ -295,6 +298,17 @@ const ProductEditScreen = ({ match, history }) => {
                         placeholder='Enter shares'
                         value={issuedShares}
                         onChange={(e) => setIssuedShares(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='netCash'>
+                      <Form.Label>Net Cash</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='Enter shares'
+                        value={netCash}
+                        onChange={(e) => setNetCash(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
                   </Col>

@@ -18,6 +18,10 @@ const companySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  netCash: {
+    type: Number,
+    required: true,
+  },
   primaryCommodity: {
     type: String,
     required: true,

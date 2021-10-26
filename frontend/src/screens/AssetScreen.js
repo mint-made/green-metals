@@ -10,6 +10,7 @@ import {
   Table,
   OverlayTrigger,
   Tooltip,
+  Badge,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -18,6 +19,7 @@ import { listAssetDetails } from '../actions/assetActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
+import NumFormat from '../components/NumFormat';
 
 const AssetScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -121,7 +123,11 @@ const AssetScreen = ({ match }) => {
                         <td>
                           NPV<sub>{asset.npv.discount}</sub>
                         </td>
-                        <td>{asset.npv && `$${asset.npv.value}m`}</td>
+                        <td>
+                          <Badge variant='primary'>
+                            $<NumFormat number={asset.npv.value} dp='2' />
+                          </Badge>
+                        </td>
                       </tr>
                     ) : !asset.npv ? (
                       <tr>
@@ -141,9 +147,9 @@ const AssetScreen = ({ match }) => {
                               <div className='p-3-5 d-flex justify-content-left align-items-center'>
                                 <p
                                   className='m-0 text-dark'
-                                  style={{ filter: 'blur(3px)' }}
+                                  style={{ filter: 'blur(4px)' }}
                                 >
-                                  $1000m
+                                  $1234m
                                 </p>
 
                                 <span>

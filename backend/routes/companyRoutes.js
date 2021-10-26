@@ -1,6 +1,10 @@
 import express from 'express';
 
-import { isAdmin, protect } from '../middleware/authMiddleware.js';
+import {
+  isAdmin,
+  protect,
+  getUserObject,
+} from '../middleware/authMiddleware.js';
 import {
   getCompanies,
   getCompanyById,
@@ -14,7 +18,7 @@ const router = express.Router();
 router.route('/').get(getCompanies).post(protect, isAdmin, createCompany);
 router
   .route('/:id')
-  .get(getCompanyById)
+  .get(getUserObject, getCompanyById)
   .delete(protect, isAdmin, deleteCompany)
   .put(protect, isAdmin, updateCompany);
 

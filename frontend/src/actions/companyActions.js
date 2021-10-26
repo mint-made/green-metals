@@ -42,11 +42,21 @@ export const listCompanies =
     }
   };
 
-export const listCompanyDetails = (id) => async (dispatch) => {
+export const listCompanyDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: COMPANY_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/companies/${id}`);
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/companies/${id}`, config);
 
     dispatch({
       type: COMPANY_DETAILS_SUCCESS,
@@ -109,7 +119,7 @@ export const createCompany = () => async (dispatch, getState) => {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
-    }; 
+    };
 
     const { data } = await axios.post('/api/companies', {}, config);
 
