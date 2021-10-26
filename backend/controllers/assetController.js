@@ -36,15 +36,23 @@ const getAssets = asyncHandler(async (req, res) => {
         }
       : {};
 
-    const assets = await Asset.find({ $or: [keyword, country], ...metal });
+    const assets = await Asset.find({
+      $or: [keyword, country],
+      ...metal,
+    }).select(['_id', 'name', 'location', 'stage', 'resource', 'ownership']);
     res.json(assets);
   } else if (req.query.assetRefs) {
     const assetRefArray = req.query.assetRefs.split('-');
     let assets;
     if (req.user.isSubscriber) {
-      assets = await Asset.find({ _id: { $in: assetRefArray } });
+      assets = await Asset.find({ _id: { $in: assetRefArray } }).select(
+        '-user'
+      );
     } else {
-      assets = await Asset.find({ _id: { $in: assetRefArray } }).select('-npv');
+      assets = await Asset.find({ _id: { $in: assetRefArray } }).select([
+        '-npv',
+        '-user',
+      ]);
     }
 
     res.json(assets);
@@ -57,9 +65,9 @@ const getAssets = asyncHandler(async (req, res) => {
 const getAssetById = asyncHandler(async (req, res) => {
   let asset;
   if (req.user.isSubscriber) {
-    asset = await Asset.findById(req.params.id);
+    asset = await Asset.findById(req.params.id).select('-user');
   } else {
-    asset = await Asset.findById(req.params.id).select('-npv');
+    asset = await Asset.findById(req.params.id).select(['-npv', '-user']);
   }
 
   if (asset) {
