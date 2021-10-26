@@ -138,7 +138,7 @@ const AssetScreen = ({ match }) => {
                           <OverlayTrigger
                             placement='bottom'
                             overlay={
-                              <Tooltip id='Hi'>
+                              <Tooltip id='subscribe'>
                                 <strong>Subscribe</strong> to view content.
                               </Tooltip>
                             }

@@ -18,6 +18,7 @@ import ExploreCompaniesScreen from './screens/ExploreCompaniesScreen';
 import AssetListScreen from './screens/AssetListScreen';
 import AssetEditScreen from './screens/AssetEditScreen';
 import AssetScreen from './screens/AssetScreen';
+import SubscribeScreen from './screens/SubscribeScreen';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path='/company/:id' component={CompanyScreen} />
           <Route path='/asset/:id' component={AssetScreen} />
           <Route path='/compare' component={CompareScreen} />
+          <Route path='/subscribe' component={SubscribeScreen} />
 
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route
