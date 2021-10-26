@@ -8,6 +8,8 @@ import {
   Button,
   Card,
   Table,
+  OverlayTrigger,
+  Tooltip,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -123,24 +125,28 @@ const AssetScreen = ({ match }) => {
                           NPV<sub>8</sub>
                         </td>
                         <td>
-                          <div className='d-flex justify-content-left align-items-center'>
-                            <p
-                              className='m-0 text-dark'
-                              style={{ filter: 'blur(3px)' }}
-                            >
-                              $1000m
-                            </p>
-                            <span>
-                              <i className='fas fa-lock pl-1 gold'></i>
-                            </span>
-                            <Button
-                              href={`google.com`}
-                              target='_blank'
-                              className='px-2 py-1 ml-3'
-                            >
-                              Subscribe
-                            </Button>
-                          </div>
+                          <OverlayTrigger
+                            placement='bottom'
+                            overlay={
+                              <Tooltip id='Hi'>
+                                <strong>Subscribe</strong> to view content.
+                              </Tooltip>
+                            }
+                          >
+                            <Link to='/subscribe' target='blank'>
+                              <div className='p-3-5 d-flex justify-content-left align-items-center'>
+                                <p
+                                  className='m-0 text-dark'
+                                  style={{ filter: 'blur(3px)' }}
+                                >
+                                  $1000m
+                                </p>
+                                <span>
+                                  <i className='fas fa-lock pl-1 gold'></i>
+                                </span>
+                              </div>
+                            </Link>
+                          </OverlayTrigger>
                         </td>
                       </tr>
                     )}
