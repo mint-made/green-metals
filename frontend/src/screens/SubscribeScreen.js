@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Card,
@@ -9,12 +9,31 @@ import {
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import Meta from '../components/Meta';
+import Message from '../components/Message';
 
-const SubscribeScreen = () => {
+const SubscribeScreen = ({ history }) => {
+  const [showMessage, setShowMessage] = useState(false);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const signUpHandler = () => {
+    if (!userInfo) {
+      history.push('/register');
+    } else if (userInfo) {
+      setShowMessage(true);
+    }
+  };
+
   return (
     <>
-      <Meta title='Green Metals' />
+      <Meta title='Subscribe' />
+      {showMessage && (
+        <Message variant='danger'>
+          You already have an account and are currently logged in
+        </Message>
+      )}
       <Row>
         <Col className='d-flex justify-content-center'>
           <Jumbotron
@@ -51,31 +70,19 @@ const SubscribeScreen = () => {
               <Card.Title className='text-center'>
                 <h3>Free Tier</h3>
               </Card.Title>
-              <Card.Text>
-                <p>
-                  <i
-                    className='fas fa-check pr-2'
-                    style={{ color: 'green' }}
-                  ></i>
-                  Access to 100s of companies involved in the zero-carbon
-                  economy
-                </p>
-                <p>
-                  <i
-                    className='fas fa-check pr-2'
-                    style={{ color: 'green' }}
-                  ></i>
-                  Basic information about the assets each company owns
-                </p>
-                <p>
-                  <i
-                    className='fas fa-check pr-2'
-                    style={{ color: 'green' }}
-                  ></i>
-                  Build comparison tables to find the best valued companies
-                </p>
-              </Card.Text>
-              <Button variant='outline-primary' href='/register'>
+              <p>
+                <i className='fas fa-check pr-2' style={{ color: 'green' }}></i>
+                Access to 100s of companies involved in the zero-carbon economy
+              </p>
+              <p>
+                <i className='fas fa-check pr-2' style={{ color: 'green' }}></i>
+                Basic information about the assets each company owns
+              </p>
+              <p>
+                <i className='fas fa-check pr-2' style={{ color: 'green' }}></i>
+                Build comparison tables to find the best valued companies
+              </p>
+              <Button variant='outline-primary' onClick={signUpHandler}>
                 Sign Up now
               </Button>
             </Card.Body>
@@ -86,31 +93,21 @@ const SubscribeScreen = () => {
           <Card className='rounded home-cards' style={{ height: '100%' }}>
             <Card.Body className='d-flex flex-column justify-content-between'>
               <Card.Title className='text-center'>
-                <h3>Premium £5/month</h3>
+                <h3>Premium</h3>
               </Card.Title>
-              <Card.Text>
-                <p>
-                  <i
-                    className='fas fa-check pr-2'
-                    style={{ color: 'green' }}
-                  ></i>
-                  In-depth information about companies and their assets
-                </p>
-                <p>
-                  <i
-                    className='fas fa-check pr-2'
-                    style={{ color: 'green' }}
-                  ></i>
-                  A detailed financial analysis of each company
-                </p>
-                <p>
-                  <i
-                    className='fas fa-check pr-2'
-                    style={{ color: 'green' }}
-                  ></i>
-                  Be the first to try out new features as they are released
-                </p>
-              </Card.Text>
+              <p>
+                <i className='fas fa-check pr-2' style={{ color: 'green' }}></i>
+                In-depth information about companies, their finances and their
+                assets
+              </p>
+              <p>
+                <i className='fas fa-check pr-2' style={{ color: 'green' }}></i>
+                Be the first to try out new features as they are released
+              </p>
+              <p>
+                <i className='fas fa-check pr-2' style={{ color: 'green' }}></i>
+                Only £5 / month
+              </p>
               <OverlayTrigger
                 placement='top'
                 overlay={

@@ -59,7 +59,6 @@ const getUserObject = async (req, res, next) => {
       next();
     }
   }
-
   if (!token) {
     next();
   }
