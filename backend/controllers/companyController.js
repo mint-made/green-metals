@@ -55,7 +55,8 @@ const getCompanies = asyncHandler(async (req, res) => {
   })
     .sort(sort)
     .limit(pageSize)
-    .skip(pageSize * (page - 1));
+    .skip(pageSize * (page - 1))
+    .select(['_id', 'name', 'trading', 'mcap', 'primaryCommodity']);
   res.json({ companies, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -63,7 +64,7 @@ const getCompanies = asyncHandler(async (req, res) => {
 // @route GET /api/companies/:id
 // @access Public
 const getCompanyById = asyncHandler(async (req, res) => {
-  const company = await Company.findById(req.params.id);
+  const company = await Company.findById(req.params.id).select('-user');
 
   if (company) {
     res.json(company);
