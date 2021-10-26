@@ -49,9 +49,12 @@ const getAssets = asyncHandler(async (req, res) => {
 // @route GET /api/assets/:id
 // @access Public
 const getAssetById = asyncHandler(async (req, res) => {
-  console.log(req.user);
-
-  const asset = await Asset.findById(req.params.id);
+  let asset;
+  if (req.user.isSubscriber) {
+    asset = await Asset.findById(req.params.id);
+  } else {
+    asset = await Asset.findById(req.params.id).select('-npv');
+  }
 
   if (asset) {
     res.json(asset);

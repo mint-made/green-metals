@@ -41,7 +41,7 @@ const isAdmin = (req, res, next) => {
 
 const getUserObject = async (req, res, next) => {
   let token;
-  console.log('hi');
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')

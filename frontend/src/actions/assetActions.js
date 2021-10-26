@@ -110,11 +110,21 @@ export const createAsset = () => async (dispatch, getState) => {
   }
 };
 
-export const listAssetDetails = (id) => async (dispatch) => {
+export const listAssetDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: ASSET_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/assets/${id}`);
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/assets/${id}`, config);
 
     dispatch({
       type: ASSET_DETAILS_SUCCESS,
