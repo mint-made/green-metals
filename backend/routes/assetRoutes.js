@@ -15,7 +15,10 @@ import {
 
 const router = express.Router();
 
-router.route('/').post(protect, isAdmin, createAsset).get(getAssets);
+router
+  .route('/')
+  .post(protect, isAdmin, createAsset)
+  .get(getUserObject, getAssets);
 router
   .route('/:id')
   .get(getUserObject, getAssetById)

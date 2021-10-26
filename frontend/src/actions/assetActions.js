@@ -20,14 +20,25 @@ import {
 
 export const listAssets =
   (keyword = '', metal = '', assetRefArray = []) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch({ type: ASSET_LIST_REQUEST });
 
       const assetRefString = assetRefArray.join('-');
 
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
       const { data } = await axios.get(
-        `/api/assets?keyword=${keyword}&metal=${metal}&assetRefs=${assetRefString}`
+        `/api/assets?keyword=${keyword}&metal=${metal}&assetRefs=${assetRefString}`,
+        config
       );
 
       dispatch({

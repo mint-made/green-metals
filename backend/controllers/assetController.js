@@ -40,12 +40,18 @@ const getAssets = asyncHandler(async (req, res) => {
     res.json(assets);
   } else if (req.query.assetRefs) {
     const assetRefArray = req.query.assetRefs.split('-');
-    const assets = await Asset.find({ _id: { $in: assetRefArray } });
+    let assets;
+    if (req.user.isSubscriber) {
+      assets = await Asset.find({ _id: { $in: assetRefArray } });
+    } else {
+      assets = await Asset.find({ _id: { $in: assetRefArray } }).select('-npv');
+    }
+
     res.json(assets);
   }
 });
 
-// @description Fetch a single asset
+// @description Fetch a single asset by ID
 // @route GET /api/assets/:id
 // @access Public
 const getAssetById = asyncHandler(async (req, res) => {

@@ -107,24 +107,28 @@ const AssetScreen = ({ match }) => {
                         ))}
                       </td>
                     </tr>
-                    <tr>
-                      <td>Study</td>
-                      <td>{asset.study}</td>
-                    </tr>
+                    {asset.study ? (
+                      <tr>
+                        <td>Study</td>
+                        <td>{asset.study}</td>
+                      </tr>
+                    ) : (
+                      <></>
+                    )}
 
-                    {asset.npv ? (
+                    {asset.npv && asset.npv.value ? (
                       <tr>
                         <td>
                           NPV<sub>{asset.npv.discount}</sub>
                         </td>
                         <td>{asset.npv && `$${asset.npv.value}m`}</td>
                       </tr>
-                    ) : (
+                    ) : !asset.npv ? (
                       <tr>
                         <td>
                           NPV<sub>8</sub>
                         </td>
-                        <td>
+                        <td className='p-0'>
                           <OverlayTrigger
                             placement='bottom'
                             overlay={
@@ -141,6 +145,7 @@ const AssetScreen = ({ match }) => {
                                 >
                                   $1000m
                                 </p>
+
                                 <span>
                                   <i className='fas fa-lock pl-1 gold'></i>
                                 </span>
@@ -149,6 +154,8 @@ const AssetScreen = ({ match }) => {
                           </OverlayTrigger>
                         </td>
                       </tr>
+                    ) : (
+                      <></>
                     )}
 
                     <tr>
