@@ -7,8 +7,8 @@ import { logout } from '../actions/userActions';
 import { changeCurrency } from '../actions/currencyActions';
 
 const Header = () => {
-  const [currencyIcon, setCurrencyIcon] = useState('Local$');
   const dispatch = useDispatch();
+  const [currencyIcon, setCurrencyIcon] = useState('Local$');
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -131,6 +131,7 @@ const Header = () => {
                     </>
                   }
                   id='username'
+                  className='mr-0'
                 >
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>

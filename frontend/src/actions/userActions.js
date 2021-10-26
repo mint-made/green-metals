@@ -261,7 +261,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     dispatch({
       type: USER_UPDATE_REQUEST,
     });
-
+    console.log(user);
     const {
       userLogin: { userInfo },
     } = getState();

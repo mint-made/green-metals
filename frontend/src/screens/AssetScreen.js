@@ -110,12 +110,38 @@ const AssetScreen = ({ match }) => {
                       <td>{asset.study}</td>
                     </tr>
 
-                    {asset.npv && (
+                    {asset.npv ? (
                       <tr>
                         <td>
                           NPV<sub>{asset.npv.discount}</sub>
                         </td>
                         <td>{asset.npv && `$${asset.npv.value}m`}</td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td>
+                          NPV<sub>8</sub>
+                        </td>
+                        <td>
+                          <div className='d-flex justify-content-left align-items-center'>
+                            <p
+                              className='m-0 text-dark'
+                              style={{ filter: 'blur(3px)' }}
+                            >
+                              $1000m
+                            </p>
+                            <span>
+                              <i className='fas fa-lock pl-1 gold'></i>
+                            </span>
+                            <Button
+                              href={`google.com`}
+                              target='_blank'
+                              className='px-2 py-1 ml-3'
+                            >
+                              Subscribe
+                            </Button>
+                          </div>
+                        </td>
                       </tr>
                     )}
 
@@ -129,7 +155,7 @@ const AssetScreen = ({ match }) => {
                                 to={`/company/${owner.companyRef}`}
                                 key={index}
                               >
-                                <div className=' '>
+                                <div>
                                   <p className='m-0 text-dark'>
                                     {owner
                                       ? `${owner.name} (${owner.stakePercent}%)`
