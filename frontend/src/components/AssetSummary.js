@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Card, Badge } from 'react-bootstrap';
+import { Table, Card, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import NumFormat from '../components/NumFormat';
@@ -60,7 +60,47 @@ const AssetSummary = ({ asset, companyRef }) => {
               <td>Study</td>
               <td>{asset.study ? asset.study : '-'}</td>
             </tr>
-            {renderNpv()}
+            {asset.npv && asset.npv.value ? (
+              <tr>
+                <td>
+                  NPV<sub>{asset.npv.discount}</sub>
+                </td>
+                <td>{asset.npv && `$${asset.npv.value}m`}</td>
+              </tr>
+            ) : !asset.npv ? (
+              <tr>
+                <td>
+                  NPV<sub>8</sub>
+                </td>
+                <td className='p-0'>
+                  <OverlayTrigger
+                    placement='bottom'
+                    overlay={
+                      <Tooltip id='Hi'>
+                        <strong>Subscribe</strong> to view content.
+                      </Tooltip>
+                    }
+                  >
+                    <Link to='/subscribe' target='blank'>
+                      <div className='p-3-5 d-flex justify-content-left align-items-center'>
+                        <p
+                          className='m-0 text-dark'
+                          style={{ filter: 'blur(3px)' }}
+                        >
+                          $1000m
+                        </p>
+
+                        <span>
+                          <i className='fas fa-lock pl-1 gold'></i>
+                        </span>
+                      </div>
+                    </Link>
+                  </OverlayTrigger>
+                </td>
+              </tr>
+            ) : (
+              <></>
+            )}
             <tr>
               <td>Resource</td>
               <td>
