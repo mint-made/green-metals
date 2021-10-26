@@ -6,7 +6,7 @@ import Company from '../models/companyModel.js';
 // @route GET /api/companies
 // @access Public
 const getCompanies = asyncHandler(async (req, res) => {
-  const pageSize = 20;
+  const pageSize = 15;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
@@ -70,7 +70,7 @@ const getCompanyById = asyncHandler(async (req, res) => {
   } else if (!req.user.isSubscriber) {
     company = await Company.findById(req.params.id)
       .select('-user')
-      .select('-enterpriseValue');
+      .select('-finances');
   }
 
   if (company) {
@@ -131,7 +131,7 @@ const updateCompany = asyncHandler(async (req, res) => {
   const {
     name,
     issuedShares,
-    netCash,
+    finances: { netCash, year },
     mcap,
     primaryCommodity,
     website,
@@ -146,7 +146,6 @@ const updateCompany = asyncHandler(async (req, res) => {
     company.name = name || company.name;
     company.issuedShares = issuedShares || company.issuedShares;
     company.mcap = mcap || company.mcap;
-    company.netCash = netCash || company.netCash;
     company.primaryCommodity = primaryCommodity || company.primaryCommodity;
     company.website = website || company.website;
     company.logo = logo || company.logo;
@@ -157,6 +156,10 @@ const updateCompany = asyncHandler(async (req, res) => {
       date: date ? date : company.trading.date,
       currency: currency ? currency : company.trading.currency,
       price: price ? price : company.trading.price,
+    };
+    company.finances = {
+      netCash: netCash ? netCash : company.finances.netCash,
+      year: year ? year : company.finances.year,
     };
     company.trading.mcap = company.trading.price * company.issuedShares;
 

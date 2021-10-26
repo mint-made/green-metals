@@ -1,7 +1,15 @@
 import React from 'react';
-import { Badge, Card, Table, Button } from 'react-bootstrap';
+import {
+  Badge,
+  Card,
+  Table,
+  Button,
+  OverlayTrigger,
+  Tooltip,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 import NumFormat from './NumFormat';
 import ConvMcap from './ConvMcap';
@@ -49,6 +57,52 @@ const ValutationSummary = ({ company }) => {
               </Badge>
             </td>
           </tr>
+          {company.finances ? (
+            <tr>
+              <td>Net Cash</td>
+              <td>
+                {' '}
+                {!company.finances.netCash ? (
+                  '-'
+                ) : (
+                  <Badge variant='primary'>
+                    <NumFormat number={company.finances.netCash} dp={2} />
+                  </Badge>
+                )}
+              </td>
+            </tr>
+          ) : !company.finances ? (
+            <tr>
+              <td>Net Cash</td>
+              <td className='p-0'>
+                <OverlayTrigger
+                  placement='bottom'
+                  overlay={
+                    <Tooltip id='Hi'>
+                      <strong>Subscribe</strong> to view content.
+                    </Tooltip>
+                  }
+                >
+                  <Link to='/subscribe' target='blank'>
+                    <div className='p-3-5 d-flex justify-content-left align-items-center'>
+                      <p
+                        className='m-0 text-dark'
+                        style={{ filter: 'blur(4px)' }}
+                      >
+                        $1234m
+                      </p>
+
+                      <span>
+                        <i className='fas fa-lock pl-1 gold'></i>
+                      </span>
+                    </div>
+                  </Link>
+                </OverlayTrigger>
+              </td>
+            </tr>
+          ) : (
+            <></>
+          )}
           <tr>
             <td>Shares Issued</td>
             <td>

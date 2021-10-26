@@ -2,7 +2,7 @@ import React from 'react';
 
 // Formats numbers into a more readable format
 // e.g. NumFormat(1234567890, 2) => 1.23B
-const NumFormat = ({ number, dp }) => {
+const NumFormat = ({ number, dp = 2 }) => {
   if (!number) {
     return null;
   }

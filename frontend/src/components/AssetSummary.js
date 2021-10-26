@@ -43,6 +43,7 @@ const AssetSummary = ({ asset, companyRef }) => {
               <td>Study</td>
               <td>{asset.study ? asset.study : '-'}</td>
             </tr>
+
             {asset.npv && asset.npv.value ? (
               <tr>
                 <td>

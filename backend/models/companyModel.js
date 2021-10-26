@@ -18,9 +18,9 @@ const companySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  netCash: {
-    type: Number,
-    required: true,
+  finances: {
+    netCash: { type: Number },
+    year: { type: Number },
   },
   primaryCommodity: {
     type: String,

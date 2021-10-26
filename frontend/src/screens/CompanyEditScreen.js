@@ -84,7 +84,7 @@ const ProductEditScreen = ({ match, history }) => {
     } else {
       setName(company.name);
       setIssuedShares(company.issuedShares);
-      setNetCash(company.netCash);
+      setNetCash(company.finances ? company.finances.netCash : 0);
       setPrimaryCommodity(company.primaryCommodity);
       setWebsite(company.website);
       setExchange(company.trading.exchange);
@@ -149,7 +149,9 @@ const ProductEditScreen = ({ match, history }) => {
         _id: companyId,
         name,
         issuedShares,
-        netCash,
+        finances: {
+          netCash,
+        },
         primaryCommodity,
         website,
         logo,
