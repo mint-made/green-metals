@@ -49,6 +49,8 @@ const getAssets = asyncHandler(async (req, res) => {
 // @route GET /api/assets/:id
 // @access Public
 const getAssetById = asyncHandler(async (req, res) => {
+  console.log(req.user);
+
   const asset = await Asset.findById(req.params.id);
 
   if (asset) {
@@ -65,7 +67,13 @@ const getAssetById = asyncHandler(async (req, res) => {
 const createAsset = asyncHandler(async (req, res) => {
   const asset = new Asset({
     user: req.user._id,
-    location: { country: 'Australia' },
+    name: '',
+    stage: '',
+    study: '',
+    npv: { value: null, discount: null },
+    location: { country: '-', province: '', lat: null, lng: null },
+    link: '',
+    ownership: [],
   });
 
   const createdAsset = await asset.save();

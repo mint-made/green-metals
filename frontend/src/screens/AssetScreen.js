@@ -109,13 +109,16 @@ const AssetScreen = ({ match }) => {
                       <td>Study</td>
                       <td>{asset.study}</td>
                     </tr>
-                    <tr>
-                      <td>Net Present Value</td>
-                      <td>
-                        {asset.npv &&
-                          `${asset.npv.value}^${asset.npv.discount}`}
-                      </td>
-                    </tr>
+
+                    {asset.npv && (
+                      <tr>
+                        <td>
+                          NPV<sub>{asset.npv.discount}</sub>
+                        </td>
+                        <td>{asset.npv && `$${asset.npv.value}m`}</td>
+                      </tr>
+                    )}
+
                     <tr>
                       <td>Ownership</td>
                       <td>
