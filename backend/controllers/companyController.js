@@ -65,9 +65,9 @@ const getCompanies = asyncHandler(async (req, res) => {
 // @access Public
 const getCompanyById = asyncHandler(async (req, res) => {
   let company;
-  if (req.user.isSubscriber) {
+  if (req.user && req.user.isSubscriber) {
     company = await Company.findById(req.params.id).select('-user');
-  } else if (!req.user.isSubscriber) {
+  } else {
     company = await Company.findById(req.params.id)
       .select('-user')
       .select('-finances');

@@ -30,11 +30,14 @@ export const listAssets =
         userLogin: { userInfo },
       } = getState();
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
+      let config;
+      if (userInfo) {
+        config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+      }
 
       const { data } = await axios.get(
         `/api/assets?keyword=${keyword}&metal=${metal}&assetRefs=${assetRefString}`,
@@ -129,11 +132,14 @@ export const listAssetDetails = (id) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+    let config;
+    if (userInfo) {
+      config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+    }
 
     const { data } = await axios.get(`/api/assets/${id}`, config);
 

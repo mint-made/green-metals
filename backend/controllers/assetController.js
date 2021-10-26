@@ -44,7 +44,7 @@ const getAssets = asyncHandler(async (req, res) => {
   } else if (req.query.assetRefs) {
     const assetRefArray = req.query.assetRefs.split('-');
     let assets;
-    if (req.user.isSubscriber) {
+    if (req.user && req.user.isSubscriber) {
       assets = await Asset.find({ _id: { $in: assetRefArray } }).select(
         '-user'
       );
@@ -64,7 +64,7 @@ const getAssets = asyncHandler(async (req, res) => {
 // @access Public
 const getAssetById = asyncHandler(async (req, res) => {
   let asset;
-  if (req.user.isSubscriber) {
+  if (req.user && req.user.isSubscriber) {
     asset = await Asset.findById(req.params.id).select('-user');
   } else {
     asset = await Asset.findById(req.params.id).select(['-npv', '-user']);
