@@ -90,8 +90,8 @@ const AssetListScreen = ({ history, match }) => {
   return (
     <>
       <Row className='align-items-center'>
-        <Col xs={4}>
-          <Breadcrumb>
+        <Col xs={12} sm={6}>
+          <Breadcrumb style={{ maxWidth: '300px' }}>
             <Breadcrumb.Item href='/assets'>Assets</Breadcrumb.Item>
             {metal && (
               <Breadcrumb.Item href={`/assets/${metal}`}>
@@ -100,24 +100,22 @@ const AssetListScreen = ({ history, match }) => {
             )}
           </Breadcrumb>
         </Col>
-        <Col>
-          <Col>
-            <Form.Group controlId='search'>
-              <Form.Control
-                placeholder='Search by Name or location'
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
+        <Col xs={12} sm={6}>
+          <Form.Group controlId='search' style={{ maxWidth: '300px' }}>
+            <Form.Control
+              placeholder='Search by Name or location'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </Form.Group>
         </Col>
-        <Col className='text-right d-flex justify-content-end mb-3'>
-          {userInfo && userInfo.isAdmin && (
+        {userInfo && userInfo.isAdmin && (
+          <Col className='text-right d-flex justify-content-end mb-3'>
             <Button onClick={createCompanyHandler} variant='success'>
               <i className='fas fa-plus'></i> Asset
             </Button>
-          )}
-        </Col>
+          </Col>
+        )}
       </Row>
 
       {loadingDelete && <Loader />}

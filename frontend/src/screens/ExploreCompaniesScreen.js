@@ -64,7 +64,7 @@ const HomeScreen = ({ match, history }) => {
         title={metal ? `Companies - ${capitalize(metal)}` : 'Companies - All'}
       />
       <Row className='my-2'>
-        <Col xs={4}>
+        <Col xs={12} sm={4}>
           <Breadcrumb>
             <Breadcrumb.Item href='/companies'>Companies</Breadcrumb.Item>
             {metal && (
@@ -74,7 +74,7 @@ const HomeScreen = ({ match, history }) => {
             )}
           </Breadcrumb>
         </Col>
-        <Col xs={4}>
+        <Col xs={6} sm={4}>
           <Form
             onSubmit={(e) => {
               e.preventDefault();
@@ -91,7 +91,7 @@ const HomeScreen = ({ match, history }) => {
           </Form>
         </Col>
 
-        <Col xs={4} className='d-flex justify-content-end'>
+        <Col xs={6} sm={4} className='d-flex justify-content-end'>
           <Dropdown>
             <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
 
