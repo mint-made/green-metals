@@ -19,7 +19,6 @@ const AssetEditScreen = ({ history, match }) => {
   const [province, setProvince] = useState('');
   const [link, setLink] = useState('');
   const [image, setImage] = useState('');
-  const [uploading, setUploading] = useState(false);
   const [npv, setNpv] = useState('');
   const [npvDiscount, setNpvDiscount] = useState('');
   const [i, setI] = useState('');
@@ -30,8 +29,11 @@ const AssetEditScreen = ({ history, match }) => {
   const [stakePercent, setStakePercent] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [companyRef, setCompanyRef] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
   const [ownershipArray, setOwnershipArray] = useState([]);
+
+  const [uploading, setUploading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [typing, setTyping] = useState(false);
 
   const assetDetails = useSelector((state) => state.assetDetails);
   const { loading, error, asset } = assetDetails;
@@ -82,9 +84,11 @@ const AssetEditScreen = ({ history, match }) => {
       if (searchTerm) {
         dispatch(listCompanies(searchTerm));
       }
+      setTyping(false);
     }, 500);
     return () => {
       clearTimeout(timerId);
+      setTyping(true);
     };
   }, [searchTerm, dispatch]);
 
@@ -296,8 +300,8 @@ const AssetEditScreen = ({ history, match }) => {
                     </Form.Group>
                   </Col>
                   <Col>
-                    {loadingCompanies ? (
-                      <Loader />
+                    {loadingCompanies || typing ? (
+                      <Loader size='2' />
                     ) : errorCompanies ? (
                       <Message variant='danger'>{error}</Message>
                     ) : (
@@ -437,6 +441,8 @@ const AssetEditScreen = ({ history, match }) => {
                         }}
                       >
                         <option value='-'>-</option>
+                        <option value='t'>t</option>
+                        <option value='kt'>kt</option>
                         <option value='mt'>mt</option>
                         <option value='moz'>moz</option>
                         <option value='mlbs'>mlbs</option>

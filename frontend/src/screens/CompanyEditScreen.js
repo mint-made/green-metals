@@ -420,7 +420,7 @@ const ProductEditScreen = ({ match, history }) => {
                   <Col>
                     <Form.Group controlId='search'>
                       <Form.Control
-                        placeholder='Search Companies'
+                        placeholder='Search Assets'
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                       />
@@ -428,11 +428,11 @@ const ProductEditScreen = ({ match, history }) => {
                   </Col>
                   <Col className='d-flex justify-content-around'>
                     {loadingAssets || typing ? (
-                      <Loader size='20' />
+                      <Loader size='2' />
                     ) : errorAssets ? (
                       <Message variant='danger'>{error}</Message>
                     ) : (
-                      <Form.Group controlId='company'>
+                      <Form.Group controlId='assets'>
                         <Form.Control
                           as='select'
                           value={`${assetRef},${assetName}`}
