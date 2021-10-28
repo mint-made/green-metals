@@ -65,8 +65,8 @@ const AssetEditScreen = ({ history, match }) => {
       setName(asset.name || '');
       setStage(asset.stage || '');
       setStudy(asset.study || '');
-      setNpv(asset.npv.value || '');
-      setNpvDiscount(asset.npv.discount || '');
+      setNpv((asset.npv && asset.npv.value) || '');
+      setNpvDiscount((asset.npv && asset.npv.discount) || '');
       setCountry(asset.location.country || '');
       setProvince(asset.location.province || '');
       setLink(asset.link || '');
@@ -76,7 +76,7 @@ const AssetEditScreen = ({ history, match }) => {
     }
   }, [dispatch, history, assetId, asset, successUpdate, userInfo]);
 
-  // Whenever the component is re-rendered and term has changed, run this function
+  // Debounced company search that will search after 500ms unless the user makes another input to searchTerm
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (searchTerm) {
@@ -88,6 +88,7 @@ const AssetEditScreen = ({ history, match }) => {
     };
   }, [searchTerm, dispatch]);
 
+  // Submits the user-selected image and uploads it to AWS S3 to be hosted and saves the path to the image
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -111,6 +112,7 @@ const AssetEditScreen = ({ history, match }) => {
     }
   };
 
+  // Submits all of the asset data to update the db document
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
@@ -129,6 +131,7 @@ const AssetEditScreen = ({ history, match }) => {
     );
   };
 
+  // Pushes the inputed resource data in to the resource array and resets the resource form data
   const addResourceHandler = () => {
     setResourceArray((resourceArray) => [
       ...resourceArray,
@@ -144,6 +147,8 @@ const AssetEditScreen = ({ history, match }) => {
     setUnits('');
     setType('');
   };
+
+  // Pushes the inputed ownership data in the ownership array and resets the ownership form data
   const addOwnershipHandler = () => {
     setOwnershipArray((ownershipArray) => [
       ...ownershipArray,
