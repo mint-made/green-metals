@@ -89,8 +89,8 @@ const AssetListScreen = ({ history, match }) => {
 
   return (
     <>
-      <Row className='align-items-center'>
-        <Col xs={12} sm={6}>
+      <Row className='d-flex justify-content-center align-items-center'>
+        <Col xs={12} sm={6} md={5} className='d-flex justify-content-center'>
           <Breadcrumb style={{ maxWidth: '300px' }}>
             <Breadcrumb.Item href='/assets'>Assets</Breadcrumb.Item>
             {metal && (
@@ -100,7 +100,7 @@ const AssetListScreen = ({ history, match }) => {
             )}
           </Breadcrumb>
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12} sm={6} md={5} className='d-flex justify-content-center'>
           <Form.Group controlId='search' style={{ maxWidth: '300px' }}>
             <Form.Control
               placeholder='Search by Name or location'
@@ -110,8 +110,12 @@ const AssetListScreen = ({ history, match }) => {
           </Form.Group>
         </Col>
         {userInfo && userInfo.isAdmin && (
-          <Col className='text-right d-flex justify-content-end mb-3'>
-            <Button onClick={createCompanyHandler} variant='success'>
+          <Col md={2} className='text-right d-flex justify-content-end mb-3'>
+            <Button
+              onClick={createCompanyHandler}
+              variant='success'
+              className='px-3 py-2'
+            >
               <i className='fas fa-plus'></i> Asset
             </Button>
           </Col>

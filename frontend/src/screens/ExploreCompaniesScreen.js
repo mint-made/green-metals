@@ -74,7 +74,7 @@ const HomeScreen = ({ match, history }) => {
             )}
           </Breadcrumb>
         </Col>
-        <Col xs={6} sm={4}>
+        <Col xs={7} sm={4}>
           <Form
             onSubmit={(e) => {
               e.preventDefault();
@@ -91,7 +91,7 @@ const HomeScreen = ({ match, history }) => {
           </Form>
         </Col>
 
-        <Col xs={6} sm={4} className='d-flex justify-content-end'>
+        <Col xs={5} sm={4} className='d-flex justify-content-end'>
           <Dropdown>
             <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
 

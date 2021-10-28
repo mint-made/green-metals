@@ -102,7 +102,7 @@ const Header = () => {
               </NavDropdown>
 
               <NavDropdown
-                className='mr-0 text-right'
+                className='mr-0'
                 title={currencyIcon}
                 id='username'
                 style={{ minWidth: '77px' }}

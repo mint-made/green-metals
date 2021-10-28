@@ -22,24 +22,24 @@ import Meta from '../components/Meta';
 
 const ProductEditScreen = ({ match, history }) => {
   const dispatch = useDispatch();
-
   const companyId = match.params.id;
-  const [name, setName] = useState('');
+
   const [logo, setLogo] = useState('');
+  const [name, setName] = useState('');
+  const [website, setWebsite] = useState('');
   const [issuedShares, setIssuedShares] = useState(0);
   const [netCash, setNetCash] = useState(0);
   const [primaryCommodity, setPrimaryCommodity] = useState('');
-  const [website, setWebsite] = useState('');
-  // Trading object
   const [exchange, setExchange] = useState('');
-  const [ticker, setTicker] = useState('');
   const [currency, setCurrency] = useState('');
+  const [ticker, setTicker] = useState('');
   const [price, setPrice] = useState('');
-  const [uploading, setUploading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [assetRef, setAssetRef] = useState('');
   const [assetName, setAssetName] = useState('');
   const [assetArray, setAssetArray] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [uploading, setUploading] = useState(false);
   const [typing, setTyping] = useState(false);
 
   const companyDetails = useSelector((state) => state.companyDetails);
@@ -104,7 +104,7 @@ const ProductEditScreen = ({ match, history }) => {
     userInfo,
   ]);
 
-  // Whenever the component is re-rendered and term has changed, run this function
+  // Debounced asset search that will search after 500ms unless the user makes another input to searchTerm
   useEffect(() => {
     const timerId = setTimeout(() => {
       if (searchTerm) {
@@ -119,6 +119,7 @@ const ProductEditScreen = ({ match, history }) => {
     };
   }, [searchTerm, dispatch]);
 
+  // Submits the user-selected image and uploads it to AWS S3 to be hosted and saves the path to the image
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -142,6 +143,7 @@ const ProductEditScreen = ({ match, history }) => {
     }
   };
 
+  // Submits all of the company data to update the db document
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
@@ -167,6 +169,7 @@ const ProductEditScreen = ({ match, history }) => {
     );
   };
 
+  // Returns a currency based on the exchange selected e.g. returns "£" if "LSE"
   const exchangeCurrency = (exchange) => {
     switch (exchange) {
       case 'NYSE':
@@ -189,8 +192,11 @@ const ProductEditScreen = ({ match, history }) => {
         return '$';
     }
   };
+
+  // Generates a mcap from shares
   const mcap = () => issuedShares * Number(price);
 
+  // Converts currency
   const toUSD = (value, currency) => {
     switch (currency) {
       case 'C$':
@@ -208,6 +214,7 @@ const ProductEditScreen = ({ match, history }) => {
     }
   };
 
+  // Pushes the selected asset information into the assetArray and clears the asset form data
   const addAssetHandler = () => {
     setAssetArray((assetArray) => [
       ...assetArray,
