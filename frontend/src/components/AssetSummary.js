@@ -47,7 +47,7 @@ const AssetSummary = ({ asset, companyRef }) => {
             {asset.npv && asset.npv.value ? (
               <tr>
                 <td>
-                  NPV<sub>{asset.npv.discount}</sub>
+                  Post-tax NPV<sub>{asset.npv.discount}</sub>
                 </td>
                 <td>
                   <Badge variant='primary'>
@@ -58,7 +58,7 @@ const AssetSummary = ({ asset, companyRef }) => {
             ) : !asset.npv ? (
               <tr>
                 <td>
-                  NPV<sub>8</sub>
+                  Post-tax NPV<sub>8</sub>
                 </td>
                 <td className='p-0'>
                   <OverlayTrigger

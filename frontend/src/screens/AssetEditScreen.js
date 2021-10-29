@@ -426,6 +426,8 @@ const AssetEditScreen = ({ history, match }) => {
                         <option value='Platinum'>Platinum</option>
                         <option value='Potash'>Potash</option>
                         <option value='Scandium'>Scandium</option>
+                        <option value='TREO'>TREO</option>
+                        <option value='K2O'>K2O</option>
                         <option value='Gold'>Gold</option>
                       </Form.Control>
                     </Form.Group>

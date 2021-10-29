@@ -84,7 +84,7 @@ const Header = () => {
                 <LinkContainer to='/assets/lithium'>
                   <NavDropdown.Item>Lithium</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/assets/rees'>
+                <LinkContainer to='/assets/treo'>
                   <NavDropdown.Item>REEs</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to='/assets/nickel'>
@@ -93,7 +93,7 @@ const Header = () => {
                 <LinkContainer to='/assets/copper'>
                   <NavDropdown.Item>Copper</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to='/assets/potash'>
+                <LinkContainer to='/assets/k2o'>
                   <NavDropdown.Item>Potash</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to='/assets/scandium'>
