@@ -7,6 +7,7 @@ import { listCompanies } from '../actions/companyActions';
 import { ASSET_UPDATE_RESET } from '../constants/assetConstants';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Meta from '../components/Meta';
 
 const AssetEditScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const AssetEditScreen = ({ history, match }) => {
   const [image, setImage] = useState('');
   const [npv, setNpv] = useState('');
   const [npvDiscount, setNpvDiscount] = useState('');
+  const [irr, setIrr] = useState('');
   const [i, setI] = useState('');
   const [mi, setMi] = useState('');
   const [units, setUnits] = useState('');
@@ -69,6 +71,7 @@ const AssetEditScreen = ({ history, match }) => {
       setStudy(asset.study || '');
       setNpv((asset.npv && asset.npv.value) || '');
       setNpvDiscount((asset.npv && asset.npv.discount) || '');
+      setIrr(asset.irr || '');
       setCountry(asset.location.country || '');
       setProvince(asset.location.province || '');
       setLink(asset.link || '');
@@ -126,6 +129,7 @@ const AssetEditScreen = ({ history, match }) => {
         stage,
         study,
         npv: { value: npv, discount: npvDiscount },
+        irr,
         location: { country, province },
         link,
         ownership: ownershipArray,
@@ -177,6 +181,7 @@ const AssetEditScreen = ({ history, match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={`Edit - ${asset.name}`} />
           <Form onSubmit={(e) => submitHandler(e)}>
             <Row>
               <Col sm={9} md={8}>
@@ -210,48 +215,19 @@ const AssetEditScreen = ({ history, match }) => {
                       </Form.Control>
                     </Form.Group>
                   </Col>
-                </Row>
-                <Row>
                   <Col>
-                    <Form.Group controlId='Study'>
-                      <Form.Label>Study</Form.Label>
-                      <Form.Control
-                        as='select'
-                        value={study}
-                        onChange={(e) => {
-                          setStudy(e.target.value);
-                        }}
-                      >
-                        <option value='-'>-</option>
-                        <option value='PFS'>PFS</option>
-                        <option value='DFS'>DFS</option>
-                        <option value='BFS'>BFS</option>
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId='NPV'>
-                      <Form.Label>NPV</Form.Label>
+                    <Form.Group controlId='link'>
+                      <Form.Label>Link</Form.Label>
                       <Form.Control
                         type='name'
-                        placeholder='Enter NPV'
-                        value={npv}
-                        onChange={(e) => setNpv(e.target.value)}
-                      ></Form.Control>
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId='NPV discount'>
-                      <Form.Label>NPV discount</Form.Label>
-                      <Form.Control
-                        type='name'
-                        placeholder='NPV discount'
-                        value={npvDiscount}
-                        onChange={(e) => setNpvDiscount(e.target.value)}
+                        placeholder='Enter Link'
+                        value={link}
+                        onChange={(e) => setLink(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>
+
                 <Row>
                   <Col>
                     <Form.Group controlId='country'>
@@ -276,18 +252,58 @@ const AssetEditScreen = ({ history, match }) => {
                     </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Group controlId='link'>
-                      <Form.Label>Link</Form.Label>
+                    <Form.Group controlId='Study'>
+                      <Form.Label>Study</Form.Label>
+                      <Form.Control
+                        as='select'
+                        value={study}
+                        onChange={(e) => {
+                          setStudy(e.target.value);
+                        }}
+                      >
+                        <option value='-'>-</option>
+                        <option value='PFS'>PFS</option>
+                        <option value='DFS'>DFS</option>
+                        <option value='BFS'>BFS</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group controlId='NPV'>
+                      <Form.Label>NPV</Form.Label>
                       <Form.Control
                         type='name'
-                        placeholder='Enter Link'
-                        value={link}
-                        onChange={(e) => setLink(e.target.value)}
+                        placeholder='Enter NPV'
+                        value={npv}
+                        onChange={(e) => setNpv(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='NPV discount'>
+                      <Form.Label>NPV discount</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='NPV discount'
+                        value={npvDiscount}
+                        onChange={(e) => setNpvDiscount(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId='IRR'>
+                      <Form.Label>IRR</Form.Label>
+                      <Form.Control
+                        type='name'
+                        placeholder='Enter IRR'
+                        value={irr}
+                        onChange={(e) => setIrr(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>
-
                 <p className='mb-2'>Ownership</p>
                 <Row>
                   <Col>
