@@ -65,6 +65,7 @@ const ProductEditScreen = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  console.log(company);
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/login');
@@ -84,7 +85,11 @@ const ProductEditScreen = ({ match, history }) => {
     } else {
       setName(company.name);
       setIssuedShares(company.issuedShares);
-      setNetCash(company.finances ? company.finances.netCash : 0);
+      setNetCash(
+        company.finances && company.finances.netCash
+          ? company.finances.netCash
+          : 0
+      );
       setPrimaryCommodity(company.primaryCommodity);
       setWebsite(company.website);
       setExchange(company.trading.exchange);

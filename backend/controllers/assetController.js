@@ -88,6 +88,7 @@ const createAsset = asyncHandler(async (req, res) => {
     stage: '',
     study: '',
     npv: { value: null, discount: null },
+    irr: null,
     location: { country: '-', province: '', lat: null, lng: null },
     link: '',
     ownership: [],
@@ -120,6 +121,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     name,
     stage,
     study,
+    irr,
     npv: { value, discount } = {},
     location: { country, province, lat, lng } = {},
     link,
@@ -134,6 +136,7 @@ const updateAsset = asyncHandler(async (req, res) => {
     asset.name = name || asset.name;
     asset.stage = stage || asset.stage;
     asset.study = study || asset.study;
+    asset.irr = irr || asset.irr;
     asset.npv = {
       value: value ? value : asset.npv.value,
       discount: discount ? discount : asset.npv.discount,

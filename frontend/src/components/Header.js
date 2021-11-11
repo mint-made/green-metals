@@ -28,6 +28,7 @@ const Header = () => {
     dispatch(logout());
   };
 
+  //
   const curencyHandler = (value) => {
     const currency = value.substring(1);
     dispatch(changeCurrency(currency));

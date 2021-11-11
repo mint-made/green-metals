@@ -21,6 +21,7 @@ const assetSchema = new mongoose.Schema({
     value: { type: Number },
     discount: { type: Number },
   },
+  irr: { type: Number },
   ownership: [
     {
       name: { type: String, required: true },

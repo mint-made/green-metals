@@ -1,6 +1,5 @@
 import asyncHandler from 'express-async-handler';
 
-import generateToken from '../utils/generateToken.js';
 import Currency from '../models/currencyModel.js';
 
 // @description Get Currency information

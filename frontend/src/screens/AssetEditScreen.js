@@ -111,7 +111,7 @@ const AssetEditScreen = ({ history, match }) => {
       setImage(data.imagePath);
       setUploading(false);
     } catch (e) {
-      console.error(error);
+      console.error(e);
       setUploading(false);
     }
   };
@@ -429,6 +429,7 @@ const AssetEditScreen = ({ history, match }) => {
                         <option value='TREO'>TREO</option>
                         <option value='K2O'>K2O</option>
                         <option value='Gold'>Gold</option>
+                        <option value='Silver'>Silver</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
