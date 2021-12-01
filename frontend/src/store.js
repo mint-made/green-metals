@@ -1,54 +1,8 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import {
-  companyListReducer,
-  companyDetailsReducer,
-  companyDeleteReducer,
-  companyCreateReducer,
-  companyUpdateReducer,
-} from './reducers/companyReducer';
-import { compareReducer } from './reducers/compareReducer';
-import {
-  userLoginReducer,
-  userRegisterReducer,
-  userDetailsReducer,
-  userUpdateProfileReducer,
-  userListReducer,
-  userDeleteReducer,
-  userUpdateReducer,
-} from './reducers/userReducers';
-import {
-  assetListReducer,
-  assetDeleteReducer,
-  assetCreateReducer,
-  assetDetailsReducer,
-  assetUpdateReducer,
-} from './reducers/assetReducers';
-import { currencyListReducer } from './reducers/currencyReducer';
-
-const reducer = combineReducers({
-  currencyList: currencyListReducer,
-  companyList: companyListReducer,
-  companyDetails: companyDetailsReducer,
-  companyDelete: companyDeleteReducer,
-  companyCreate: companyCreateReducer,
-  companyUpdate: companyUpdateReducer,
-  compare: compareReducer,
-  userLogin: userLoginReducer,
-  userRegister: userRegisterReducer,
-  userDetails: userDetailsReducer,
-  userUpdateProfile: userUpdateProfileReducer,
-  userList: userListReducer,
-  userDelete: userDeleteReducer,
-  userUpdate: userUpdateReducer,
-  assetList: assetListReducer,
-  assetDelete: assetDeleteReducer,
-  assetCreate: assetCreateReducer,
-  assetDetails: assetDetailsReducer,
-  assetUpdate: assetUpdateReducer,
-});
+import { rootReducer } from './reducers/rootReducer';
 
 const compareListFromStorage = localStorage.getItem('compareList')
   ? JSON.parse(localStorage.getItem('compareList'))
@@ -77,7 +31,7 @@ const initialState = {
 const middleware = [thunk];
 
 const store = createStore(
-  reducer,
+  rootReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
