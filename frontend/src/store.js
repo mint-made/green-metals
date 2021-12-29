@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
 import { rootReducer } from './reducers/rootReducer';
-import { helloSaga } from './sagas/sagas';
+import rootSaga from './sagas/rootSaga';
 
 const compareListFromStorage = localStorage.getItem('compareList')
   ? JSON.parse(localStorage.getItem('compareList'))
@@ -40,6 +40,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(...middleware))
 );
 
-sagaMiddleware.run(helloSaga);
+//***************************** */
+sagaMiddleware.run(rootSaga);
 
 export default store;

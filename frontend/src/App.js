@@ -19,6 +19,7 @@ import AssetListScreen from './screens/AssetListScreen';
 import AssetEditScreen from './screens/AssetEditScreen';
 import AssetScreen from './screens/AssetScreen';
 import SubscribeScreen from './screens/SubscribeScreen';
+import Playground from './screens/Playground';
 
 const App = () => {
   return (
@@ -26,6 +27,10 @@ const App = () => {
       <Header />
       <main className='py-4'>
         <Container>
+          {
+            //***************************** *}
+          }
+          <Route path='/playground' component={Playground} />
           <Route path='/register' component={RegisterScreen} />
           <Route path='/login' component={LoginScreen} />
           <Route path='/profile' component={ProfileScreen} />
@@ -33,7 +38,6 @@ const App = () => {
           <Route path='/asset/:id' component={AssetScreen} />
           <Route path='/compare' component={CompareScreen} />
           <Route path='/subscribe' component={SubscribeScreen} />
-
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route
             path='/admin/companylist'
@@ -45,21 +49,17 @@ const App = () => {
             component={CompanyListScreen}
             exact
           />
-
           <Route path='/admin/company/:id/edit' component={CompanyEditScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
           <Route path='/admin/asset/:id/edit' component={AssetEditScreen} />
-
           <Route path='/assets/' component={AssetListScreen} exact />
           <Route path='/assets/:metal' component={AssetListScreen} exact />
-
           <Route path='/companies/' component={ExploreCompaniesScreen} exact />
           <Route
             path='/companies/:metal'
             component={ExploreCompaniesScreen}
             exact
           />
-
           <Route path='/search/:keyword' component={HomeScreen} exact />
           <Route path='/page/:pageNumber' component={HomeScreen} exact />
           <Route
