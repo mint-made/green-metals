@@ -9,6 +9,8 @@ import Message from '../components/Message';
 import AssetSummary from '../components/AssetSummary';
 import ValutationSummary from '../components/ValutationSummary';
 import Meta from '../components/Meta';
+import { ASSET_LIST_RESET } from '../constants/assetConstants';
+import LineChart from '../components/graphs/LineChart';
 
 const CompanyScreen = ({ match }) => {
   const dispatch = useDispatch();
@@ -24,11 +26,17 @@ const CompanyScreen = ({ match }) => {
   }, [dispatch, match]);
 
   useEffect(() => {
-    if (company.assets[0]) {
+    if (!company) {
+      return;
+    }
+    if (!company.assets || !company.assets.length > 0) {
+      dispatch({ type: ASSET_LIST_RESET });
+    } else {
       const assetRefArray = company.assets.map((asset) => asset.assetRef);
+      console.log('ListAssets Request: ', assetRefArray);
       dispatch(listAssets('', '', assetRefArray));
     }
-  }, [dispatch, company.assets]);
+  }, [dispatch, company]);
 
   return (
     <>
@@ -63,22 +71,29 @@ const CompanyScreen = ({ match }) => {
               <ValutationSummary company={company} />
             </Col>
           </Row>
-          <h2 className='text-center'>Assets</h2>
-          <Row className='d-flex justify-content-center'>
-            {assetsLoading ? (
-              <Loader />
-            ) : assetsError ? (
-              <Message variant='danger'>{error}</Message>
-            ) : (
-              <>
-                {assets.map((asset) => (
-                  <Col key={asset._id} xs={12} sm={6} md={6} lg={4}>
-                    <AssetSummary asset={asset} companyRef={company._id} />
-                  </Col>
-                ))}
-              </>
-            )}
+          <Row>
+            <Col>
+              {company.trading.data && !!company.trading.data.length && (
+                <LineChart data={company.trading.data} />
+              )}
+            </Col>
           </Row>
+
+          {assetsLoading ? (
+            <Loader />
+          ) : assetsError ? (
+            <Message variant='danger'>{error}</Message>
+          ) : (
+            <Row className='d-flex justify-content-center'>
+              <h2 className='text-center'>Assets</h2>
+
+              {assets.map((asset) => (
+                <Col key={asset._id} xs={12} sm={6} md={6} lg={4}>
+                  <AssetSummary asset={asset} companyRef={company._id} />
+                </Col>
+              ))}
+            </Row>
+          )}
         </>
       )}
     </>

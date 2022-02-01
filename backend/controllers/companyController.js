@@ -6,7 +6,7 @@ import Company from '../models/companyModel.js';
 // @route GET /api/companies
 // @access Public
 const getCompanies = asyncHandler(async (req, res) => {
-  const pageSize = 15;
+  const pageSize = 100;
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
@@ -56,7 +56,17 @@ const getCompanies = asyncHandler(async (req, res) => {
     .sort(sort)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
-    .select(['_id', 'name', 'trading', 'mcap', 'primaryCommodity']);
+    .select([
+      '_id',
+      'name',
+      'trading.ticker',
+      'trading.exchange',
+      'trading.currency',
+      'trading.mcap',
+      'mcap',
+      'primaryCommodity',
+      'type',
+    ]);
   res.json({ companies, page, pages: Math.ceil(count / pageSize) });
 });
 
@@ -107,6 +117,7 @@ const createCompany = asyncHandler(async (req, res) => {
     netCash: 0,
     primaryCommodity: '-',
     website: '-',
+    type: 'Other',
     logo: '/images/sample.jpeg',
     trading: {
       exchange: 'LSE',
@@ -116,6 +127,7 @@ const createCompany = asyncHandler(async (req, res) => {
       price: '1',
       mcap: 1,
     },
+    companyType: 'Other',
     mcap: 1,
     assets: [],
   });
@@ -131,13 +143,14 @@ const updateCompany = asyncHandler(async (req, res) => {
   const {
     name,
     issuedShares,
-    finances: { netCash, year },
+    finances: { netCash, year } = {},
     mcap,
     primaryCommodity,
     website,
     logo,
+    type,
     assets,
-    trading: { exchange, ticker, date, currency, price } = {},
+    trading: { exchange, ticker, date, currency, price, data } = {},
   } = req.body;
 
   const company = await Company.findById(req.params.id);
@@ -149,6 +162,7 @@ const updateCompany = asyncHandler(async (req, res) => {
     company.primaryCommodity = primaryCommodity || company.primaryCommodity;
     company.website = website || company.website;
     company.logo = logo || company.logo;
+    company.type = type || company.type || '-';
     company.assets = assets || company.assets;
     company.trading = {
       exchange: exchange ? exchange : company.trading.exchange,
@@ -156,12 +170,15 @@ const updateCompany = asyncHandler(async (req, res) => {
       date: date ? date : company.trading.date,
       currency: currency ? currency : company.trading.currency,
       price: price ? price : company.trading.price,
+      data: data ? data : company.trading.data,
     };
     company.finances = {
       netCash: netCash ? netCash : company.finances.netCash,
       year: year ? year : company.finances.year,
     };
     company.trading.mcap = company.trading.price * company.issuedShares;
+
+    console.log(company);
 
     const updatedCompany = await company.save();
     res.json(updatedCompany);
@@ -171,10 +188,19 @@ const updateCompany = asyncHandler(async (req, res) => {
   }
 });
 
+// @description Fetch all companies trading data
+// @route GET /api/companies/tradingdata
+// @access Private
+const getCompaniesTradingData = asyncHandler(async (req, res) => {
+  const companies = await Company.find({}).select(['name', 'trading']);
+  res.json(companies);
+});
+
 export {
   getCompanies,
   getCompanyById,
   deleteCompany,
   createCompany,
   updateCompany,
+  getCompaniesTradingData,
 };

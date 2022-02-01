@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 
 const currencySchema = new mongoose.Schema(
   {
@@ -13,6 +12,22 @@ const currencySchema = new mongoose.Schema(
         required: true,
       },
       gbp: {
+        type: Number,
+        required: true,
+      },
+      usd: {
+        type: Number,
+        required: true,
+      },
+      eur: {
+        type: Number,
+        required: true,
+      },
+      rub: {
+        type: Number,
+        required: true,
+      },
+      hkd: {
         type: Number,
         required: true,
       },

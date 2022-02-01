@@ -61,6 +61,9 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               <NavDropdown title='Companies' id='companies' className='mr-2'>
+                <LinkContainer to='/companies/uranium'>
+                  <NavDropdown.Item>Uranium</NavDropdown.Item>
+                </LinkContainer>
                 <LinkContainer to='/companies/lithium'>
                   <NavDropdown.Item>Lithium</NavDropdown.Item>
                 </LinkContainer>
@@ -142,9 +145,6 @@ const Header = () => {
                     <>
                       <LinkContainer to='/admin/userlist'>
                         <NavDropdown.Item>Users</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to='/admin/companylist'>
-                        <NavDropdown.Item>Companies</NavDropdown.Item>
                       </LinkContainer>
                     </>
                   )}
