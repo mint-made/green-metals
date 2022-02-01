@@ -26,6 +26,10 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   website: {
     type: String,
     required: true,
@@ -41,6 +45,18 @@ const companySchema = new mongoose.Schema({
     currency: { type: String, required: true },
     price: { type: Number, required: true },
     mcap: { type: Number, required: true },
+    data: [
+      {
+        closingPrice: {
+          type: Number,
+          required: true,
+        },
+        date: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
   },
   assets: [
     {

@@ -66,7 +66,7 @@ const ValutationSummary = ({ company }) => {
                   '-'
                 ) : (
                   <Badge variant='primary'>
-                    <NumFormat number={company.finances.netCash} dp={2} />
+                    $<NumFormat number={company.finances.netCash} dp={2} />
                   </Badge>
                 )}
               </td>

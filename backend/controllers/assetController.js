@@ -43,6 +43,7 @@ const getAssets = asyncHandler(async (req, res) => {
     res.json(assets);
   } else if (req.query.assetRefs) {
     const assetRefArray = req.query.assetRefs.split('-');
+    console.log(assetRefArray);
     let assets;
     if (req.user && req.user.isSubscriber) {
       assets = await Asset.find({ _id: { $in: assetRefArray } }).select(
@@ -84,7 +85,7 @@ const getAssetById = asyncHandler(async (req, res) => {
 const createAsset = asyncHandler(async (req, res) => {
   const asset = new Asset({
     user: req.user._id,
-    name: '',
+    name: '-',
     stage: '',
     study: '',
     npv: { value: null, discount: null },

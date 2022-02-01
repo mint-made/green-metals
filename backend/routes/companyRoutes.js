@@ -11,11 +11,13 @@ import {
   deleteCompany,
   createCompany,
   updateCompany,
+  getCompaniesTradingData,
 } from '../controllers/companyController.js';
 
 const router = express.Router();
 
 router.route('/').get(getCompanies).post(protect, isAdmin, createCompany);
+router.route('/tradingdata').get(getCompaniesTradingData);
 router
   .route('/:id')
   .get(getUserObject, getCompanyById)

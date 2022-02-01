@@ -41,22 +41,18 @@ const AssetListScreen = ({ history, match }) => {
   } = assetCreate;
 
   useEffect(() => {
-    dispatch({ type: ASSET_CREATE_RESET });
+    if (successCreate) {
+      dispatch({ type: ASSET_CREATE_RESET });
+    }
 
     dispatch(listAssets(keyword, metal));
+  }, [keyword, dispatch, successDelete, metal, history]);
 
-    if (successCreate) {
+  useEffect(() => {
+    if (successCreate && userInfo.isAdmin && createdAsset) {
       history.push(`/admin/asset/${createdAsset._id}/edit`);
     }
-  }, [
-    keyword,
-    dispatch,
-    successDelete,
-    createdAsset,
-    successCreate,
-    metal,
-    history,
-  ]);
+  }, [successCreate, createdAsset, history]);
 
   // Whenever the component is re-rendered and term has changed, run this function
   useEffect(() => {
@@ -83,7 +79,7 @@ const AssetListScreen = ({ history, match }) => {
     }
   };
 
-  const createCompanyHandler = () => {
+  const createAssetHandler = () => {
     dispatch(createAsset());
   };
 
@@ -112,7 +108,7 @@ const AssetListScreen = ({ history, match }) => {
         {userInfo && userInfo.isAdmin && (
           <Col md={2} className='text-right d-flex justify-content-end mb-3'>
             <Button
-              onClick={createCompanyHandler}
+              onClick={createAssetHandler}
               variant='success'
               className='px-3 py-2'
             >
@@ -122,11 +118,9 @@ const AssetListScreen = ({ history, match }) => {
         )}
       </Row>
 
-      {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
-      {loadingCreate && <Loader />}
       {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
-      {loading ? (
+      {loading || loadingDelete || loadingCreate ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
@@ -193,24 +187,26 @@ const AssetListScreen = ({ history, match }) => {
                     </Link>
                   ))}
                 </td>
-                <td className='p-2'>
-                  {userInfo && userInfo.isAdmin && (
-                    <>
-                      <LinkContainer to={`/admin/asset/${asset._id}/edit`}>
-                        <Button variant='light' className='btn-sm'>
-                          <i className='fas fa-edit'></i>
-                        </Button>
-                      </LinkContainer>
+                {userInfo && userInfo.isAdmin && (
+                  <td className='p-1 text-center'>
+                    <div className='d-flex'>
+                      <Button
+                        href={`/admin/asset/${asset._id}/edit`}
+                        variant='light'
+                        className='btn-sm py-1 px-2'
+                      >
+                        <i className='fas fa-edit'></i>
+                      </Button>
                       <Button
                         variant='danger'
-                        className='btn-sm'
+                        className='btn-sm px-2 py-1'
                         onClick={() => deleteHandler(asset._id)}
                       >
                         <i className='fas fa-trash'></i>
                       </Button>
-                    </>
-                  )}
-                </td>
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

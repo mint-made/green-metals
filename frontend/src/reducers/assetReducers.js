@@ -16,6 +16,7 @@ import {
   ASSET_UPDATE_FAIL,
   ASSET_UPDATE_SUCCESS,
   ASSET_UPDATE_RESET,
+  ASSET_LIST_RESET,
 } from '../constants/assetConstants';
 
 export const assetListReducer = (state = { assets: [] }, action) => {
@@ -29,6 +30,8 @@ export const assetListReducer = (state = { assets: [] }, action) => {
       };
     case ASSET_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case ASSET_LIST_RESET:
+      return { assets: [] };
     default:
       return state;
   }

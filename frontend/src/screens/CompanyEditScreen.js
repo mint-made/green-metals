@@ -34,6 +34,7 @@ const ProductEditScreen = ({ match, history }) => {
   const [currency, setCurrency] = useState('');
   const [ticker, setTicker] = useState('');
   const [price, setPrice] = useState('');
+  const [type, setType] = useState('');
   const [assetRef, setAssetRef] = useState('');
   const [assetName, setAssetName] = useState('');
   const [assetArray, setAssetArray] = useState([]);
@@ -65,7 +66,6 @@ const ProductEditScreen = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  console.log(company);
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/login');
@@ -73,7 +73,7 @@ const ProductEditScreen = ({ match, history }) => {
 
     if (successUpdate) {
       dispatch({ type: COMPANY_UPDATE_RESET });
-      history.push('/admin/companylist');
+      history.push('/companies');
     }
 
     if (!company.name || company._id !== companyId) {
@@ -97,6 +97,7 @@ const ProductEditScreen = ({ match, history }) => {
       setCurrency(company.trading.currency);
       setPrice(company.trading.price);
       setLogo(company.logo);
+      setType(company.type ? company.type : 'Other');
       setAssetArray(company.assets);
     }
   }, [
@@ -162,6 +163,7 @@ const ProductEditScreen = ({ match, history }) => {
         primaryCommodity,
         website,
         logo,
+        type,
         mcap: toUSD(mcap(), currency),
         trading: {
           exchange,
@@ -179,6 +181,8 @@ const ProductEditScreen = ({ match, history }) => {
     switch (exchange) {
       case 'NYSE':
         return '$';
+      case 'NASDAQ':
+        return '$';
       case 'TSX':
         return 'C$';
       case 'ASX':
@@ -193,13 +197,17 @@ const ProductEditScreen = ({ match, history }) => {
         return '₽';
       case 'TSXV':
         return 'C$';
+      case 'HKEK':
+        return 'HK$';
+      case 'CNSX':
+        return 'C$';
       default:
         return '$';
     }
   };
 
   // Generates a mcap from shares
-  const mcap = () => issuedShares * Number(price);
+  const mcap = () => Number(issuedShares) * Number(price);
 
   // Converts currency
   const toUSD = (value, currency) => {
@@ -214,6 +222,8 @@ const ProductEditScreen = ({ match, history }) => {
         return value / currencyConv.usd.rub;
       case '€':
         return value / currencyConv.usd.eur;
+      case 'HK$':
+        return value / currencyConv.usd.hkd;
       default:
         return value;
     }
@@ -306,7 +316,12 @@ const ProductEditScreen = ({ match, history }) => {
                 <Row>
                   <Col>
                     <Form.Group controlId='issuedShares'>
-                      <Form.Label>Issued Shares</Form.Label>
+                      <Form.Label>
+                        Issued Shares{' '}
+                        <Badge variant='secondary'>
+                          <NumFormat number={issuedShares} dp='2' />
+                        </Badge>
+                      </Form.Label>
                       <Form.Control
                         type='name'
                         placeholder='Enter shares'
@@ -317,7 +332,12 @@ const ProductEditScreen = ({ match, history }) => {
                   </Col>
                   <Col>
                     <Form.Group controlId='netCash'>
-                      <Form.Label>Net Cash</Form.Label>
+                      <Form.Label>
+                        Net Cash{' '}
+                        <Badge variant='primary'>
+                          $<NumFormat number={netCash} dp='2' />
+                        </Badge>
+                      </Form.Label>
                       <Form.Control
                         type='name'
                         placeholder='Enter shares'
@@ -337,6 +357,7 @@ const ProductEditScreen = ({ match, history }) => {
                         }}
                       >
                         <option value='-'>-</option>
+                        <option value='Uranium'>Uranium</option>
                         <option value='Lithium'>Lithium</option>
                         <option value='REEs'>REEs</option>
                         <option value='Nickel'>Nickel</option>
@@ -361,6 +382,7 @@ const ProductEditScreen = ({ match, history }) => {
                         }}
                       >
                         <option value='NYSE'>NYSE</option>
+                        <option value='NASDAQ'>NASDAQ</option>
                         <option value='LSE'>LSE</option>
                         <option value='ASX'>ASX</option>
                         <option value='TSX'>TSX</option>
@@ -368,6 +390,8 @@ const ProductEditScreen = ({ match, history }) => {
                         <option value='XTRA'>XTRA</option>
                         <option value='MOEX'>MOEX</option>
                         <option value='OTC'>OTC</option>
+                        <option value='HKEK'>HKEK</option>
+                        <option value='CNSX'>CNSX</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
@@ -391,6 +415,25 @@ const ProductEditScreen = ({ match, history }) => {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                       ></Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Company Type</Form.Label>
+                      <Form.Control
+                        as='select'
+                        value={type}
+                        onChange={(e) => {
+                          setType(e.target.value);
+                        }}
+                      >
+                        <option value='Producer'>Producer</option>
+                        <option value='Developer'>Developer</option>
+                        <option value='Explorer'>Explorer</option>
+                        <option value='Other'>Other</option>
+                      </Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Col, Dropdown, Row, Table } from 'react-bootstrap';
+import { Badge, Col, Dropdown, Row, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import CompanyTableRow from '../components/CompanyTableRow';
+import ConvMcap from '../components/ConvMcap';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 
@@ -87,8 +87,36 @@ const CompareScreen = ({ history }) => {
           </tr>
         </thead>
         <tbody>
-          {compareList.map((company) => (
-            <CompanyTableRow key={company._id} company={company} />
+          {compareList.map((company, index) => (
+            <tr key={index}>
+              <td className='p-0'>
+                <Link to={`/company/${company._id}`}>
+                  <div className='d-flex justify-content-between p-2 '>
+                    <p className='mb-0 text-dark'>
+                      {company.name}
+                      <span>
+                        <i className='pl-1 fas fa-info-circle text-info'></i>
+                      </span>
+                    </p>
+                  </div>
+                </Link>
+              </td>
+              <td className='p-2'>
+                <Link to={`/company/${company._id}`}>
+                  <Badge variant='secondary'>{company.trading.ticker}</Badge>
+                </Link>
+                <span style={{ fontSize: '75%' }}>
+                  {' '}
+                  {company.trading.exchange}
+                </span>
+              </td>
+              <td className='p-2'>
+                <Badge variant='primary'>
+                  <ConvMcap company={company} />
+                </Badge>
+              </td>
+              <td className='p-2'>{company.primaryCommodity}</td>
+            </tr>
           ))}
         </tbody>
       </Table>

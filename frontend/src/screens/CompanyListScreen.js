@@ -1,37 +1,38 @@
-import React, { useEffect } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Row, Col, Dropdown, Badge } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
+import { useLocation } from 'react-router-dom';
+import { Badge, Breadcrumb, Button, Col, Form, Row } from 'react-bootstrap';
+
 import {
-  listCompanies,
-  deleteCompany,
   createCompany,
+  deleteCompany,
+  listCompanies,
 } from '../actions/companyActions';
-import Paginate from '../components/Paginate';
-import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
-import { Link, useLocation } from 'react-router-dom';
+import Loader from '../components/Loader';
 import Meta from '../components/Meta';
-import ConvMcap from '../components/ConvMcap';
+import { formatNumber } from '../util/utility';
+import CompaniesGraphView from '../components/CompaniesGraphView';
+import CompaniesTableView from '../components/CompaniesTableView';
+import { COMPANY_CREATE_RESET } from '../constants/companyConstants';
+import Message from '../components/Message';
 
-const ProductListScreen = ({ history, match }) => {
+const CompanyListScreen = ({ match, history }) => {
   const location = useLocation();
-  const metal = match.params.metal;
-  const pageNo = useQuery().get('page') || 1;
-  const sort = useQuery().get('sort') || '';
-
   const dispatch = useDispatch();
 
-  const companyList = useSelector((state) => state.companyList);
-  const { loading, error, companies, pages } = companyList;
+  const metal = match.params.metal || '';
+  const keyword = useQuery().get('q') || '';
+  const pageNo = useQuery().get('page') || 1;
+  const sort = useQuery().get('sort') || 'mcap_desc';
 
-  const companyDelete = useSelector((state) => state.companyDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = companyDelete;
+  const [term, setTerm] = useState('');
+  const [view, setView] = useState('table');
+
+  const companyList = useSelector((state) => state.companyList);
+  const { loading, error, companies, pages, page } = companyList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const companyCreate = useSelector((state) => state.companyCreate);
   const {
@@ -41,32 +42,70 @@ const ProductListScreen = ({ history, match }) => {
     company: createdCompany,
   } = companyCreate;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const companyDelete = useSelector((state) => state.companyDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = companyDelete;
 
   useEffect(() => {
-    dispatch({ type: COMPANY_CREATE_RESET });
-
-    if (!userInfo.isAdmin) {
-      history.push('/login');
-    }
-
     if (successCreate) {
-      history.push(`/admin/company/${createdCompany._id}/edit`);
-    } else {
-      dispatch(listCompanies('', Number(pageNo), sort, metal));
+      dispatch({ type: COMPANY_CREATE_RESET });
     }
-  }, [
-    dispatch,
-    history,
-    userInfo,
-    successDelete,
-    successCreate,
-    createdCompany,
-    pageNo,
-    metal,
-    sort,
-  ]);
+
+    dispatch(listCompanies(keyword, Number(pageNo), sort, metal));
+  }, [dispatch, keyword, pageNo, sort, metal, successDelete, history]);
+
+  useEffect(() => {
+    if (successCreate && userInfo.isAdmin && createdCompany) {
+      history.push(`/admin/company/${createdCompany._id}/edit`);
+    }
+  }, [successCreate, createdCompany, history]);
+
+  // Whenever the component is re-rendered and term has changed, run this function
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (term) {
+        history.push(`${location.pathname}?q=${term}`);
+      }
+      if (!term && keyword) {
+        history.push(`${location.pathname}`);
+      }
+    }, 500);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term, history, location, keyword]);
+
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
+  const capitalize = (s) => {
+    if (typeof s !== 'string') return '';
+    const sArr = s.split(' ').map((string) => {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    });
+    return sArr.join(' ');
+  };
+
+  const getTotalMcap = () => {
+    if (!companies || companies.length < 1) {
+      return 0;
+    }
+
+    let total = 0;
+    companies.forEach((company) => {
+      total += company.mcap;
+    });
+
+    return total;
+  };
+
+  const createCompanyHandler = () => {
+    dispatch(createCompany());
+  };
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -74,138 +113,86 @@ const ProductListScreen = ({ history, match }) => {
     }
   };
 
-  const createCompanyHandler = () => {
-    dispatch(createCompany());
-  };
-
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-  const sortSelectHandler = (value) => {
-    history.push(`${location.pathname}?sort=${value}`);
-  };
-
   return (
     <>
-      <Meta title='Company List' />
-      <Row className='align-items-center'>
+      <Meta
+        title={metal ? `Companies - ${capitalize(metal)}` : 'Companies - All'}
+      />
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+
+      <Row className='my-2'>
         <Col>
-          <h1>Companies</h1>
+          <Breadcrumb>
+            <Breadcrumb.Item href='/companies'>Companies</Breadcrumb.Item>
+            {metal && (
+              <Breadcrumb.Item href={`/companies/${metal}`}>
+                {capitalize(metal)}
+              </Breadcrumb.Item>
+            )}
+          </Breadcrumb>
         </Col>
-        <Col className='text-right d-flex justify-content-around my-3'>
-          <Dropdown>
-            <Dropdown.Toggle id='dropdown-basic'>Sort By:</Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => sortSelectHandler('mcap_asc')}>
-                MCap: Low - High
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => sortSelectHandler('mcap_desc')}>
-                MCap: High - Low
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown>
-            <Dropdown.Toggle id='dropdown-basic'>Category:</Dropdown.Toggle>
-            <Dropdown.Menu>
-              {[
-                '',
-                'Lithium',
-                'REEs',
-                'Nickel',
-                'Copper',
-                'Potash',
-                'Scandium',
-                '-',
-              ].map((metal, index) => (
-                <Dropdown.Item
-                  key={index}
-                  onClick={() => history.push(`/admin/companylist/${metal}`)}
-                >
-                  {metal ? metal : 'All'}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          <Button onClick={createCompanyHandler} variant='success'>
-            <i className='fas fa-plus'></i> Create Company
-          </Button>
+        <Col>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+              history.push(`${location.pathname}?q=${term}`);
+            }}
+          >
+            <Form.Group controlId='search'>
+              <Form.Control
+                placeholder='Search by Name or Ticker'
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+        {metal && !loading && !error && (
+          <Col className='text-center'>
+            <p className='m-0'>Total {metal} MCap:</p>
+            <Badge variant='dark'>{formatNumber(getTotalMcap(), 1)}</Badge>
+          </Col>
+        )}
+        <Col>
+          <button onClick={() => setView('table')}>
+            <i className='fas fa-align-justify'></i>
+          </button>{' '}
+          <button onClick={() => setView('graph')}>
+            <i className='fas fa-chart-pie'></i>
+          </button>{' '}
+          <button onClick={() => setView('summary')}>
+            <i className='fas fa-th-large'></i>
+          </button>
+          <button onClick={createCompanyHandler} className='ml-4'>
+            <i className='fas fa-plus'></i> Co.
+          </button>
         </Col>
       </Row>
-      {loadingDelete && <Loader />}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
-      {loadingCreate && <Loader />}
-      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
-      {loading ? (
+      {loadingCreate || loadingDelete || loading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <h3>{error}</h3>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table-sm'>
-            <thead>
-              <tr>
-                <th className='p-1'>
-                  <h5 className='m-0 text-center'>Name</h5>
-                </th>
-                <th className='p-1'>
-                  <h5 className='m-0 text-center'>Ticker</h5>
-                </th>
-                <th className='p-1'>
-                  <h5 className='m-0 text-center'>MCap</h5>
-                </th>
-                <th className='p-1'>
-                  <h5 className='m-0 text-center'>Commodity</h5>
-                </th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {companies.map((company) => (
-                <tr key={company._id}>
-                  <td>
-                    <Link to={`/company/${company._id}`}>
-                      <div className='d-flex justify-content-between p-2 '>
-                        <p className='mb-0 text-dark'>
-                          {company.name}
-                          <span>
-                            <i className='pl-1 fas fa-info-circle text-info'></i>
-                          </span>
-                        </p>
-                      </div>
-                    </Link>
-                  </td>
-                  <td className='p-2'>
-                    {company.trading.exchange}:{company.trading.ticker}
-                  </td>
-                  <td className='p-2'>
-                    <Badge variant='primary'>
-                      <ConvMcap company={company} />
-                    </Badge>
-                  </td>
-                  <td className='p-2'>{company.primaryCommodity}</td>
-                  <td>
-                    <LinkContainer to={`/admin/company/${company._id}/edit`}>
-                      <Button variant='light' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant='danger'
-                      className='btn-sm'
-                      onClick={() => deleteHandler(company._id)}
-                    >
-                      <i className='fas fa-trash'></i>
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <Paginate pages={pages} page={Number(pageNo)} sort={sort} />
+          {view === 'graph' && companies && (
+            <CompaniesGraphView companies={companies} commodityName={metal} />
+          )}
+          {view === 'table' && companies && (
+            <CompaniesTableView
+              companies={companies}
+              pages={pages}
+              page={page}
+              sort={sort}
+              keyword={keyword}
+              userInfo={userInfo}
+              deleteHandler={deleteHandler}
+            />
+          )}
         </>
       )}
     </>
   );
 };
 
-export default ProductListScreen;
+export default CompanyListScreen;
